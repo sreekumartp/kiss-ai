@@ -70,6 +70,8 @@ For each update later: bump `versionCode` and `versionName` in `android/app/buil
 download the new `.aab` from Actions, upload it to a new release.
 
 ## Notes
-- Package name: `io.github.sreekumartp.kissai`. It can never change once published.
+- Package name (app ID): `io.github.sreekumartp.kissai.app`. It can never change once published.
+  If Play asks for an APK to prove you own the package name, use `app-release.apk` (signed with
+  your upload key), never `app-debug.apk` (signed with a throwaway key that changes every build).
 - Target API 36 (Android 16), minimum Android 8.0.
 - Sign-in on Android is email/password (Google blocks its sign-in inside app web views).

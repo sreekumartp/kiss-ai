@@ -54,8 +54,10 @@ jobs:
           AAB=app/build/outputs/bundle/release/app-release.aab
           echo "Package name(s) in the bundle manifest:"
           unzip -p "$AAB" base/manifest/AndroidManifest.xml | strings | grep -oE 'io\.github\.[a-z0-9_.]+' | sort -u
-          echo "Signing certificate:"
+          echo "Bundle signing certificate:"
           keytool -printcert -jarfile "$AAB" | grep -E 'Owner:|SHA1:'
+          echo "Release APK signing certificate (use app-release.apk for any ownership check):"
+          keytool -printcert -jarfile app/build/outputs/apk/release/app-release.apk | grep -E 'Owner:|SHA1:' || true
 
       - name: Upload APKs
         uses: actions/upload-artifact@v4

@@ -8,10 +8,10 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "io.github.sreekumartp.kissai"
+        applicationId = "io.github.sreekumartp.kissai.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 20
+        versionCode = 21
         versionName = "3.0"
     }
 
