@@ -323,6 +323,9 @@ a.res .rk{grid-row:1/span 2;grid-column:2;align-self:center;font-family:var(--fo
 #home h3,.rdetail h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:18px 0 8px;font-weight:600}
 #home .card>h3:first-child{margin-top:0}
 .rdetail h2{font-family:var(--font-display);font-size:1.5rem;line-height:1.15;margin:8px 0 8px;text-wrap:balance}
+.acctform{display:flex;flex-direction:column;gap:8px}
+.acctform input{min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg);font:inherit}
+.settings code{font-family:var(--font-mono);font-size:.85em}
 .roleback{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 /* ---------- Phones ---------- */
 @media (max-width:860px){
@@ -2379,7 +2382,7 @@ function homeHTML(){
   const starts = ["gd","backprop","transformer","rag","reasoning","agents"].map(id=>byId.get(id));
   return `<div class="homewrap">${intro}${cont}<div class="card">${funnelHTML()}</div>
     <div class="card"><h3 style="margin-top:0">Good places to start</h3><div class="links">${starts.map(itemHTML).join("")}</div></div>
-    <p class="foot">${nodes.length} topics · ${edges.length} links · frontier through mid-2026. Progress is saved on this device; back it up in Settings.</p></div>`;
+    <p class="foot">${nodes.length} topics · ${edges.length} links · frontier through mid-2026. ${syncFooter()}</p></div>`;
 }
 function renderHome(){ document.getElementById("home").innerHTML = homeHTML(); }
 function homeClick(ev){
@@ -2400,6 +2403,7 @@ function openSettings(){
   const goal=getGoal(), bg=getBg();
   sheet.innerHTML = `<button class="xbtn" id="mClose" aria-label="Close">×</button>
     <div class="settings"><h2 id="mTitle">Settings</h2>
+    ${accountSectionHTML()}
     <section><label class="sl" for="setGoal">What success means to you</label>
       <select id="setGoal" data-set="goal">
         <option value="">Natural for each topic</option>${SUCCESS_FORMS.map(f=>`<option value="${f.k}" ${goal===f.k?"selected":""}>${esc(f.name)}</option>`).join("")}
@@ -2433,6 +2437,8 @@ function settingsChange(ev){
 function settingsClick(ev){
   const t=ev.target.closest("button[data-set]"); if(!t || modalId) return false;
   const k=t.dataset.set;
+  if(k==="signin") return true; // handled by the form's submit event
+  if(["google","signup","reset","signout"].includes(k)){ accountAction(k); return true; }
   if(k==="copy"){ const ta=document.getElementById("setBackup"), st=document.getElementById("bkStatus");
     const done=()=>{ st.textContent="Backup copied. Paste it into a note or message to keep it safe."; };
     const fall=()=>{ ta.focus(); ta.select(); st.textContent="Select-all is on. Copy it with your device's Copy command."; };
@@ -2604,6 +2610,157 @@ hs.addEventListener("keydown", ev=>{
 });
 window.addEventListener("resize", ()=>updateHScroll(d3.zoomTransform(svg.node())));
 
+/* ---------- Account and cloud sync (Firebase, optional) ---------- */
+// Signed out, everything stays on this device as before. Signed in, all "atlas-" keys are
+// mirrored to Firestore at users/{uid} and kept in sync across devices.
+const SYNC_SKIP = new Set(["atlas-view"]);
+const sync = { state:"init", user:null, db:null, auth:null, unsub:null, applying:false, timer:null, last:null, msg:"" };
+const syncKey = k => typeof k==="string" && k.startsWith("atlas-") && !SYNC_SKIP.has(k);
+try{
+  const P = Storage.prototype, _set = P.setItem, _rem = P.removeItem;
+  P.setItem = function(k,v){ _set.call(this,k,v); if(this===window.localStorage && syncKey(k)) queueSync(); };
+  P.removeItem = function(k){ _rem.call(this,k); if(this===window.localStorage && syncKey(k)) queueSync(); };
+}catch(e){}
+function localSnapshot(){ const o={}; try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(syncKey(k)) o[k]=localStorage.getItem(k); } }catch(e){} return o; }
+// Merge device data into account data: higher rung wins, ticked subtopics combine,
+// non-empty success definitions and account settings are kept.
+function mergeProgress(local, cloud){
+  const out = Object.assign({}, cloud), rank = v => ({i:0,k:1,s:2,"$":3})[v] ?? -1;
+  Object.entries(local).forEach(([k,v])=>{
+    if(!(k in out)){ out[k]=v; return; }
+    if(k.startsWith("atlas-stage-")) out[k] = rank(v) > rank(out[k]) ? v : out[k];
+    else if(k.startsWith("atlas-done-")){ try{ out[k] = JSON.stringify([...new Set([...JSON.parse(out[k]||"[]"), ...JSON.parse(v||"[]")])].sort((a,b)=>a-b)); }catch(e){} }
+    else if(k.startsWith("atlas-mysucc-")) out[k] = (out[k]||"").trim() ? out[k] : v;
+  });
+  return out;
+}
+function applyLocal(data){
+  sync.applying = true;
+  try{
+    Object.keys(localSnapshot()).forEach(k=>{ if(!(k in data)) localStorage.removeItem(k); });
+    Object.entries(data).forEach(([k,v])=>{ if(syncKey(k) && typeof v==="string" && localStorage.getItem(k)!==v) localStorage.setItem(k,v); });
+  }catch(e){}
+  sync.applying = false;
+  rerenderAll();
+  const typing = document.activeElement && document.activeElement.tagName==="TEXTAREA";
+  if(!modal.hidden && modalId && !typing) openModal(modalId, true);
+}
+function setSync(state, msg){ sync.state=state; if(msg!==undefined) sync.msg=msg; const a=document.getElementById("acctStatus"); if(a) a.textContent=syncStatusText(); }
+function syncStatusText(){
+  if(sync.state==="saving") return "Saving…";
+  if(sync.state==="synced") return "Synced" + (sync.last ? " · " + sync.last.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"}) : "");
+  if(sync.state==="offline") return "Offline. Changes will sync when you reconnect.";
+  return sync.msg || "";
+}
+function queueSync(){
+  if(!sync.user || sync.applying) return;
+  clearTimeout(sync.timer); setSync("saving");
+  sync.timer = setTimeout(pushCloud, 1200);
+}
+function userDoc(){ return sync.db.collection("users").doc(sync.user.uid); }
+async function pushCloud(){
+  if(!sync.user) return;
+  try{
+    await userDoc().set({ data: localSnapshot(), updatedAt: firebase.firestore.FieldValue.serverTimestamp(), app:"kiss-ai", v:1 });
+    sync.last = new Date(); setSync("synced");
+  }catch(e){ setSync(navigator.onLine===false ? "offline" : "error", "Couldn't save to your account. It will retry on your next change."); }
+}
+async function startSync(){
+  setSync("saving", "");
+  try{
+    const snap = await userDoc().get();
+    const cloud = (snap.exists && snap.data() && snap.data().data) || {};
+    const merged = mergeProgress(localSnapshot(), cloud);
+    applyLocal(merged);
+    await pushCloud();
+    if(sync.unsub) sync.unsub();
+    sync.unsub = userDoc().onSnapshot(d=>{
+      if(d.metadata.hasPendingWrites || !d.exists) return;
+      const data = (d.data() && d.data().data) || {};
+      if(JSON.stringify(data) !== JSON.stringify(localSnapshot())){ applyLocal(data); sync.last=new Date(); setSync("synced"); }
+    }, ()=>setSync("error", "Live sync stopped. Reopen the app to reconnect."));
+  }catch(e){ setSync("error", "Couldn't reach your account. Your progress is still saved on this device."); }
+}
+function stopSync(){ if(sync.unsub){ sync.unsub(); sync.unsub=null; } clearTimeout(sync.timer); }
+function loadScript(src){ return new Promise((res,rej)=>{ const el=document.createElement("script"); el.src=src; el.onload=res; el.onerror=()=>rej(new Error(src)); document.head.appendChild(el); }); }
+async function initSync(){
+  if(typeof window.KISS_FIREBASE_CONFIG === "undefined"){ setSync("unavailable"); return; }
+  if(!window.KISS_FIREBASE_CONFIG){ setSync("unconfigured"); return; }
+  try{
+    if(!window.firebase) for(const f of ["firebase-app-compat.js","firebase-auth-compat.js","firebase-firestore-compat.js"]) await loadScript("firebase/"+f);
+    firebase.initializeApp(window.KISS_FIREBASE_CONFIG);
+    sync.auth = firebase.auth(); sync.db = firebase.firestore();
+    setSync("signedout", "");
+    sync.auth.onAuthStateChanged(u=>{
+      sync.user = u || null;
+      if(u) startSync(); else { stopSync(); setSync("signedout", ""); }
+      refreshAccountUI();
+    });
+    if(!window.AtlasNative) sync.auth.getRedirectResult().catch(e=>setSync("signedout", authError(e)));
+  }catch(e){ setSync("error", "Sign-in couldn't load. Check your connection and reopen the app."); }
+  refreshAccountUI();
+}
+function refreshAccountUI(){
+  const a=document.getElementById("acct"); if(a) a.outerHTML = accountSectionHTML();
+  if(state.view==="home") renderHome(); else if(!state.sel && !state.role) renderPanel();
+}
+function syncFooter(){
+  if(sync.user) return `Your progress syncs to your account (${esc(sync.user.email||"signed in")}).`;
+  if(sync.state==="signedout") return `Progress is saved on this device. Sign in from Settings to sync it across devices.`;
+  return `Progress is saved on this device; back it up in Settings.`;
+}
+function authError(e){
+  const c = (e && e.code) || "";
+  return ({
+    "auth/invalid-email":"That email address doesn't look right.",
+    "auth/missing-password":"Enter your password.",
+    "auth/weak-password":"Use a password of at least 6 characters.",
+    "auth/email-already-in-use":"An account with this email already exists. Sign in instead.",
+    "auth/invalid-credential":"Email or password is incorrect.",
+    "auth/wrong-password":"Email or password is incorrect.",
+    "auth/user-not-found":"No account with this email. Create one instead.",
+    "auth/too-many-requests":"Too many attempts. Wait a few minutes and try again.",
+    "auth/network-request-failed":"No connection. Check your internet and try again.",
+    "auth/popup-closed-by-user":"Google sign-in was closed before it finished.",
+    "auth/unauthorized-domain":"This website isn't on the Firebase authorized domains list yet."
+  })[c] || ((e && e.message) || "Something went wrong. Try again.");
+}
+function accountSectionHTML(){
+  let body;
+  if(sync.state==="unavailable") body = `<p class="note" style="margin:0">Sign-in and sync work in the web app and the Android app.</p>`;
+  else if(sync.state==="unconfigured") body = `<p class="note" style="margin:0">Sign-in isn't set up for this copy yet. Add a Firebase config to <code>firebase-config.js</code> to turn it on.</p>`;
+  else if(sync.user) body = `<p style="margin:0">Signed in as <b>${esc(sync.user.email||"your account")}</b></p>
+      <p class="status" id="acctStatus" role="status">${esc(syncStatusText())}</p>
+      <div class="btnrow"><button class="btn" data-set="signout">Sign out</button></div>
+      <p class="note">Signing out keeps a copy of your progress on this device.</p>`;
+  else body = `<p class="note" style="margin:0 0 10px">Sign in to keep your progress in sync on every device.</p>
+      ${window.AtlasNative ? "" : `<div class="btnrow" style="margin-top:0"><button class="btn primary" data-set="google">Continue with Google</button></div><p class="note" style="margin:10px 0 6px">or use email</p>`}
+      <form id="acctForm" class="acctform" autocomplete="on">
+        <input id="acctEmail" type="email" autocomplete="username" placeholder="Email" required>
+        <input id="acctPass" type="password" autocomplete="current-password" placeholder="Password (6+ characters)" minlength="6">
+        <div class="btnrow"><button class="btn ${window.AtlasNative?"primary":""}" data-set="signin" type="submit">Sign in</button><button class="btn" data-set="signup" type="button">Create account</button><button class="btn" data-set="reset" type="button">Forgot password</button></div>
+      </form>
+      <p class="status" id="acctStatus" role="status">${esc(syncStatusText())}</p>`;
+  return `<section id="acct"><label class="sl">Account and sync</label>${body}</section>`;
+}
+async function accountAction(k){
+  const email = (document.getElementById("acctEmail")||{}).value||"", pass = (document.getElementById("acctPass")||{}).value||"";
+  const say = m => setSync(sync.state, m);
+  try{
+    if(k==="google"){
+      const pr = new firebase.auth.GoogleAuthProvider();
+      try{ await sync.auth.signInWithPopup(pr); }
+      catch(e){ if(e.code==="auth/popup-blocked" || e.code==="auth/operation-not-supported-in-this-environment") await sync.auth.signInWithRedirect(pr); else throw e; }
+    }
+    if(k==="signin"){ say("Signing in…"); await sync.auth.signInWithEmailAndPassword(email.trim(), pass); }
+    if(k==="signup"){ say("Creating your account…"); await sync.auth.createUserWithEmailAndPassword(email.trim(), pass); }
+    if(k==="reset"){ if(!email.trim()) return say("Enter your email first, then tap Forgot password."); await sync.auth.sendPasswordResetEmail(email.trim()); say("Password reset email sent. Check your inbox."); }
+    if(k==="signout"){ await sync.auth.signOut(); }
+  }catch(e){ say(authError(e)); }
+}
+sheet.addEventListener("submit", ev=>{ if(ev.target.id==="acctForm"){ ev.preventDefault(); accountAction("signin"); } });
+window.addEventListener("online", ()=>{ if(sync.user) queueSync(); });
+
 /* ---------- Boot ---------- */
 function start(){
   renderGraph(); renderList(); refreshStages();
@@ -2616,6 +2773,7 @@ function start(){
   if(first) select(first,{anim:false}); else if(firstRole){ selectRole(firstRole,{anim:false}); }
   else { renderPanel(); applyHighlight(); if(state.view==="graph"){ if(isPhone()) jumpLevel(0,false); else fit(false); } }
   if(isPhone() && state.view!=="graph"){ document.getElementById("map").style.display="block"; jumpLevel(0,false); document.getElementById("map").style.display="none"; }
+  initSync();
 }
 (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start, start);
 </script>

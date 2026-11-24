@@ -3,7 +3,8 @@
 Usage: python3 build_app_page.py <atlas.html> <android/app/src/main/assets/index.html>
 
 It swaps CDN fonts and d3 for the bundled copies, adds a full HTML document shell,
-and adds the Android bridge (native Share and the Back-button hook).
+adds the Android bridge (native Share), and loads firebase-config.js so sign-in
+and sync can be turned on.
 """
 import re
 import sys
@@ -40,7 +41,7 @@ reset = ("html,body{margin:0}body{font-size:14px;-webkit-tap-highlight-color:tra
 rep("<style>\n", "<style>\n" + ff + reset)
 rep("</style>\n", "</style>\n</head>\n<body>\n")
 rep('<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>',
-    '<script src="d3.min.js"></script>')
+    '<script src="d3.min.js"></script>\n<script src="firebase-config.js"></script>')
 rep('<button id="mUnlocks">Show what it unlocks</button>',
     '<button id="mUnlocks">Show what it unlocks</button>\n'
     '      ${window.AtlasNative?`<button id="mShare">Share</button>`:""}')
