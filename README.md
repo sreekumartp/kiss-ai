@@ -14,7 +14,9 @@ It also has phased learning paths for 20 AI roles, a personal funnel, backup/res
 sign-in that syncs your progress across devices.
 
 - **Web app:** published to GitHub Pages from `.github/workflows/pages.yml`.
-- **Android app:** `android/`. APKs are built by `.github/workflows/android.yml` (see its run artifacts).
+- **Android app:** `android/`. APKs and the Play bundle (`.aab`) are built by `.github/workflows/android.yml` (see its run artifacts).
+- **Google Play:** everything needed to publish is in [`playstore/`](playstore/README.md): signing setup, listing text, graphics, data-safety answers.
+- **Privacy policy:** https://sreekumartp.github.io/kiss-ai/privacy.html
 
 ## Layout
 

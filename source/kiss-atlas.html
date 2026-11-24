@@ -323,6 +323,11 @@ a.res .rk{grid-row:1/span 2;grid-column:2;align-self:center;font-family:var(--fo
 #home h3,.rdetail h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:18px 0 8px;font-weight:600}
 #home .card>h3:first-child{margin-top:0}
 .rdetail h2{font-family:var(--font-display);font-size:1.5rem;line-height:1.15;margin:8px 0 8px;text-wrap:balance}
+.btn.danger{color:#C0392B;border-color:color-mix(in srgb,#C0392B 45%,var(--line))}
+.btn.dangerfill{background:#C0392B;border-color:#C0392B;color:#fff}
+.delbox{margin-top:10px;padding:12px;border:1px solid color-mix(in srgb,#C0392B 45%,var(--line));border-radius:10px;background:color-mix(in srgb,#C0392B 7%,var(--surface))}
+.delbox p{margin:0 0 4px;font-size:.88rem}
+.settings a{color:var(--accent)}
 .acctform{display:flex;flex-direction:column;gap:8px}
 .acctform input{min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg);font:inherit}
 .settings code{font-family:var(--font-mono);font-size:.85em}
@@ -2438,7 +2443,8 @@ function settingsClick(ev){
   const t=ev.target.closest("button[data-set]"); if(!t || modalId) return false;
   const k=t.dataset.set;
   if(k==="signin") return true; // handled by the form's submit event
-  if(["google","signup","reset","signout"].includes(k)){ accountAction(k); return true; }
+  if(k==="delask"||k==="delno"){ sync.confirmDelete = k==="delask"; refreshAccountUI(); return true; }
+  if(["google","signup","reset","signout","deldo"].includes(k)){ accountAction(k); return true; }
   if(k==="copy"){ const ta=document.getElementById("setBackup"), st=document.getElementById("bkStatus");
     const done=()=>{ st.textContent="Backup copied. Paste it into a note or message to keep it safe."; };
     const fall=()=>{ ta.focus(); ta.select(); st.textContent="Select-all is on. Copy it with your device's Copy command."; };
@@ -2725,13 +2731,16 @@ function authError(e){
     "auth/unauthorized-domain":"This website isn't on the Firebase authorized domains list yet."
   })[c] || ((e && e.message) || "Something went wrong. Try again.");
 }
+const PRIVACY_URL = "https://sreekumartp.github.io/kiss-ai/privacy.html";
 function accountSectionHTML(){
   let body;
   if(sync.state==="unavailable") body = `<p class="note" style="margin:0">Sign-in and sync work in the web app and the Android app.</p>`;
   else if(sync.state==="unconfigured") body = `<p class="note" style="margin:0">Sign-in isn't set up for this copy yet. Add a Firebase config to <code>firebase-config.js</code> to turn it on.</p>`;
   else if(sync.user) body = `<p style="margin:0">Signed in as <b>${esc(sync.user.email||"your account")}</b></p>
       <p class="status" id="acctStatus" role="status">${esc(syncStatusText())}</p>
-      <div class="btnrow"><button class="btn" data-set="signout">Sign out</button></div>
+      <div class="btnrow"><button class="btn" data-set="signout">Sign out</button><button class="btn danger" data-set="delask">Delete account</button></div>
+      ${sync.confirmDelete ? `<div class="delbox"><p><b>Delete your account and all synced progress?</b> This can't be undone. A copy of your progress stays on this device.</p>
+        <div class="btnrow"><button class="btn dangerfill" data-set="deldo">Yes, delete my account</button><button class="btn" data-set="delno">Cancel</button></div></div>` : ""}
       <p class="note">Signing out keeps a copy of your progress on this device.</p>`;
   else body = `<p class="note" style="margin:0 0 10px">Sign in to keep your progress in sync on every device.</p>
       ${window.AtlasNative ? "" : `<div class="btnrow" style="margin-top:0"><button class="btn primary" data-set="google">Continue with Google</button></div><p class="note" style="margin:10px 0 6px">or use email</p>`}
@@ -2741,7 +2750,8 @@ function accountSectionHTML(){
         <div class="btnrow"><button class="btn ${window.AtlasNative?"primary":""}" data-set="signin" type="submit">Sign in</button><button class="btn" data-set="signup" type="button">Create account</button><button class="btn" data-set="reset" type="button">Forgot password</button></div>
       </form>
       <p class="status" id="acctStatus" role="status">${esc(syncStatusText())}</p>`;
-  return `<section id="acct"><label class="sl">Account and sync</label>${body}</section>`;
+  return `<section id="acct"><label class="sl">Account and sync</label>${body}
+    <p class="note"><a href="${PRIVACY_URL}" target="_blank" rel="noopener noreferrer">Privacy policy and account deletion ↗</a></p></section>`;
 }
 async function accountAction(k){
   const email = (document.getElementById("acctEmail")||{}).value||"", pass = (document.getElementById("acctPass")||{}).value||"";
@@ -2755,8 +2765,18 @@ async function accountAction(k){
     if(k==="signin"){ say("Signing in…"); await sync.auth.signInWithEmailAndPassword(email.trim(), pass); }
     if(k==="signup"){ say("Creating your account…"); await sync.auth.createUserWithEmailAndPassword(email.trim(), pass); }
     if(k==="reset"){ if(!email.trim()) return say("Enter your email first, then tap Forgot password."); await sync.auth.sendPasswordResetEmail(email.trim()); say("Password reset email sent. Check your inbox."); }
-    if(k==="signout"){ await sync.auth.signOut(); }
-  }catch(e){ say(authError(e)); }
+    if(k==="signout"){ sync.confirmDelete=false; await sync.auth.signOut(); }
+    if(k==="deldo"){
+      say("Deleting your account…");
+      const u = sync.auth.currentUser; stopSync();
+      await sync.db.collection("users").doc(u.uid).delete();
+      await u.delete();
+      sync.confirmDelete=false; setSync("signedout", "Your account and synced progress were deleted.");
+    }
+  }catch(e){
+    if(e && e.code==="auth/requires-recent-login"){ say("For your security, sign out, sign in again, then delete your account."); if(sync.user) startSync(); }
+    else say(authError(e));
+  }
 }
 sheet.addEventListener("submit", ev=>{ if(ev.target.id==="acctForm"){ ev.preventDefault(); accountAction("signin"); } });
 window.addEventListener("online", ()=>{ if(sync.user) queueSync(); });

@@ -5,14 +5,29 @@ plugins {
 
 android {
     namespace = "io.github.sreekumartp.aimlatlas"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "io.github.sreekumartp.aimlatlas"
         minSdk = 26
-        targetSdk = 35
-        versionCode = 18
-        versionName = "2.7"
+        targetSdk = 36
+        versionCode = 19
+        versionName = "3.0"
+    }
+
+    // Play upload key. Supplied by CI from GitHub Secrets (see playstore/README.md);
+    // never committed. Without it, release builds fall back to the debug key so the
+    // APK still installs for testing, but such builds cannot be uploaded to Play.
+    val uploadStore = System.getenv("UPLOAD_KEYSTORE_FILE")
+    signingConfigs {
+        if (uploadStore != null) {
+            create("upload") {
+                storeFile = file(uploadStore)
+                storePassword = System.getenv("UPLOAD_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("UPLOAD_KEY_ALIAS")
+                keyPassword = System.getenv("UPLOAD_KEY_PASSWORD")
+            }
+        }
     }
 
     buildTypes {
@@ -20,9 +35,8 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            // Signed with the debug key so the release APK installs without extra setup.
-            // Replace with your own signing config before publishing to Play.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = if (uploadStore != null) signingConfigs.getByName("upload")
+                            else signingConfigs.getByName("debug")
         }
     }
 

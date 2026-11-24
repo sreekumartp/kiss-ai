@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - "android/**"
-      - ".github/workflows/android-atlas.yml"
+      - ".github/workflows/android.yml"
   pull_request:
     paths:
       - "android/**"
@@ -26,18 +26,42 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
-      - name: Build debug and release APKs
+      # The Play upload key comes from repository secrets (see playstore/README.md).
+      # When they are not set, release builds are signed with the debug key instead.
+      - name: Restore upload key
+        env:
+          UPLOAD_KEYSTORE_BASE64: ${{ secrets.UPLOAD_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$UPLOAD_KEYSTORE_BASE64" ]; then
+            echo "$UPLOAD_KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/upload.jks"
+            echo "UPLOAD_KEYSTORE_FILE=$RUNNER_TEMP/upload.jks" >> "$GITHUB_ENV"
+            echo "Release builds will be signed with the Play upload key."
+          else
+            echo "::notice::No upload key secrets; release builds use the debug key and cannot be uploaded to Play."
+          fi
+
+      - name: Build APKs and Play bundle
+        env:
+          UPLOAD_KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSWORD }}
+          UPLOAD_KEY_ALIAS: ${{ secrets.UPLOAD_KEY_ALIAS }}
+          UPLOAD_KEY_PASSWORD: ${{ secrets.UPLOAD_KEY_PASSWORD }}
         run: |
           chmod +x gradlew
-          ./gradlew --no-daemon assembleDebug assembleRelease lintDebug
+          ./gradlew --no-daemon assembleDebug assembleRelease bundleRelease lintDebug
 
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
-          name: aiml-atlas-apks
+          name: kiss-ai-apks
           path: |
             android/app/build/outputs/apk/debug/*.apk
             android/app/build/outputs/apk/release/*.apk
+
+      - name: Upload Play bundle (.aab)
+        uses: actions/upload-artifact@v4
+        with:
+          name: kiss-ai-play-bundle
+          path: android/app/build/outputs/bundle/release/*.aab
 
       - name: Upload lint report
         if: always()
