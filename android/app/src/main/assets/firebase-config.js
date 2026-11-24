@@ -1,14 +1,12 @@
 // Sign-in and progress sync (Firebase).
-// Leave this as null to keep the app fully local. To turn sync on, replace null with
-// your Firebase web app config (Project settings -> General -> Your apps -> Web app).
-// These values are public by design; access is controlled by firestore.rules.
-window.KISS_FIREBASE_CONFIG = null;
-
-/* Example:
+// These values identify the Firebase project and are public by design; access to
+// data is controlled by firestore.rules (each person can only read/write their own).
+// Set this to null to turn sign-in off and keep the app fully local.
 window.KISS_FIREBASE_CONFIG = {
-  apiKey: "AIza...",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project",
-  appId: "1:1234567890:web:abc123"
+  apiKey: "AIzaSyBqOBlWwpLOdSGy7qFLdr4Ydfugv8y9SIQ",
+  authDomain: "kiss-ai-c3509.firebaseapp.com",
+  projectId: "kiss-ai-c3509",
+  storageBucket: "kiss-ai-c3509.firebasestorage.app",
+  messagingSenderId: "346293345979",
+  appId: "1:346293345979:web:950abe21ec19774611939e"
 };
-*/
