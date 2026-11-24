@@ -29,8 +29,8 @@ FOR EVERY TOPIC
 • What each K.I.S.S rung means for that topic, including what success looks like
 • Your own definition of success
 
-LEARNING PATHS FOR 20 AI ROLES
-Data Scientist, ML Engineer, AI Engineer, Research Scientist, MLOps, AI Safety, AI Product Manager and more. Each role has ordered phases with a teach-back, a capstone project and a milestone. Tell the app your background and it marks what you already know and where to start.
+LEARNING PATHS FOR 21 AI ROLES
+Data Scientist, ML Engineer, AI Engineer, Forward Deployed Engineer, Research Scientist, MLOps, AI Safety, AI Product Manager and more. Each role has ordered phases with a teach-back, a capstone project and a milestone. Tell the app your background and it marks what you already know and where to start.
 
 YOUR PROGRESS, YOUR WAY
 • Works fully offline, no account needed

@@ -1778,6 +1778,9 @@ const ROLES = [
  {id:"solutions-architect", name:"AI Solutions Architect / Consultant", fam:"bridge", depth:"k", success:["influence","adoption"],
   does:"Fits AI into a business: build vs buy vs fine-tune, cost, data and risk.",
   targets:"rag vecdb peft llmevals kvcache quant mlops agents governance privacy"},
+ {id:"fde", name:"Forward Deployed Engineer (FDE)", fam:"bridge", depth:"s", success:["adoption","influence"],
+  does:"Embeds with customers to build and ship working AI systems inside their real environment.",
+  targets:"rag vecdb tooluse agents mcp contexteng llmevals peft kvcache mlops redteam enterpriseai"},
  {id:"eval-engineer", name:"AI Evaluation Engineer", fam:"trust", depth:"s", success:["technique","influence"],
   does:"Measures what models can do: benchmarks, LLM-as-judge, red-team and safety evals.",
   targets:"hyptest metrics llmevals hallucination prm redteam frontierevals"}
@@ -1924,6 +1927,13 @@ const PHASES = {
  ["Solution patterns","rag vecdb tooluse peft sft","Explain build vs buy vs fine-tune","Design a reference architecture for an enterprise assistant",""],
  ["Operating AI","llmevals kvcache quant mlops","Explain the cost, latency and quality budget","Estimate the total cost of a deployment","A client or team adopts your architecture"],
  ["Risk and agents","agents mcp governance privacy agentsafety enterpriseai","Explain compliance and agent risks","Write a rollout plan with governance","Recognised as the trusted adviser on AI adoption"]],
+"fde":[
+ ["Engineering foundations","programming datastruct dataeng mlbasics metrics","Explain to a customer what their data can and cannot support","Wire up a customer's data source and profile it in a day",""],
+ ["LLM fundamentals","gpt incontext decoding hallucination","Explain to a non-technical sponsor why outputs vary and how you control them","Prototype the customer's use case with prompting in one sitting",""],
+ ["The build core","sentemb vecdb rag tooluse agents mcp contexteng","Explain when to use RAG, tools or an agent for a given workflow","Build a RAG or agent system on the customer's own documents and APIs",""],
+ ["Quality and tuning","llmevals sft peft","Explain fine-tuning vs prompting vs retrieval with cost and quality numbers","Build an eval set from real customer cases and show measured gains","The customer signs off on your eval as the launch bar"],
+ ["Production at the customer","mlops kvcache quant privacy redteam agentsafety","Explain the security, privacy, cost and latency plan to the customer's IT team","Deploy into the customer's environment with monitoring, guardrails and access controls","The system runs in production and people use it daily"],
+ ["Field craft and scale","enterpriseai governance","Explain the ROI and rollout plan to customer leadership","Turn a one-off build into a reusable pattern or product feature","Your pattern is adopted by other customers or your product team"]],
 "eval-engineer":[
  ["Statistics","programming probbasics descstats hyptest","Explain statistical significance for model comparisons","Compare two models with confidence intervals",""],
  ["Evaluation design","metrics cvval biasvar","Explain contamination and overfitting to benchmarks","Design a held-out eval set",""],
@@ -2377,7 +2387,7 @@ function homeHTML(){
       <p style="margin-top:10px;font-size:.86rem"><b>Capstone:</b> ${esc(now.ph[3])}</p>`:""}
       <div class="btnrow"><button class="btn primary" data-homerole="${role.id}">Open full path</button><button class="btn" data-goto="roles">Change role</button></div></div>`;
   } else {
-    cont = `<div class="card"><h2>Pick a role to get a learning path</h2><p class="none">20 AI roles, each with ordered phases, a capstone per phase and a check of your gaps.</p><div class="btnrow"><button class="btn primary" data-goto="roles">Choose a role</button></div></div>`;
+    cont = `<div class="card"><h2>Pick a role to get a learning path</h2><p class="none">21 AI roles, each with ordered phases, a capstone per phase and a check of your gaps.</p><div class="btnrow"><button class="btn primary" data-goto="roles">Choose a role</button></div></div>`;
   }
   const intro = introSeen() ? "" : `<div class="card intro"><h2>How the ${KISS_TITLE.replace("The ","").replace(" model for mastering AI","")} model works</h2>
     <p class="none">Every topic has four rungs. Move topics up the ladder.</p>

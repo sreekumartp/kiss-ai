@@ -10,7 +10,7 @@ section. Every topic has a syllabus, learning resources and a **K.I.S.S ladder**
 | **S**kill | You can build or create something with it |
 | **S**uccess | Others recognise, use or build on it (SME status, papers, new techniques, adoption, influence or money) |
 
-It also has phased learning paths for 20 AI roles, a personal funnel, backup/restore, and optional
+It also has phased learning paths for 21 AI roles, a personal funnel, backup/restore, and optional
 sign-in that syncs your progress across devices.
 
 - **Web app:** published to GitHub Pages from `.github/workflows/pages.yml`.
