@@ -49,6 +49,14 @@ jobs:
           chmod +x gradlew
           ./gradlew --no-daemon assembleDebug assembleRelease bundleRelease lintDebug
 
+      - name: Show bundle package name and signing certificate
+        run: |
+          AAB=app/build/outputs/bundle/release/app-release.aab
+          echo "Package name(s) in the bundle manifest:"
+          unzip -p "$AAB" base/manifest/AndroidManifest.xml | strings | grep -oE 'io\.github\.[a-z0-9_.]+' | sort -u
+          echo "Signing certificate:"
+          keytool -printcert -jarfile "$AAB" | grep -E 'Owner:|SHA1:'
+
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
