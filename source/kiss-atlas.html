@@ -63,7 +63,13 @@ main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 390px}
 .zoombtns[hidden],.hint[hidden]{display:none}
 .zoombtns{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:6px}
 .zoombtns button{width:34px;height:34px;border:1px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer;font-weight:600}
-.hint{position:absolute;left:12px;bottom:12px;font-size:.75rem;color:var(--muted);background:color-mix(in srgb,var(--surface) 85%,transparent);padding:4px 8px;border-radius:6px;border:1px solid var(--line)}
+.hscroll{position:absolute;left:12px;right:64px;bottom:10px;height:14px;border-radius:7px;background:color-mix(in srgb,var(--surface-2) 90%,transparent);border:1px solid var(--line);cursor:pointer;touch-action:none;z-index:4}
+.hscroll[hidden]{display:none}
+.hscroll:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hthumb{position:absolute;top:1px;bottom:1px;left:0;width:30%;min-width:28px;border-radius:6px;background:color-mix(in srgb,var(--fg) 45%,transparent);cursor:grab;touch-action:none}
+.hthumb:hover,.hthumb.drag{background:color-mix(in srgb,var(--fg) 65%,transparent)}
+.hthumb.drag{cursor:grabbing}
+.hint{position:absolute;left:12px;bottom:34px;font-size:.75rem;color:var(--muted);background:color-mix(in srgb,var(--surface) 85%,transparent);padding:4px 8px;border-radius:6px;border:1px solid var(--line)}
 /* SVG */
 .colband{fill:var(--stripe)}
 .colband.appband{fill:color-mix(in srgb,var(--d-app) 10%,var(--bg))}
@@ -347,6 +353,8 @@ a.res .rk{grid-row:1/span 2;grid-column:2;align-self:center;font-family:var(--fo
   .levelbar[hidden]{display:none}
   .levelbar button{flex:none;min-height:40px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:.8rem;font-weight:600;cursor:pointer}
   .zoombtns button{width:44px;height:44px}
+  .hscroll{height:20px;border-radius:10px;bottom:12px}
+  .hthumb{border-radius:9px;min-width:44px}
   .item{min-height:40px}
   .seg button{min-height:44px}
   .xbtn{width:44px;height:44px}
@@ -393,6 +401,9 @@ a.res .rk{grid-row:1/span 2;grid-column:2;align-self:center;font-family:var(--fo
       <div class="mapbar" id="mapbar" hidden></div>
       <div id="list" hidden></div>
       <div id="roles" hidden></div>
+      <div class="hscroll" id="hscroll" role="scrollbar" aria-orientation="horizontal" aria-controls="map" aria-label="Scroll the map left and right" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="hthumb" id="hthumb"></div>
+      </div>
       <div class="zoombtns" id="zoombtns">
         <button id="zin" aria-label="Zoom in">+</button>
         <button id="zout" aria-label="Zoom out">−</button>
@@ -2004,7 +2015,7 @@ function renderGraph(){
   nodeSel.append("circle").attr("cx",10).attr("cy",PH/2).attr("r",3.6);
   nodeSel.append("text").attr("class","lbl").attr("x",19).attr("y",PH/2+4).text(n=>n.label);
   nodeSel.append("text").attr("class","sl").attr("x",10).attr("y",PH/2+3).attr("text-anchor","middle");
-  zoom = d3.zoom().scaleExtent([.2,2.5]).clickDistance(5).on("zoom", e=>root.attr("transform", e.transform));
+  zoom = d3.zoom().scaleExtent([.2,2.5]).clickDistance(5).on("zoom", e=>{ root.attr("transform", e.transform); updateHScroll(e.transform); });
   svg.call(zoom).on("dblclick.zoom", null);
   svg.on("click", ()=> { if(state.sel || state.role){ state.role=null; select(null); } });
 }
@@ -2307,7 +2318,8 @@ function setView(v){
   document.getElementById("map").style.display = v==="graph"?"block":"none";
   document.getElementById("list").hidden = v!=="list";
   document.getElementById("levelbar").hidden = v!=="graph";
-  document.getElementById("zoombtns").hidden = v!=="graph"; document.getElementById("hint").hidden = v!=="graph";
+  document.getElementById("zoombtns").hidden = v!=="graph"; document.getElementById("hint").hidden = v!=="graph"; document.getElementById("hscroll").hidden = v!=="graph";
+  if(v==="graph") requestAnimationFrame(()=>updateHScroll(d3.zoomTransform(svg.node())));
   if(v==="graph" && state.sel) focusNode(byId.get(state.sel), false);
   if(v==="graph" && !state.sel && state.role) fitNodes([...rolePath(ROLES.find(x=>x.id===state.role)).keys()], false);
   updateMapbar();
@@ -2541,6 +2553,56 @@ document.getElementById("roles").addEventListener("click", ev=>{
 /* ---------- Title with highlighted K.I.S.S letters ---------- */
 document.getElementById("ttl").innerHTML = KISS_TITLE;
 document.getElementById("pttl").innerHTML = KISS_TITLE;
+
+/* ---------- Horizontal scroll bar for the map ---------- */
+const hs = document.getElementById("hscroll"), hthumb = document.getElementById("hthumb");
+function hGeom(t){
+  const b = bounds(), W = svg.node().getBoundingClientRect().width, track = hs.clientWidth;
+  const left = t.x + t.k*b.x0, width = t.k*(b.x1-b.x0);
+  return {W, track, left, width};
+}
+function updateHScroll(t){
+  if(!hs || !nodes[0] || nodes[0].x===undefined) return;
+  const g = hGeom(t); if(!g.W || !g.track) return;
+  if(g.width <= g.W){ hthumb.style.left="0px"; hthumb.style.width=g.track+"px"; hs.setAttribute("aria-valuenow","0"); return; }
+  const tw = Math.max(28, g.track * g.W / g.width);
+  const frac = Math.min(1, Math.max(0, -g.left / (g.width - g.W)));
+  hthumb.style.width = tw + "px";
+  hthumb.style.left = (frac * (g.track - tw)) + "px";
+  hs.setAttribute("aria-valuenow", String(Math.round(frac*100)));
+}
+// Move the map so that the given fraction (0 = left edge, 1 = right edge) is in view.
+function hScrollTo(frac, anim=false){
+  const t = d3.zoomTransform(svg.node()), g = hGeom(t), b = bounds();
+  if(g.width <= g.W) return;
+  frac = Math.min(1, Math.max(0, frac));
+  const x = -(frac * (g.width - g.W)) - t.k*b.x0;
+  const nt = d3.zoomIdentity.translate(x, t.y).scale(t.k);
+  (anim ? svg.transition().duration(250) : svg).call(zoom.transform, nt);
+}
+let hDrag = null;
+hthumb.addEventListener("pointerdown", ev=>{
+  ev.preventDefault(); ev.stopPropagation();
+  const g = hGeom(d3.zoomTransform(svg.node())), tw = hthumb.offsetWidth;
+  hDrag = {x0: ev.clientX, left0: hthumb.offsetLeft, range: Math.max(1, g.track - tw)};
+  hthumb.classList.add("drag"); hthumb.setPointerCapture(ev.pointerId);
+});
+hthumb.addEventListener("pointermove", ev=>{ if(!hDrag) return; hScrollTo((hDrag.left0 + ev.clientX - hDrag.x0) / hDrag.range); });
+const hEnd = ev=>{ if(!hDrag) return; hDrag=null; hthumb.classList.remove("drag"); try{ hthumb.releasePointerCapture(ev.pointerId); }catch(e){} };
+hthumb.addEventListener("pointerup", hEnd); hthumb.addEventListener("pointercancel", hEnd);
+hs.addEventListener("pointerdown", ev=>{
+  if(ev.target===hthumb) return;
+  const r = hs.getBoundingClientRect(), tw = hthumb.offsetWidth;
+  hScrollTo((ev.clientX - r.left - tw/2) / Math.max(1, r.width - tw), true);
+});
+hs.addEventListener("keydown", ev=>{
+  const cur = (+hs.getAttribute("aria-valuenow")||0)/100;
+  const step = {ArrowRight:.05, ArrowLeft:-.05, PageDown:.25, PageUp:-.25}[ev.key];
+  if(step!==undefined){ ev.preventDefault(); hScrollTo(cur+step, true); }
+  if(ev.key==="Home"){ ev.preventDefault(); hScrollTo(0, true); }
+  if(ev.key==="End"){ ev.preventDefault(); hScrollTo(1, true); }
+});
+window.addEventListener("resize", ()=>updateHScroll(d3.zoomTransform(svg.node())));
 
 /* ---------- Boot ---------- */
 function start(){
