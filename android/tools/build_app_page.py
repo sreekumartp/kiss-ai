@@ -3,8 +3,9 @@
 Usage: python3 build_app_page.py <atlas.html> <android/app/src/main/assets/index.html>
 
 It swaps CDN fonts and d3 for the bundled copies, adds a full HTML document shell,
-adds the Android bridge (native Share), and loads firebase-config.js so sign-in
-and sync can be turned on.
+adds the Android bridge (native Share), loads firebase-config.js so sign-in
+and sync can be turned on, and adds auto-update: a build id in the page and in
+version.json, which the website and the app use to pick up new versions.
 """
 import re
 import sys
@@ -59,7 +60,39 @@ function shareTopic(id){
     "Resources:",...[...r.learn,...r.papers].map(x=>`• ${x.t}: ${x.u}`)].join("\n");
   window.AtlasNative.share(n.label, text);
 }
+/* ---------- Auto-update ----------
+   The website checks version.json and reloads itself when a newer build is published.
+   The Android app downloads newer builds itself and calls window.atlasUpdateReady(). */
+(function(){
+  const BUILD = window.ATLAS_BUILD; if(!BUILD) return;
+  let pending = false;
+  const busy = () => { const m=document.getElementById("modal"), a=document.activeElement;
+    return (m && !m.hidden) || (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)); };
+  function apply(){ if(!pending) return; if(busy()){ setTimeout(apply, 4000); return; } location.reload(); }
+  window.atlasUpdateReady = () => { pending = true; apply(); };
+  if(!/\.github\.io$/.test(location.hostname)) return;
+  async function check(){
+    try{
+      const r = await fetch("version.json?t=" + Date.now(), {cache:"no-store"}); if(!r.ok) return;
+      const v = await r.json(); if(!v.build || v.build === BUILD) return;
+      // Reload at most once per new build, in case the CDN still serves the old page for a few minutes.
+      let tried = null; try{ tried = sessionStorage.getItem("atlas-update-tried"); }catch(e){}
+      if(tried === v.build) return;
+      try{ sessionStorage.setItem("atlas-update-tried", v.build); }catch(e){}
+      await fetch(location.pathname, {cache:"reload"}).catch(()=>{});
+      window.atlasUpdateReady();
+    }catch(e){}
+  }
+  setTimeout(check, 3000); setInterval(check, 15*60*1000);
+  document.addEventListener("visibilitychange", () => { if(!document.hidden) check(); });
+})();
 /* ---------- Boot ---------- */''')
 s = s.rstrip() + "\n</body>\n</html>\n"
+
+# Build id: a hash of the page, written into the page and into version.json beside it.
+import hashlib, json, os
+build = hashlib.sha256(s.encode("utf-8")).hexdigest()[:12]
+s = s.replace("<head>\n", f'<head>\n<script>window.ATLAS_BUILD="{build}";</script>\n', 1)
 open(dst, "w", encoding="utf-8").write(s)
-print("wrote", dst, len(s), "bytes")
+open(os.path.join(os.path.dirname(dst), "version.json"), "w").write(json.dumps({"build": build}) + "\n")
+print("wrote", dst, len(s), "bytes, build", build)

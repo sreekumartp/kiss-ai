@@ -20,19 +20,24 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.webkit.WebViewAssetLoader
+import java.util.concurrent.Executors
 
 /**
  * Hosts the AI & ML Knowledge Atlas. The page and everything it needs (d3, fonts)
  * ship inside the APK and are served from a virtual https origin, so the app works
- * offline and localStorage (study progress) persists between launches.
+ * offline and localStorage (study progress) persists between launches. Newer pages
+ * published on the website are picked up automatically by [LiveUpdate].
  */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
 
+    private val liveUpdate by lazy { LiveUpdate(applicationContext) }
+    private val updateExecutor = Executors.newSingleThreadExecutor()
+
     private val assetLoader by lazy {
         WebViewAssetLoader.Builder()
-            .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(this))
+            .addPathHandler("/assets/", liveUpdate.pathHandler())
             .build()
     }
 
@@ -97,6 +102,25 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        checkForUpdate()
+    }
+
+    /** Looks for a newer published page in the background; the page reloads itself when idle. */
+    private fun checkForUpdate() {
+        updateExecutor.execute {
+            if (liveUpdate.check()) {
+                runOnUiThread {
+                    if (!isDestroyed) {
+                        webView.evaluateJavascript(
+                            "window.atlasUpdateReady ? window.atlasUpdateReady() : location.reload()", null)
+                    }
+                }
+            }
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         webView.saveState(outState)
@@ -110,6 +134,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        updateExecutor.shutdownNow()
         webView.destroy()
         super.onDestroy()
     }

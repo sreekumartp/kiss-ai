@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script>window.ATLAS_BUILD="c0954b11fb2b";</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The K.I.S.S model for mastering AI</title>
@@ -2994,6 +2995,32 @@ function shareTopic(id){
     "Resources:",...[...r.learn,...r.papers].map(x=>`• ${x.t}: ${x.u}`)].join("\n");
   window.AtlasNative.share(n.label, text);
 }
+/* ---------- Auto-update ----------
+   The website checks version.json and reloads itself when a newer build is published.
+   The Android app downloads newer builds itself and calls window.atlasUpdateReady(). */
+(function(){
+  const BUILD = window.ATLAS_BUILD; if(!BUILD) return;
+  let pending = false;
+  const busy = () => { const m=document.getElementById("modal"), a=document.activeElement;
+    return (m && !m.hidden) || (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)); };
+  function apply(){ if(!pending) return; if(busy()){ setTimeout(apply, 4000); return; } location.reload(); }
+  window.atlasUpdateReady = () => { pending = true; apply(); };
+  if(!/\.github\.io$/.test(location.hostname)) return;
+  async function check(){
+    try{
+      const r = await fetch("version.json?t=" + Date.now(), {cache:"no-store"}); if(!r.ok) return;
+      const v = await r.json(); if(!v.build || v.build === BUILD) return;
+      // Reload at most once per new build, in case the CDN still serves the old page for a few minutes.
+      let tried = null; try{ tried = sessionStorage.getItem("atlas-update-tried"); }catch(e){}
+      if(tried === v.build) return;
+      try{ sessionStorage.setItem("atlas-update-tried", v.build); }catch(e){}
+      await fetch(location.pathname, {cache:"reload"}).catch(()=>{});
+      window.atlasUpdateReady();
+    }catch(e){}
+  }
+  setTimeout(check, 3000); setInterval(check, 15*60*1000);
+  document.addEventListener("visibilitychange", () => { if(!document.hidden) check(); });
+})();
 /* ---------- Boot ---------- */
 function start(){
   renderGraph(); renderList(); refreshStages();
