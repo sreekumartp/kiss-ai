@@ -239,6 +239,8 @@ aside h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var
 .rolekey[hidden]{display:none}
 body:not([data-view="graph"]) .rolekey{display:none}
 .rolekey:not([hidden]) ~ .hint{display:none}
+.rolekey .rkrole{min-height:32px;max-width:190px;padding:0 6px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);font:inherit;font-size:.76rem;font-weight:600}
+.rolekey.norole button{opacity:.55}
 .rolekey .rkl{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .rolekey button{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-height:32px;padding:0 10px 0 6px;border:1px solid var(--line);border-radius:999px;background:var(--surface);cursor:pointer;font-size:.76rem;color:var(--muted)}
 .rolekey button[aria-pressed="true"]{border-color:var(--fg);color:var(--fg);background:color-mix(in srgb,var(--fg) 7%,var(--surface))}
@@ -463,7 +465,7 @@ a.res .rk{grid-row:1/span 2;grid-column:2;align-self:center;font-family:var(--fo
         <button id="zout" aria-label="Zoom out">−</button>
         <button id="zfit" aria-label="Fit whole map" title="Fit whole map">⤢</button>
       </div>
-      <div class="rolekey" id="rolekey" hidden role="group" aria-label="Show topics on the role map"><span class="rkl">Show</span><button data-rf="ess" aria-pressed="true"><i class="k-ess"></i><b>Essential</b></button><button data-rf="opt" aria-pressed="true"><i class="k-opt"></i>Optional</button><button data-rf="bg" aria-pressed="true"><i class="k-bg"></i>Background</button></div>
+      <div class="rolekey" id="rolekey" role="group" aria-label="Role filter"><select id="rkrole" class="rkrole" aria-label="Role shown on the map"></select><span class="rkl">Show</span><button data-rf="ess" aria-pressed="true"><i class="k-ess"></i><b>Essential</b></button><button data-rf="opt" aria-pressed="true"><i class="k-opt"></i>Optional</button><button data-rf="bg" aria-pressed="true"><i class="k-bg"></i>Background</button></div>
       <div class="hint" id="hint">Drag to pan · scroll or pinch to zoom · click a topic</div>
     </div>
     <aside id="panel" aria-live="polite"></aside>
@@ -2145,7 +2147,8 @@ const itemHTML = n => `<button class="item" data-id="${n.id}" style="--c:var(--d
 /* ---------- Highlight ---------- */
 function activeSet(){
   if(state.sel){ const n=byId.get(state.sel); const s=closure(n, state.mode==="pre"?"pre":"kids"); s.add(n); return s; }
-  if(state.role){ const r=ROLES.find(x=>x.id===state.role), s=new Set(rolePath(r).keys()); roleTiers(r).all.forEach(id=>s.add(byId.get(id))); return s; }
+  if(state.role){ const r=ROLES.find(x=>x.id===state.role); let s=new Set(rolePath(r).keys()); roleTiers(r).all.forEach(id=>s.add(byId.get(id)));
+    if(state.dom) s=new Set([...s].filter(n=>n.d===state.dom)); return s; }
   if(state.dom){ return new Set(nodes.filter(n=>n.d===state.dom)); }
   return null;
 }
@@ -2159,8 +2162,18 @@ function roleTiers(role){
 }
 // Which role tiers the map shows: essential, optional, background. Remembered per device.
 const roleFilter = (()=>{ try{ const v=JSON.parse(localStorage.getItem("atlas-rolefilter")); if(v && (v.ess||v.opt||v.bg)) return v; }catch(e){} return {ess:true,opt:true,bg:true}; })();
+// The role filter is always on the map. Without an active role it offers a role picker,
+// and tapping a toggle brings back your last role.
+document.getElementById("rkrole").innerHTML = `<option value="">Choose a role…</option>` +
+  Object.entries(ROLE_FAMILIES).map(([f,fn])=>`<optgroup label="${esc(fn)}">${ROLES.filter(r=>r.fam===f).map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join("")}</optgroup>`).join("");
+document.getElementById("rkrole").addEventListener("change", ev=>{ const v=ev.target.value; if(v) selectRole(v); else { state.role=null; select(null); } });
 document.getElementById("rolekey").addEventListener("click", ev=>{
   const b=ev.target.closest("[data-rf]"); if(!b) return;
+  if(!state.role){
+    const last=(()=>{ try{ return localStorage.getItem("atlas-lastrole"); }catch(e){ return null; } })();
+    if(last && ROLES.some(r=>r.id===last)) selectRole(last); else document.getElementById("rkrole").focus();
+    return;
+  }
   const k=b.dataset.rf; roleFilter[k]=!roleFilter[k];
   if(!roleFilter.ess && !roleFilter.opt && !roleFilter.bg) roleFilter[k]=true;
   try{ localStorage.setItem("atlas-rolefilter", JSON.stringify(roleFilter)); }catch(e){}
@@ -2178,7 +2191,9 @@ function applyHighlight(){
     .classed("optn", n=>!!tiers && tiers.opt.has(n.id))
     .classed("bgn", n=>!!tiers && !!act && act.has(n) && !tiers.all.has(n.id));
   edgeSel.classed("toopt", e=>!!tiers && (tiers.opt.has(e.t.id) || tiers.opt.has(e.s.id)));
-  const key=document.getElementById("rolekey"); if(key) key.hidden = !(tiers && state.view==="graph");
+  const key=document.getElementById("rolekey");
+  if(key){ key.hidden=false; key.classList.toggle("norole", !tiers); const rs=document.getElementById("rkrole"); if(rs.value!==(state.role||"")) rs.value=state.role||"";
+    key.querySelectorAll("[data-rf]").forEach(b=>b.setAttribute("aria-pressed", String(!!roleFilter[b.dataset.rf]))); }
   nodeSel.classed("sel", n=>n===sel).classed("on", n=>!!act && act.has(n) && n!==sel).classed("dim", n=>!!act && !act.has(n));
   edgeSel.classed("on", e=>!!act && act.has(e.s) && act.has(e.t)).classed("dim", e=>!!act && !(act.has(e.s)&&act.has(e.t)))
     .attr("style", e=> act && act.has(e.s)&&act.has(e.t) ? `--c:var(--d-${(sel||e.t).d})` : null);
