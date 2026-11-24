@@ -229,6 +229,13 @@ aside h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var
 .phase.now .phst{color:var(--accent)}
 .item.known{opacity:.5}
 .item.known::after{content:"✓";margin-left:4px;font-size:.75rem}
+.optdet{margin-top:8px}
+.optdet summary{cursor:pointer;font-size:.8rem;color:var(--muted);padding:4px 0;display:flex;align-items:center;gap:6px;min-height:32px}
+.optdet .links{margin-top:4px}
+.opttag{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border-radius:999px;border:1px dashed var(--muted);color:var(--muted)}
+.item.opt{border-style:dashed;background:transparent}
+.phase.opt{border-style:dashed;background:transparent}
+.phase.opt .phst{color:var(--muted)}
 .phk{margin:10px 0 0;display:flex;flex-direction:column;gap:6px}
 .phk div{display:grid;grid-template-columns:112px minmax(0,1fr);gap:8px;font-size:.84rem}
 .phk dt{display:flex;align-items:center;gap:6px;font-weight:600;color:var(--muted)}
@@ -1941,6 +1948,32 @@ const PHASES = {
  ["LLM evals","llmevals hallucination prm","Explain LLM-as-judge pitfalls","Build an eval harness with a judge and human checks","Your eval becomes a team standard"],
  ["Frontier evals","redteam frontierevals agents","Explain capability elicitation","Build an agentic or safety eval suite","Labs or the community report results on your eval"]]
 };
+// Optional topics per role: useful depth, alternatives or scale work, but not needed to get started.
+// Everything else in a role's phases is essential. A phase whose topics are all optional is an optional phase.
+const OPTIONAL = {
+ "data-scientist":"vectors bayesinf mle forests pca anomaly sentemb",
+ "ml-engineer":"complexity datastruct bert hpo disttrain distill",
+ "ai-engineer":"probbasics cvval contrastive peft kvcache quant codingagents",
+ "cv-engineer":"fourier sslvision sam ldm medai industrial docai autodrive",
+ "nlp-speech":"probbasics ngram rnn lstm t5 audiollm",
+ "genai-media":"sampling vqvae flows flowmatch dit worldmodels omni",
+ "rl-robotics":"bandits modelrl offlinerl autodrive worldmodels rlvr",
+ "research-scientist":"svd learnth convex ssm moe latentreason diffusionlm hybrid jepa",
+ "research-engineer":"init moe muon lowprec moemodern",
+ "ai-scientist":"gp causal selfsup weather drugdisc reasoning",
+ "mlops":"complexity datastruct parallel vecdb disttrain specdec agentsafety",
+ "inference-perf":"complexity distill disttrain moemodern smallmodels",
+ "data-engineer":"viz hyptest ngram distill",
+ "safety-researcher":"infotheory cai xai hallucination scalableov",
+ "ai-security":"sets dataeng hallucination computeruse",
+ "responsible-ai":"biasvar alignment frontierevals",
+ "ai-pm":"cvval decoding kvcache",
+ "educator":"ddpm reasoning rlvr mechinterp",
+ "solutions-architect":"dataeng transformer sft quant mcp",
+ "fde":"datastruct decoding sft peft quant",
+ "eval-engineer":"biasvar prm"
+};
+function optSet(role){ return new Set((OPTIONAL[role.id]||"").split(/\s+/).filter(Boolean)); }
 const BACKGROUNDS = [
  {id:"new", name:"New to tech (student or career changer)", topics:""},
  {id:"swe", name:"Software engineer", topics:"numbers arith fractions exponents logs ratios sets binary sumnot algebra functions programming complexity datastruct graphs dataeng dynprog"},
@@ -1953,14 +1986,21 @@ function bgSet(bg){
 }
 function getBg(){ try{ return localStorage.getItem("atlas-bg")||"new"; }catch(e){ return "new"; } }
 function setBg(v){ try{ localStorage.setItem("atlas-bg",v); }catch(e){} }
-// A phase counts as covered when every topic is in your background or you have marked it at Knowledge or above.
+// A phase counts as covered when every essential topic is in your background or you have marked it at Knowledge or above.
+// Optional topics never block progress. A phase with only optional topics is marked "opt" and is never the starting phase.
 function phaseStatus(role){
-  const bg=bgSet(BACKGROUNDS.find(b=>b.id===getBg())||BACKGROUNDS[0]);
+  const bg=bgSet(BACKGROUNDS.find(b=>b.id===getBg())||BACKGROUNDS[0]), opt=optSet(role);
   let started=false;
   return (PHASES[role.id]||[]).map(ph=>{
-    const ids=ph[1].split(/\s+/); const known=new Set(ids.filter(id=>bg.has(id)||STAGE_IDX[getStage(id)]>=1)); const covered=known.size===ids.length;
-    let st = covered && !started ? "done" : (!started ? (started=true,"now") : "next");
-    return {ph, ids, st, known};
+    const ids=ph[1].split(/\s+/); const known=new Set(ids.filter(id=>bg.has(id)||STAGE_IDX[getStage(id)]>=1));
+    const ess=ids.filter(id=>!opt.has(id)), optional=ids.filter(id=>opt.has(id));
+    const essNew=ess.filter(id=>!known.has(id)), optNew=optional.filter(id=>!known.has(id));
+    let st;
+    if(!ess.length) st = "opt";
+    else if(!essNew.length && !started) st = "done";
+    else if(!started){ started=true; st="now"; }
+    else st = "next";
+    return {ph, ids, st, known, ess, optional, essNew, optNew};
   });
 }
 
@@ -2383,7 +2423,7 @@ function homeHTML(){
     const ps=phaseStatus(role), now=ps.find(x=>x.st==="now"), {met}=roleGap(rolePath(role)), need=rolePath(role).size;
     cont = `<div class="card"><h2>Continue: ${esc(role.name)}</h2>
       <p class="none">${Math.round(met/need*100)}% ready · ${now?`Phase ${ps.indexOf(now)+1} of ${ps.length}: <b>${esc(now.ph[0])}</b>`:"All phases covered"}</p>
-      ${now?`<div class="links" style="margin-top:10px">${now.ids.filter(id=>!now.known.has(id)).slice(0,5).map(id=>itemHTML(byId.get(id))).join("")}</div>
+      ${now?`<div class="links" style="margin-top:10px">${now.essNew.slice(0,5).map(id=>itemHTML(byId.get(id))).join("")}</div>
       <p style="margin-top:10px;font-size:.86rem"><b>Capstone:</b> ${esc(now.ph[3])}</p>`:""}
       <div class="btnrow"><button class="btn primary" data-homerole="${role.id}">Open full path</button><button class="btn" data-goto="roles">Change role</button></div></div>`;
   } else {
@@ -2529,16 +2569,22 @@ function roleHTML(role){
     <h3>Your starting point</h3>
     <select class="bgsel" data-bg aria-label="Your background">${BACKGROUNDS.map(b=>`<option value="${b.id}" ${b.id===getBg()?"selected":""}>${esc(b.name)}</option>`).join("")}</select>
     <h3>Learning path: ${(PHASES[role.id]||[]).length} phases</h3>
-    <ol class="phases">${phaseStatus(role).map(({ph,ids,st,known},i)=>`<li class="phase ${st}">
-      <div class="phhead"><span class="phn">${i+1}</span><b>${esc(ph[0])}</b><span class="phst">${st==="done"?"Covered":(st==="now"?"Start here · ":"")+`${ids.length-known.size} new`}</span></div>
-      ${st==="done"?`<p class="none">Covered by your background or your marked rungs.</p>`:`
-      <div class="links">${ids.map(id=>known.has(id)?itemHTML(byId.get(id)).replace('class="item"','class="item known" title="Already covered"'):itemHTML(byId.get(id))).join("")}</div>
+    <p class="none" style="margin-top:-2px">Essential topics get you started. <b>Optional</b> topics add depth: skip them now and come back when a project needs them.</p>
+    <ol class="phases">${phaseStatus(role).map(({ph,ids,st,known,ess,optional,essNew,optNew},i)=>{
+      const chip = id => known.has(id)?itemHTML(byId.get(id)).replace('class="item"','class="item known" title="Already covered"'):itemHTML(byId.get(id));
+      const optBlock = optional.length ? `<details class="optdet" ${st==="opt"?"open":""}><summary><span class="opttag">Optional</span> go deeper later · ${optional.length} topic${optional.length>1?"s":""}</summary><div class="links">${optional.map(id=>chip(id).replace('class="item','class="item opt')).join("")}</div></details>` : "";
+      const label = st==="done" ? "Covered" : st==="opt" ? "Optional phase" : (st==="now"?"Start here · ":"") + `${essNew.length} essential${optNew.length?` · ${optNew.length} optional`:""}`;
+      return `<li class="phase ${st}">
+      <div class="phhead"><span class="phn">${i+1}</span><b>${esc(ph[0])}</b><span class="phst">${label}</span></div>
+      ${st==="done"?`<p class="none">Essentials covered by your background or your marked rungs.</p>${optBlock}`:`
+      ${st==="opt"?`<p class="none">Skip this phase to get started. Take it when you want to specialise.</p>`:`<div class="links">${ess.map(chip).join("")}</div>`}
+      ${optBlock}
       <dl class="phk">
         <div><dt><span class="rk2 r-k">K</span>Teach-back</dt><dd>${esc(ph[2])}</dd></div>
         <div><dt><span class="rk2 r-s">S</span>Capstone</dt><dd>${esc(ph[3])}</dd></div>
         ${ph[4]?`<div><dt><span class="rk2 r-x">S</span>Milestone</dt><dd>${esc(ph[4])}</dd></div>`:""}
       </dl>`}
-    </li>`).join("")}</ol>
+    </li>`;}).join("")}</ol>
     ${next.length?`<h3>Close these gaps next</h3><div class="links">${next.map(n=>`<button class="item" data-id="${n.id}" style="--c:var(--d-${n.d})"><span class="dot"></span>${esc(n.label)}<span class="need">needs ${STAGE_LETTER[need.get(n)]}</span></button>`).join("")}</div>`:`<p class="none">You meet every required rung for this role.</p>`}
     <h3>Full topic set by rung</h3>
     ${group(RUNG_LABEL[role.depth], role.depth==="s"?S:K, false)}
@@ -2557,7 +2603,7 @@ function renderRoles(){
       const need=rolePath(r), {met}=roleGap(need), core=[...need.values()].filter(x=>x===r.depth).length;
       return `<button class="rcard${state.role===r.id?" cur":""}" data-role="${r.id}">
         <b>${esc(r.name)}</b><span class="rd">${esc(r.does)}</span>
-        <span class="rm">${(()=>{ const ps=phaseStatus(r), tot=ps.reduce((a,x)=>a+x.ids.length,0), kn=ps.reduce((a,x)=>a+x.known.size,0), at=ps.findIndex(x=>x.st==="now")+1; return `${ps.length} phases · ${at?`start at phase ${at}`:"all covered"} · ${tot-kn} of ${tot} topics new to you`; })()}</span>
+        <span class="rm">${(()=>{ const ps=phaseStatus(r), tot=ps.reduce((a,x)=>a+x.ess.length,0), nw=ps.reduce((a,x)=>a+x.essNew.length,0), at=ps.findIndex(x=>x.st==="now")+1; return `${ps.length} phases · ${at?`start at phase ${at}`:"essentials covered"} · ${nw} of ${tot} essential topics new to you`; })()}</span>
         <span class="rm">Success: ${r.success.map(k=>esc(FORM[k].name)).join(" · ")}</span>
         <span class="rbar"><span style="width:${Math.round(met/need.size*100)}%"></span></span>
       </button>`; }).join("")}</div></section>`).join("");
