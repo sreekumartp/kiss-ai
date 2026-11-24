@@ -2102,7 +2102,7 @@ function renderGraph(){
   nodeSel.append("text").attr("class","sl").attr("x",10).attr("y",PH/2+3).attr("text-anchor","middle");
   zoom = d3.zoom().scaleExtent([.2,2.5]).clickDistance(5).on("zoom", e=>{ root.attr("transform", e.transform); updateHScroll(e.transform); });
   svg.call(zoom).on("dblclick.zoom", null);
-  svg.on("click", ()=> { if(state.sel || state.role){ state.role=null; select(null); } });
+  svg.on("click", ()=> { if(state.sel) select(null); else if(state.role){ state.role=null; select(null); } });
 }
 function bounds(){ const xs=nodes.map(n=>n.x), xe=nodes.map(n=>n.x+n.w), ys=nodes.map(n=>n.y); return {x0:Math.min(...xs)-20,x1:Math.max(...xe)+20,y0:Math.min(...ys)-80,y1:Math.max(...ys)+20}; }
 function fit(anim=true){ const r=svg.node().getBoundingClientRect(); const b=bounds(); const k=Math.min(r.width/(b.x1-b.x0), r.height/(b.y1-b.y0))*.96;
@@ -2154,9 +2154,9 @@ document.getElementById("rolekey").addEventListener("click", ev=>{
 });
 function applyHighlight(){
   let act = activeSet(); const sel = state.sel && byId.get(state.sel);
-  const tiers = state.role && !sel ? roleTiers(ROLES.find(x=>x.id===state.role)) : null;
+  const tiers = state.role ? roleTiers(ROLES.find(x=>x.id===state.role)) : null;
   if(tiers && act){
-    act = new Set([...act].filter(n => tiers.ess.has(n.id) ? roleFilter.ess : tiers.opt.has(n.id) ? roleFilter.opt : roleFilter.bg));
+    act = new Set([...act].filter(n => n===sel || (tiers.ess.has(n.id) ? roleFilter.ess : tiers.opt.has(n.id) ? roleFilter.opt : roleFilter.bg)));
     document.querySelectorAll("#rolekey [data-rf]").forEach(b=>b.setAttribute("aria-pressed", String(!!roleFilter[b.dataset.rf])));
   }
   nodeSel.classed("tgt", false)
@@ -2380,7 +2380,7 @@ document.addEventListener("keydown", ev=>{
 
 /* ---------- Select ---------- */
 function select(id, opts={}){
-  state.sel = id; if(id){ state.dom = null; state.role = null; }
+  state.sel = id; if(id){ state.dom = null; }
   renderPanel(); applyHighlight();
   if(id){ if(state.view==="graph" && opts.focus!==false) focusNode(byId.get(id), opts.anim!==false);
     if(location.hash.slice(1)!==id){ try{ history.replaceState(null,"","#"+id); }catch(e){ location.hash=id; } }
@@ -2456,13 +2456,14 @@ function updateMapbar(){
   const bar=document.getElementById("mapbar"); if(!bar) return;
   const show = isPhone() && state.view==="graph" && (state.sel || state.role);
   bar.hidden = !show; if(!show) return;
-  if(state.sel){ const n=byId.get(state.sel); bar.innerHTML = `<span class="mt">${state.mode==="pre"?"Path to":"Unlocked by"} <b>${esc(n.label)}</b></span><button class="btn" data-mb="open">Details</button><button class="btn" data-mb="clear" aria-label="Clear">✕</button>`; }
+  if(state.sel){ const n=byId.get(state.sel); bar.innerHTML = `<span class="mt">${state.mode==="pre"?"Path to":"Unlocked by"} <b>${esc(n.label)}</b></span><button class="btn" data-mb="open">Details</button>${state.role?`<button class="btn" data-mb="clear" aria-label="Back to the role">‹ Role</button>`:`<button class="btn" data-mb="clear" aria-label="Clear">✕</button>`}`; }
   else { const r=ROLES.find(x=>x.id===state.role); bar.innerHTML = `<span class="mt">Role: <b>${esc(r.name)}</b></span><button class="btn" data-mb="role">Path</button><button class="btn" data-mb="clear" aria-label="Clear">✕</button>`; }
 }
 document.getElementById("mapbar").addEventListener("click", ev=>{
   const b=ev.target.closest("[data-mb]"); if(!b) return;
   if(b.dataset.mb==="open") openModal(state.sel);
   else if(b.dataset.mb==="role"){ roleDetail=state.role; setView("roles"); }
+  else if(state.sel) select(null);
   else { state.role=null; select(null); }
 });
 
@@ -2573,7 +2574,8 @@ window.atlasBack = function(){
   if(hd.classList.contains("searching")){ hd.classList.remove("searching"); qres.hidden=true; return true; }
   if(!qres.hidden){ qres.hidden=true; return true; }
   if(state.view==="roles" && roleDetail){ roleDetail=null; renderRoles(); return true; }
-  if(state.view==="graph" && (state.sel||state.role)){ state.role=null; select(null); return true; }
+  if(state.view==="graph" && state.sel){ select(null); return true; }
+  if(state.view==="graph" && state.role){ state.role=null; select(null); return true; }
   if(isPhone() && state.view!=="home"){ setView("home"); return true; }
   if(!isPhone() && state.view!=="graph"){ setView("graph"); return true; }
   return false;
