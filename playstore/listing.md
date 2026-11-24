@@ -4,7 +4,7 @@
 K.I.S.S AI: Master AI & ML
 
 ## Short description (max 80 characters)
-Map of 243 AI topics with role paths. Go from aware to skilled to successful.
+Map of 256 AI topics with role paths. Go from aware to skilled to successful.
 
 ## Full description (max 4000 characters)
 The K.I.S.S model for mastering AI turns the whole field of AI and machine learning into one map you can actually follow, from arithmetic to the 2024–26 frontier.
@@ -18,7 +18,7 @@ Every topic has four rungs, so you always know what "learning it" means:
 
 Mark where you are on any topic with one tap, and watch your personal funnel grow.
 
-243 TOPICS, CONNECTED
+256 TOPICS, CONNECTED
 • Eight levels: arithmetic, core math, advanced math and computing, classical ML, deep learning, modern architectures, foundation models and LLMs, and the 2024–26 frontier
 • An Applied AI section: robotics, autonomous driving, healthcare, drug discovery, climate, finance, search, document AI and more
 • Every link is a real prerequisite, so you can trace exactly what a topic builds on and what it unlocks

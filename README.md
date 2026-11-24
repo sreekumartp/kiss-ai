@@ -1,6 +1,6 @@
 # The K.I.S.S model for mastering AI
 
-A map of AI and machine learning: 243 topics from arithmetic to the 2024–26 frontier, plus an Applied AI
+A map of AI and machine learning: 256 topics from arithmetic to the 2024–26 frontier, plus an Applied AI
 section. Every topic has a syllabus, learning resources and a **K.I.S.S ladder**:
 
 | Rung | Meaning |
