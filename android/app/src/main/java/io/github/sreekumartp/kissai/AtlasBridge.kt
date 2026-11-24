@@ -1,4 +1,4 @@
-package io.github.sreekumartp.aimlatlas
+package io.github.sreekumartp.kissai
 
 import android.content.Intent
 import android.webkit.JavascriptInterface

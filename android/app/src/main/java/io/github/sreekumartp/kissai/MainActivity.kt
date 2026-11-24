@@ -1,4 +1,4 @@
-package io.github.sreekumartp.aimlatlas
+package io.github.sreekumartp.kissai
 
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException

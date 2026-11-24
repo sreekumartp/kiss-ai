@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    namespace = "io.github.sreekumartp.aimlatlas"
+    namespace = "io.github.sreekumartp.kissai"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "io.github.sreekumartp.aimlatlas"
+        applicationId = "io.github.sreekumartp.kissai"
         minSdk = 26
         targetSdk = 36
-        versionCode = 19
+        versionCode = 20
         versionName = "3.0"
     }
 

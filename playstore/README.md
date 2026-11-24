@@ -70,6 +70,6 @@ For each update later: bump `versionCode` and `versionName` in `android/app/buil
 download the new `.aab` from Actions, upload it to a new release.
 
 ## Notes
-- Package name: `io.github.sreekumartp.aimlatlas`. It can never change once published.
+- Package name: `io.github.sreekumartp.kissai`. It can never change once published.
 - Target API 36 (Android 16), minimum Android 8.0.
 - Sign-in on Android is email/password (Google blocks its sign-in inside app web views).
