@@ -226,6 +226,24 @@ aside h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var
 .item .need{font-family:var(--font-mono);font-size:.62rem;color:var(--muted);margin-left:4px}
 .node.tgt rect{stroke:var(--c);stroke-width:2.4;fill:color-mix(in srgb,var(--c) 30%,var(--surface))}
 .node.tgt text.lbl{font-weight:700}
+/* Role view: essential solid and bold, optional dashed and lighter, background plain and faded */
+.node.on.ess rect.pill{fill:color-mix(in srgb,var(--c) 30%,var(--surface));stroke:var(--c);stroke-width:2.6}
+.node.on.ess text.lbl{font-weight:700}
+.node.on.optn rect.pill{fill:var(--surface);stroke:var(--c);stroke-width:1.6;stroke-dasharray:5 3}
+.node.on.optn{opacity:.8}
+.node.on.optn text.lbl{font-style:italic}
+.node.on.bgn rect.pill{fill:var(--surface);stroke:var(--line)}
+.node.on.bgn{opacity:.6}
+.edge.on.toopt{stroke-dasharray:4 3;opacity:.5}
+.rolekey{position:absolute;left:12px;bottom:34px;z-index:5;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:color-mix(in srgb,var(--surface) 92%,transparent);font-size:.76rem;max-width:calc(100% - 80px)}
+.rolekey[hidden]{display:none}
+body:not([data-view="graph"]) .rolekey{display:none}
+.rolekey:not([hidden]) ~ .hint{display:none}
+.rolekey span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.rolekey i{display:inline-block;width:22px;height:12px;border-radius:6px;background:var(--surface)}
+.rolekey .k-ess{border:2.5px solid var(--accent);background:color-mix(in srgb,var(--accent) 30%,var(--surface))}
+.rolekey .k-opt{border:1.5px dashed var(--accent)}
+.rolekey .k-bg{border:1px solid var(--line);opacity:.6}
 .bglabel{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-size:.85rem;font-weight:500}
 .bgsel{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);font:inherit;max-width:100%}
 .phases{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
@@ -386,6 +404,7 @@ a.res .rk{grid-row:1/span 2;grid-column:2;align-self:center;font-family:var(--fo
   .xbtn{width:44px;height:44px}
   .lvl{grid-template-columns:1fr}
   .hint{display:none}
+  .rolekey{bottom:42px;max-width:calc(100% - 24px)}
   .introgrid{grid-template-columns:1fr}
   #roles .phase .links,.card .links{gap:8px}
 }
@@ -437,6 +456,7 @@ a.res .rk{grid-row:1/span 2;grid-column:2;align-self:center;font-family:var(--fo
         <button id="zout" aria-label="Zoom out">−</button>
         <button id="zfit" aria-label="Fit whole map" title="Fit whole map">⤢</button>
       </div>
+      <div class="rolekey" id="rolekey" hidden aria-label="Role map key"><span><i class="k-ess"></i><b>Essential</b></span><span><i class="k-opt"></i>Optional</span><span><i class="k-bg"></i>Background (know of)</span></div>
       <div class="hint" id="hint">Drag to pan · scroll or pinch to zoom · click a topic</div>
     </div>
     <aside id="panel" aria-live="polite"></aside>
@@ -2118,14 +2138,27 @@ const itemHTML = n => `<button class="item" data-id="${n.id}" style="--c:var(--d
 /* ---------- Highlight ---------- */
 function activeSet(){
   if(state.sel){ const n=byId.get(state.sel); const s=closure(n, state.mode==="pre"?"pre":"kids"); s.add(n); return s; }
-  if(state.role){ return new Set(rolePath(ROLES.find(x=>x.id===state.role)).keys()); }
+  if(state.role){ const r=ROLES.find(x=>x.id===state.role), s=new Set(rolePath(r).keys()); roleTiers(r).all.forEach(id=>s.add(byId.get(id))); return s; }
   if(state.dom){ return new Set(nodes.filter(n=>n.d===state.dom)); }
   return null;
 }
+// Role view tiers: essential = path topics you need to get started (plus core targets),
+// optional = topics marked optional for the role, background = everything else the role builds on.
+function roleTiers(role){
+  const opt=optSet(role), all=new Set((PHASES[role.id]||[]).flatMap(ph=>ph[1].split(/\s+/)));
+  role.targets.split(/\s+/).forEach(id=>all.add(id));
+  const ess=new Set([...all].filter(id=>!opt.has(id)));
+  return {all, ess, opt:new Set([...all].filter(id=>opt.has(id)))};
+}
 function applyHighlight(){
   const act = activeSet(); const sel = state.sel && byId.get(state.sel);
-  const roleT = state.role && !sel ? new Set(ROLES.find(x=>x.id===state.role).targets.split(/\s+/)) : null;
-  nodeSel.classed("tgt", n=>!!roleT && roleT.has(n.id));
+  const tiers = state.role && !sel ? roleTiers(ROLES.find(x=>x.id===state.role)) : null;
+  nodeSel.classed("tgt", false)
+    .classed("ess", n=>!!tiers && tiers.ess.has(n.id))
+    .classed("optn", n=>!!tiers && tiers.opt.has(n.id))
+    .classed("bgn", n=>!!tiers && !!act && act.has(n) && !tiers.all.has(n.id));
+  edgeSel.classed("toopt", e=>!!tiers && (tiers.opt.has(e.t.id) || tiers.opt.has(e.s.id)));
+  const key=document.getElementById("rolekey"); if(key) key.hidden = !(tiers && state.view==="graph");
   nodeSel.classed("sel", n=>n===sel).classed("on", n=>!!act && act.has(n) && n!==sel).classed("dim", n=>!!act && !act.has(n));
   edgeSel.classed("on", e=>!!act && act.has(e.s) && act.has(e.t)).classed("dim", e=>!!act && !(act.has(e.s)&&act.has(e.t)))
     .attr("style", e=> act && act.has(e.s)&&act.has(e.t) ? `--c:var(--d-${(sel||e.t).d})` : null);
