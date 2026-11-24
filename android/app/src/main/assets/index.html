@@ -1831,6 +1831,9 @@ const ROLES = [
  {id:"fde", name:"Forward Deployed Engineer (FDE)", fam:"bridge", depth:"s", success:["adoption","influence"],
   does:"Embeds with customers to build and ship working AI systems inside their real environment.",
   targets:"rag vecdb tooluse agents mcp contexteng llmevals peft kvcache mlops redteam enterpriseai"},
+ {id:"ai-qa", name:"AI Quality Assurance Engineer", fam:"trust", depth:"s", success:["adoption","influence"],
+  does:"Tests AI features before and after release: data checks, regression suites, LLM output testing, adversarial tests and production monitoring.",
+  targets:"hyptest metrics cvval fairness llmevals hallucination rag agents redteam agentsafety mlops"},
  {id:"eval-engineer", name:"AI Evaluation Engineer", fam:"trust", depth:"s", success:["technique","influence"],
   does:"Measures what models can do: benchmarks, LLM-as-judge, red-team and safety evals.",
   targets:"hyptest metrics llmevals hallucination prm redteam frontierevals"}
@@ -1984,6 +1987,13 @@ const PHASES = {
  ["Quality and tuning","llmevals sft peft","Explain fine-tuning vs prompting vs retrieval with cost and quality numbers","Build an eval set from real customer cases and show measured gains","The customer signs off on your eval as the launch bar"],
  ["Production at the customer","mlops kvcache quant privacy redteam agentsafety","Explain the security, privacy, cost and latency plan to the customer's IT team","Deploy into the customer's environment with monitoring, guardrails and access controls","The system runs in production and people use it daily"],
  ["Field craft and scale","enterpriseai governance","Explain the ROI and rollout plan to customer leadership","Turn a one-off build into a reusable pattern or product feature","Your pattern is adopted by other customers or your product team"]],
+"ai-qa":[
+ ["Testing foundations","programming dataeng descstats probbasics hyptest","Explain why AI features need statistical tests, not exact-match asserts","Write automated tests for a data pipeline with schema, range and drift checks",""],
+ ["How ML fails","mlbasics metrics cvval biasvar fairness","Explain overfitting, data leakage and drift to a developer","Build a regression test suite for a model with per-slice metrics",""],
+ ["How LLMs fail","gpt incontext decoding hallucination","Explain non-determinism and hallucination, and how to test around them","Create a golden test set and run it across prompts and model versions",""],
+ ["Testing AI applications","rag tooluse agents llmevals","Explain how to test retrieval, generation and tool calls separately","Automate LLM-as-judge and human review checks in CI","Your test suite gates every release"],
+ ["Adversarial and safety testing","redteam agentsafety privacy","Explain prompt injection and data-leak risks to the team","Run an adversarial test campaign and track every defect to a fix",""],
+ ["Quality in production","mlops uncertainty xai governance","Explain how AI quality is monitored after launch","Set up production quality monitoring with alerts and user-feedback loops","Your quality process becomes the team or industry standard"]],
 "eval-engineer":[
  ["Statistics","programming probbasics descstats hyptest","Explain statistical significance for model comparisons","Compare two models with confidence intervals",""],
  ["Evaluation design","metrics cvval biasvar","Explain contamination and overfitting to benchmarks","Design a held-out eval set",""],
@@ -2014,6 +2024,7 @@ const OPTIONAL = {
  "educator":"ddpm reasoning rlvr mechinterp",
  "solutions-architect":"dataeng transformer sft quant mcp",
  "fde":"datastruct decoding sft peft quant",
+ "ai-qa":"probbasics decoding uncertainty xai governance",
  "eval-engineer":"biasvar prm"
 };
 function optSet(role){ return new Set((OPTIONAL[role.id]||"").split(/\s+/).filter(Boolean)); }
@@ -2512,7 +2523,7 @@ function homeHTML(){
       <p style="margin-top:10px;font-size:.86rem"><b>Capstone:</b> ${esc(now.ph[3])}</p>`:""}
       <div class="btnrow"><button class="btn primary" data-homerole="${role.id}">Open full path</button><button class="btn" data-goto="roles">Change role</button></div></div>`;
   } else {
-    cont = `<div class="card"><h2>Pick a role to get a learning path</h2><p class="none">21 AI roles, each with ordered phases, a capstone per phase and a check of your gaps.</p><div class="btnrow"><button class="btn primary" data-goto="roles">Choose a role</button></div></div>`;
+    cont = `<div class="card"><h2>Pick a role to get a learning path</h2><p class="none">22 AI roles, each with ordered phases, a capstone per phase and a check of your gaps.</p><div class="btnrow"><button class="btn primary" data-goto="roles">Choose a role</button></div></div>`;
   }
   const intro = introSeen() ? "" : `<div class="card intro"><h2>How the ${KISS_TITLE.replace("The ","").replace(" model for mastering AI","")} model works</h2>
     <p class="none">Every topic has four rungs. Move topics up the ladder.</p>
