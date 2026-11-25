@@ -57,7 +57,8 @@ function shareTopic(id){
   const text=[`${n.label} (Level ${n.lv}, ${dName[n.d]})`,n.desc,"",
     "K.I.S.S. ladder:",...KISS_STAGES.map((st,i)=>`${st.name}: ${k[i]}`),"",
     "Topics to cover:",...subs.map((x,i)=>`${i+1}. ${x}`),"",
-    "Resources:",...[...r.learn,...r.papers].map(x=>`• ${x.t}: ${x.u}`)].join("\n");
+    "Resources:",...[...r.learn,...r.papers].map(x=>`• ${x.t}: ${x.u}`),
+    ...(getMyRes(id).length ? ["","My resources:",...getMyRes(id).map(x=>`• ${myResTitle(x)}: ${x.u}`)] : [])].join("\n");
   window.AtlasNative.share(n.label, text);
 }
 /* ---------- Auto-update ----------

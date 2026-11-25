@@ -28,6 +28,7 @@ FOR EVERY TOPIC
 • Hand-picked courses, books, videos and key papers
 • What each K.I.S.S rung means for that topic, including what success looks like
 • Your own definition of success
+• Save your own learning links to any topic, and suggest the best ones for everyone
 
 LEARNING PATHS FOR 22 AI ROLES
 Data Scientist, ML Engineer, AI Engineer, Forward Deployed Engineer, AI Quality Assurance, Research Scientist, MLOps, AI Safety, AI Product Manager and more. Each role has ordered phases with a teach-back, a capstone project and a milestone. Tell the app your background and it marks what you already know and where to start.
