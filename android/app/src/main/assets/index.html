@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>window.ATLAS_BUILD="a8df46a47120";</script>
+<script>window.ATLAS_BUILD="e36e5310df18";</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The K.I.S.S model for mastering AI</title>
@@ -240,12 +240,30 @@ aside h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var
 .rolekey[hidden]{display:none}
 body:not([data-view="graph"]) .rolekey{display:none}
 .rolekey:not([hidden]) ~ .hint{display:none}
-.rolekey .rkrole{min-height:32px;max-width:190px;padding:0 6px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);font:inherit;font-size:.76rem;font-weight:600}
+.rolekey .rkrole{min-height:32px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;text-align:left;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);font:inherit;font-size:.76rem;font-weight:600}
 .rolekey.norole button{opacity:.55}
 .rolekey .rkfocus{display:inline-flex;align-items:center;min-height:32px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);cursor:pointer;font-size:.76rem;font-weight:600;color:var(--muted)}
 .rolekey .rkfocus[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .rolekey .rkfocus[aria-pressed="true"]::before{content:none}
 .rolekey .rkfold{display:none}
+.rolekey .fopen{display:none}
+.rolekey.open .fshut{display:none}
+.rolekey.open .fopen{display:inline}
+.rpick{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;background:rgba(8,12,24,.5);padding-block:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.rpick[hidden]{display:none}
+.rpsheet{width:100%;max-width:560px;max-height:100%;display:flex;flex-direction:column;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(8,12,24,.35)}
+.rphead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px 10px;border-bottom:1px solid var(--line)}
+.rphead h2{font-family:var(--font-display);font-size:1.2rem;margin:0}
+.rphead .xbtn{position:static}
+.rplist{overflow:auto;padding:4px 10px 14px}
+.rplist h3{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin:14px 6px 6px}
+.rprow{display:flex;flex-direction:column;gap:1px;width:100%;text-align:left;padding:9px 12px;min-height:48px;border:1px solid transparent;border-radius:10px;background:none;cursor:pointer;color:var(--fg)}
+.rprow:hover,.rprow:focus-visible{background:var(--surface-2)}
+.rprow[aria-current="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+.rprow[aria-current="true"] .rpn::after{content:"  ✓";color:var(--accent)}
+.rpn{font-weight:600;font-size:.94rem}
+.rpd{font-size:.8rem;color:var(--muted);line-height:1.35}
+.rpnone{margin-top:12px;border:1px dashed var(--line);color:var(--muted);font-size:.86rem;align-items:center}
 body.focusing .levelbar{display:none!important}
 body.focusing .mapbar{top:8px}
 body.focusvert .edge.on{opacity:.4}
@@ -393,6 +411,12 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
 .delbox{margin-top:10px;padding:12px;border:1px solid color-mix(in srgb,#C0392B 45%,var(--line));border-radius:10px;background:color-mix(in srgb,#C0392B 7%,var(--surface))}
 .delbox p{margin:0 0 4px;font-size:.88rem}
 .settings a{color:var(--accent)}
+.landacct h2{margin-bottom:4px}
+.landacct .acctform{margin-top:10px}
+.landacct.signedin{padding-block:10px;font-size:.88rem}
+.dotok{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--r-s);margin-right:8px;vertical-align:middle}
+.landmini{font-size:.86rem}
+.linkbtn{border:0;background:none;padding:6px 0;min-height:36px;color:var(--accent);text-decoration:underline;cursor:pointer;font:inherit;font-size:.86rem}
 .acctform{display:flex;flex-direction:column;gap:8px}
 .acctform input{min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg);font:inherit}
 .settings code{font-family:var(--font-mono);font-size:.85em}
@@ -437,7 +461,10 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
   .rolekey .rkfold{display:inline-flex;align-items:center;min-height:36px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:.8rem;font-weight:600;color:var(--fg)}
   .rolekey:not(.open){padding:0;border:0;background:none}
   .rolekey:not(.open) > :not(.rkfold){display:none!important}
-  .rolekey.open .rkfold{width:100%}
+  .rolekey.open .rkfold{width:100%;justify-content:center}
+  .rolekey .rkrole{max-width:100%;flex:1 1 100%}
+  .rpick{align-items:flex-end;padding-left:0;padding-right:0;padding-bottom:0}
+  .rpsheet{max-width:none;max-height:88vh;border-radius:16px 16px 0 0;padding-bottom:env(safe-area-inset-bottom,0px)}
   .rolekey .rkl{display:none}
   .rolekey button{padding:0 8px 0 5px;gap:4px}
   .rolekey i{width:16px}
@@ -492,7 +519,7 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
         <button id="zout" aria-label="Zoom out">−</button>
         <button id="zfit" aria-label="Fit whole map" title="Fit whole map">⤢</button>
       </div>
-      <div class="rolekey" id="rolekey" role="group" aria-label="Role filter"><button id="rkfold" class="rkfold" aria-expanded="false" aria-controls="rolekey"><span id="rkfoldlbl">Choose a role</span> · Show ▾</button><select id="rkrole" class="rkrole" aria-label="Role shown on the map"></select><button id="rkfocus" class="rkfocus" aria-pressed="true" title="Show only this role's topics, packed to fit">Focus</button><span class="rkl">Show</span><button data-rf="ess" aria-pressed="true"><i class="k-ess"></i><b>Essential</b></button><button data-rf="opt" aria-pressed="true"><i class="k-opt"></i>Optional</button><button data-rf="bg" aria-pressed="true"><i class="k-bg"></i>Background</button></div>
+      <div class="rolekey" id="rolekey" role="group" aria-label="Role filter"><button id="rkfold" class="rkfold" aria-expanded="false" aria-controls="rolekey"><span class="fshut"><span id="rkfoldlbl">Choose a role</span> · Show ▾</span><span class="fopen">Hide ▴</span></button><button id="rkrole" class="rkrole" aria-haspopup="dialog"><span id="rkrolelbl">Choose a role</span> ▾</button><button id="rkfocus" class="rkfocus" aria-pressed="true" title="Show only this role's topics, packed to fit">Focus</button><span class="rkl">Show</span><button data-rf="ess" aria-pressed="true"><i class="k-ess"></i><b>Essential</b></button><button data-rf="opt" aria-pressed="true"><i class="k-opt"></i>Optional</button><button data-rf="bg" aria-pressed="true"><i class="k-bg"></i>Background</button></div>
       <div class="hint" id="hint">Drag to pan · scroll or pinch to zoom · click a topic</div>
     </div>
     <aside id="panel" aria-live="polite"></aside>
@@ -504,6 +531,9 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
     <button data-view="roles"><span class="bi">◆</span>Roles</button>
   </nav>
 </div>
+<div class="rpick" id="rpick" hidden><div class="rpsheet" role="dialog" aria-modal="true" aria-labelledby="rpTitle">
+    <div class="rphead"><h2 id="rpTitle">Choose a role</h2><button class="xbtn" data-rpclose aria-label="Close">✕</button></div>
+    <div class="rplist" id="rplist"></div></div></div>
 <div class="modal" id="modal" hidden>
   <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle"></div>
 </div>
@@ -696,8 +726,8 @@ const RAW = [
 ["moe","Mixture of Experts","dl",5,"transformer","A router sends each token to a few expert sub-networks, so parameter count grows without growing compute per token.","y = Σ_{i∈topk} gᵢ(x) Eᵢ(x)"],
 ["dlth","Deep Learning Theory","ml",5,"learnth,backprop","Neural tangent kernels, double descent, grokking, the lottery ticket hypothesis and why overparameterized nets generalize.",""],
 ["geodl","Geometric DL & AI for Science","dl",5,"gnn,transformer","Equivariant networks respect symmetries such as rotation. AlphaFold 2 predicted protein structures at near-experimental accuracy.",""],
-["modelrl","Model-Based RL","rl",5,"ppo,vae,mcts","Learn a model of the environment and plan or imagine inside it: MuZero, the Dreamer family.",""],
-["offlinerl","Offline RL & Imitation","rl",5,"ppo","Learn policies from fixed datasets of behaviour: behavior cloning, conservative Q-learning, Decision Transformer.",""],
+["modelrl","Model-Based Reinforcement Learning","rl",5,"ppo,vae,mcts","Learn a model of the environment and plan or imagine inside it: MuZero, the Dreamer family.",""],
+["offlinerl","Offline Reinforcement Learning & Imitation","rl",5,"ppo","Learn policies from fixed datasets of behaviour: behavior cloning, conservative Q-learning, Decision Transformer.",""],
 ["scaling","Scaling Laws","llm",5,"gpt,biasvar","Loss falls as a smooth power law in parameters, data and compute. Chinchilla showed models should be trained on far more tokens than before.","L(N, D) ≈ E + A/N^α + B/D^β"],
 ["datacuration","Web-Scale Data Curation","llm",5,"dataeng,tokenization,ngram","Crawling, deduplication, quality filtering and mixture design for trillions of tokens. Data quality often matters more than architecture.",""],
 ["disttrain","Distributed Training","sys",5,"gputrain,transformer","Data, tensor, pipeline and expert parallelism, FSDP and ZeRO sharding to train across thousands of accelerators.",""],
@@ -710,7 +740,7 @@ const RAW = [
 ["pretrain","LLM Pretraining","llm",6,"gpt,scaling,disttrain,datacuration","Next-token prediction on trillions of tokens with a carefully tuned recipe: architecture, optimizer, schedule, mixtures and stability tricks.",""],
 ["incontext","In-Context Learning & Prompting","llm",6,"pretrain","Large models learn tasks from examples and instructions in the prompt alone. Includes few-shot and chain-of-thought prompting.",""],
 ["sft","Instruction Tuning (SFT)","llm",6,"pretrain,transfer","Fine-tune a base model on instruction–response pairs so it follows requests and holds conversations.",""],
-["rlhf","RLHF & Reward Models","llm",6,"sft,ppo,kl","Train a reward model from human preference comparisons, then optimize the policy against it with a KL penalty to the reference model.","max E[r(x,y)] − β D_KL(π ‖ π_ref)"],
+["rlhf","Reinforcement Learning from Human Feedback","llm",6,"sft,ppo,kl","Train a reward model from human preference comparisons, then optimize the policy against it with a KL penalty to the reference model.","max E[r(x,y)] − β D_KL(π ‖ π_ref)"],
 ["dpo","DPO & Preference Optimization","llm",6,"rlhf","Optimize directly on preference pairs without a separate reward model or RL loop. Variants include IPO, KTO and SimPO.","L = −log σ(β log π(y_w)/π_ref(y_w) − β log π(y_l)/π_ref(y_l))"],
 ["peft","LoRA & Parameter-Efficient Tuning","llm",6,"sft,svd","Freeze the base model and train small low-rank adapters. QLoRA does it on a 4-bit quantized base.","W′ = W + BA,  rank(BA) = r ≪ d"],
 ["decoding","Decoding & Sampling","llm",6,"gpt,sampling","Greedy, beam search, temperature, top-k, top-p and min-p sampling, and constrained decoding for structured output.","p ∝ exp(logit / T)"],
@@ -736,7 +766,7 @@ const RAW = [
 ["governance","AI Governance & Policy","safe",6,"alignment","Regulation such as the EU AI Act, frontier safety frameworks, model documentation and audits.",""],
 // ---------- Level 7 ----------
 ["reasoning","Reasoning Models","llm",7,"rlhf,incontext,mcts","Models trained with RL to think in long chains of thought before answering, trading inference compute for accuracy. OpenAI o1 (2024) and DeepSeek-R1 (2025) made this mainstream.",""],
-["rlvr","RL with Verifiable Rewards","rl",7,"rlhf,ppo","Reward the model when an answer checks out: unit tests pass or the math answer matches. GRPO estimates advantages from groups of samples without a critic.","Aᵢ = (rᵢ − mean(r)) / std(r)"],
+["rlvr","Reinforcement Learning with Verifiable Rewards","rl",7,"rlhf,ppo","Reward the model when an answer checks out: unit tests pass or the math answer matches. GRPO estimates advantages from groups of samples without a critic.","Aᵢ = (rᵢ − mean(r)) / std(r)"],
 ["prm","Process Reward Models & Verifiers","llm",7,"rlhf,mcts","Score each reasoning step, not just the final answer, to guide search and training.",""],
 ["ttscaling","Test-Time Compute Scaling","llm",7,"scaling,reasoning","Accuracy keeps improving with more thinking tokens, parallel samples, voting and search at inference time.",""],
 ["latentreason","Latent & Looped Reasoning","llm",7,"reasoning,resnet","Reason in continuous hidden states or by looping layers instead of writing every step as text (e.g. Coconut, recurrent-depth models).",""],
@@ -1103,10 +1133,10 @@ const LIB = {
 "shais":["Understanding Machine Learning: From Theory to Algorithms","https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/","book","Shalev-Shwartz & Ben-David"],
 "lattimore":["Bandit Algorithms","https://tor-lattimore.com/downloads/book/book.pdf","book","Lattimore & Szepesvári"],
 "sutton":["Reinforcement Learning: An Introduction","http://incompleteideas.net/book/the-book-2nd.html","book","Sutton & Barto"],
-"silver":["RL lecture course","https://www.davidsilver.uk/teaching/","course","David Silver"],
+"silver":["Reinforcement Learning lecture course","https://www.davidsilver.uk/teaching/","course","David Silver"],
 "spinup":["Spinning Up in Deep RL","https://spinningup.openai.com/","course","OpenAI"],
 "spinup-pg":["Intro to Policy Optimization","https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html","article","Spinning Up"],
-"hfrl":["Deep RL Course","https://huggingface.co/learn/deep-rl-course","course","Hugging Face"],
+"hfrl":["Deep Reinforcement Learning Course","https://huggingface.co/learn/deep-rl-course","course","Hugging Face"],
 "fairml":["Fairness and Machine Learning","https://fairmlbook.org/","book","Barocas, Hardt & Narayanan"],
 "whatif":["Causal Inference: What If","https://miguelhernan.org/whatifbook","book","Hernán & Robins"],
 "bradyneal":["Introduction to Causal Inference course","https://www.bradyneal.com/causal-inference-course","course","Brady Neal"],
@@ -2150,7 +2180,7 @@ const esc = s => s.replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"'
 const state = { sel:null, mode:"pre", dom:null, view:"graph", role:null };
 
 /* ---------- Layout ---------- */
-const COLW = 290, ROWH = 26, PH = 19;
+const COLW = 300, ROWH = 26, PH = 19;
 const measure = document.createElement("canvas").getContext("2d");
 function layout(){
   measure.font = '500 11.5px "Instrument Sans", system-ui, sans-serif';
@@ -2203,7 +2233,8 @@ function renderGraph(){
   nodeSel.append("text").attr("class","sl").attr("x",10).attr("y",PH/2+3).attr("text-anchor","middle");
   zoom = d3.zoom().scaleExtent([.2,2.5]).clickDistance(5).on("zoom", e=>{ root.attr("transform", e.transform); updateHScroll(e.transform); });
   svg.call(zoom).on("dblclick.zoom", null);
-  svg.on("click", ()=> { if(state.sel) select(null); else if(state.role){ state.role=null; select(null); } });
+  svg.on("click", ()=> { const rk=document.getElementById("rolekey"); if(rk.classList.contains("open")){ rk.classList.remove("open"); document.getElementById("rkfold").setAttribute("aria-expanded","false"); return; }
+    if(state.sel) select(null); else if(state.role){ state.role=null; select(null); } });
 }
 function bounds(){ const vn=nodes.filter(n=>!n.hidden), xs=vn.map(n=>n.x), xe=vn.map(n=>n.x+n.w), ys=vn.map(n=>n.y); return {x0:Math.min(...xs)-20,x1:Math.max(...xe)+20,y0:Math.min(...ys)-80,y1:Math.max(...ys)+20}; }
 function fit(anim=true){ const r=svg.node().getBoundingClientRect(); const b=bounds(); const k=Math.min(r.width/(b.x1-b.x0), r.height/(b.y1-b.y0))*.96;
@@ -2273,7 +2304,9 @@ function applyFocus(){
   if(on && vis.size){
     nodes.forEach(n=>{ n.ox=n.x; n.oy=n.y; n.hidden=!vis.has(n); });
     const shown=[...vis], cols=[...new Set(shown.map(n=>n.col))].sort((a,b)=>a-b);
-    const inCol = c => shown.filter(n=>n.col===c).sort((a,b)=>a.oy-b.oy);
+    const own = new Set([...roleTiers(ROLES.find(x=>x.id===state.role)).all]);
+    // The role's own topics first in each level, then background topics.
+    const inCol = c => shown.filter(n=>n.col===c).sort((a,b)=>(own.has(b.id)-own.has(a.id)) || a.oy-b.oy);
     bands = new Map();
     if(isPhone()){
       focusVertical = true;
@@ -2289,7 +2322,7 @@ function applyFocus(){
         inCol(c).forEach(n=>{ if(x+n.w>W && x>0){ x=0; y+=ROWH+6; } n.x=x; n.y=y; x+=n.w+10; });
         bands.set(c,{x:-10, y:by-8, w:W+20, h:(y-by)+PH+16, tx:0, numY:by+8, nameY:by+26}); y+=ROWH+30; });
     } else {
-      const GAP = COLW*.92;
+      const GAP = Math.max(COLW*.92, Math.max(...shown.map(n=>n.w))+24);
       cols.forEach((c,ci)=>{ const list=inCol(c); list.forEach((n,i)=>{ n.x=ci*GAP; n.y=(i-(list.length-1)/2)*(ROWH+8); }); });
       const ys=shown.map(n=>n.y), top=Math.min(...ys)-70, H=Math.max(...ys)-Math.min(...ys)+110;
       cols.forEach((c,ci)=>bands.set(c,{x:ci*GAP-16, y:top-10, w:GAP-18, h:H, tx:ci*GAP, numY:top+16, nameY:top+38}));
@@ -2303,7 +2336,8 @@ function applyFocus(){
     shown.forEach(n=>{ const seen=new Set(), st=[...n.pre];
       while(st.length){ const p=st.pop(); if(seen.has(p)) continue; seen.add(p); if(shown.has(p)) red.push({s:p,t:n}); else st.push(...p.pre); } });
     const order=new Map([...bands.keys()].map((c,i)=>[c,i]));
-    const list = focusVertical ? red.filter(e=>order.get(e.t.col)-order.get(e.s.col)<=1) : red;
+    const own = new Set([...roleTiers(ROLES.find(x=>x.id===state.role)).all]);
+    const list = focusVertical ? red.filter(e=>order.get(e.t.col)-order.get(e.s.col)<=1 && own.has(e.t.id) && own.has(e.s.id)) : red;
     redSel = d3.select(edgeSel.node().parentNode).selectAll("path.redge").data(list).join("path").attr("class","edge redge").attr("d", edgeD);
   }
   placeBands(bands);
@@ -2344,19 +2378,33 @@ function roleTiers(role){
 const roleFilter = (()=>{ try{ const v=JSON.parse(localStorage.getItem("atlas-rolefilter2")); if(v && (v.ess||v.opt||v.bg)) return v; }catch(e){} return {ess:true,opt:true,bg:false}; })();
 // The role filter is always on the map. Without an active role it offers a role picker,
 // and tapping a toggle brings back your last role.
-document.getElementById("rkrole").innerHTML = `<option value="">Choose a role…</option>` +
-  Object.entries(ROLE_FAMILIES).map(([f,fn])=>`<optgroup label="${esc(fn)}">${ROLES.filter(r=>r.fam===f).map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join("")}</optgroup>`).join("");
-document.getElementById("rkrole").addEventListener("change", ev=>{ const v=ev.target.value; document.getElementById("rolekey").classList.remove("open"); if(v) selectRole(v); else { state.role=null; select(null); } });
+// Role picker: grouped list with a one-line description per role (replaces the phone's native dropdown).
+function shortRole(r){ return r.name.replace(/ \(.*\)$/,""); }
+function renderRolePicker(){
+  document.getElementById("rplist").innerHTML = Object.entries(ROLE_FAMILIES).map(([f,fn])=>`<section><h3>${esc(fn)}</h3>${ROLES.filter(r=>r.fam===f).map(r=>
+    `<button class="rprow" data-rp="${r.id}" ${r.id===state.role?'aria-current="true"':""}><span class="rpn">${esc(r.name)}</span><span class="rpd">${esc(r.does)}</span></button>`).join("")}</section>`).join("")
+    + (state.role ? `<button class="rprow rpnone" data-rp="">Show the whole map without a role</button>` : "");
+}
+function openRolePicker(){ renderRolePicker(); const el=document.getElementById("rpick"); el.hidden=false; const cur=el.querySelector('[aria-current="true"]')||el.querySelector(".rprow"); if(cur){ cur.scrollIntoView({block:"center"}); cur.focus(); } }
+function closeRolePicker(){ document.getElementById("rpick").hidden=true; }
+document.getElementById("rkrole").addEventListener("click", openRolePicker);
+document.getElementById("rpick").addEventListener("click", ev=>{
+  if(ev.target.id==="rpick" || ev.target.closest("[data-rpclose]")){ closeRolePicker(); return; }
+  const b=ev.target.closest("[data-rp]"); if(!b) return;
+  closeRolePicker(); document.getElementById("rolekey").classList.remove("open");
+  const v=b.dataset.rp; if(v) selectRole(v); else { state.role=null; select(null); }
+});
+document.addEventListener("keydown", ev=>{ if(ev.key==="Escape" && !document.getElementById("rpick").hidden) closeRolePicker(); });
 document.getElementById("rolekey").addEventListener("click", ev=>{
   const key=document.getElementById("rolekey");
   if(ev.target.closest("#rkfold")){ const o=!key.classList.contains("open"); key.classList.toggle("open",o); ev.target.closest("#rkfold").setAttribute("aria-expanded",String(o)); return; }
   if(ev.target.closest("#rkfocus")){
-    if(!state.role){ const last=(()=>{ try{ return localStorage.getItem("atlas-lastrole"); }catch(e){ return null; } })(); focusOn=true; if(last && ROLES.some(r=>r.id===last)) selectRole(last); else document.getElementById("rkrole").focus(); return; }
+    if(!state.role){ const last=(()=>{ try{ return localStorage.getItem("atlas-lastrole"); }catch(e){ return null; } })(); focusOn=true; if(last && ROLES.some(r=>r.id===last)) selectRole(last); else openRolePicker(); return; }
     focusOn=!(focusOn && !focusPaused); focusPaused=false; try{ localStorage.setItem("atlas-focus", focusOn?"1":"0"); }catch(e){} applyHighlight(); return; }
   const b=ev.target.closest("[data-rf]"); if(!b) return;
   if(!state.role){
     const last=(()=>{ try{ return localStorage.getItem("atlas-lastrole"); }catch(e){ return null; } })();
-    if(last && ROLES.some(r=>r.id===last)) selectRole(last); else document.getElementById("rkrole").focus();
+    if(last && ROLES.some(r=>r.id===last)) selectRole(last); else openRolePicker();
     return;
   }
   const k=b.dataset.rf; roleFilter[k]=!roleFilter[k];
@@ -2379,7 +2427,7 @@ function applyHighlight(){
   const links = redSel ? d3.selectAll([...edgeSel.nodes(), ...redSel.nodes()]) : edgeSel;
   links.classed("toopt", e=>!!tiers && (tiers.opt.has(e.t.id) || tiers.opt.has(e.s.id)));
   const key=document.getElementById("rolekey");
-  if(key){ key.hidden=false; key.classList.toggle("norole", !tiers); const rs=document.getElementById("rkrole"); if(rs.value!==(state.role||"")) rs.value=state.role||"";
+  if(key){ key.hidden=false; key.classList.toggle("norole", !tiers); document.getElementById("rkrolelbl").textContent = state.role ? shortRole(ROLES.find(x=>x.id===state.role)) : "Choose a role";
     key.querySelectorAll("[data-rf]").forEach(b=>b.setAttribute("aria-pressed", String(!!roleFilter[b.dataset.rf]))); }
   nodeSel.classed("sel", n=>n===sel).classed("on", n=>!!act && act.has(n) && n!==sel).classed("dim", n=>!!act && !act.has(n));
   links.classed("on", e=>!!act && act.has(e.s) && act.has(e.t)).classed("dim", e=>!!act && !(act.has(e.s)&&act.has(e.t)))
@@ -2666,10 +2714,40 @@ legend.addEventListener("click", ev=>{ const c=ev.target.closest(".chip"); if(!c
 
 /* ---------- Search ---------- */
 const q = document.getElementById("q"), qres = document.getElementById("qres"); let hits=[], kb=0;
+// Common abbreviations, so "RL", "reinforcement learning", "LLM" or "computer vision" all find the right topics.
+const ABBR = {rl:"reinforcement learning", rlhf:"reinforcement learning from human feedback reward models", rlvr:"reinforcement learning with verifiable rewards",
+  rlaif:"reinforcement learning from ai feedback", llm:"large language models", llms:"large language models", nlp:"natural language processing",
+  cv:"computer vision", ml:"machine learning", dl:"deep learning", ai:"artificial intelligence", genai:"generative ai", gan:"generative adversarial networks",
+  vae:"variational autoencoder", rag:"retrieval augmented generation", mcp:"model context protocol", ppo:"proximal policy optimization",
+  dpo:"direct preference optimization", sft:"supervised fine-tuning instruction tuning", lora:"low-rank adaptation fine-tuning", peft:"parameter-efficient fine-tuning",
+  cnn:"convolutional neural networks", rnn:"recurrent neural networks", lstm:"long short-term memory", mlp:"multilayer perceptron",
+  svm:"support vector machines", pca:"principal component analysis", moe:"mixture of experts", vlm:"vision language models", ssm:"state space models",
+  mcts:"monte carlo tree search", mdp:"markov decision process", dqn:"deep q-networks", td:"temporal difference", kv:"key value cache",
+  gpu:"graphics processing unit cuda", tpu:"tensor processing unit", asr:"automatic speech recognition", tts:"text to speech", ocr:"optical character recognition",
+  vit:"vision transformer", clip:"contrastive language image pretraining", gnn:"graph neural networks", nerf:"neural radiance fields", slam:"localization and mapping",
+  mlops:"machine learning operations deployment", llmops:"llm operations observability", xai:"explainable ai interpretability", sae:"sparse autoencoders",
+  mle:"maximum likelihood estimation", map:"maximum a posteriori", kl:"kullback-leibler divergence", sgd:"stochastic gradient descent", eda:"exploratory data analysis"};
+// Everyday names for each domain, so searches like "computer vision" or "reinforcement learning" find the whole area.
+const DOMAIN_ALIAS = {math:"mathematics maths", prob:"probability statistics stats", opt:"optimization optimisation", sys:"computing systems engineering",
+  ml:"machine learning ml classical", dl:"deep learning dl neural networks", nlp:"natural language processing nlp text speech", cv:"computer vision cv images",
+  gen:"generative ai genai generative models", rl:"reinforcement learning rl", llm:"large language models llm llms foundation models",
+  agent:"ai agents agentic", safe:"ai safety alignment interpretability", app:"applied ai applications"};
+const searchText = new Map();
+function topicSearchText(n){
+  if(searchText.has(n.id)) return searchText.get(n.id);
+  const words=(n.label+" "+n.id).toLowerCase().match(/[a-z0-9]+/g)||[];
+  const t=(n.label+" "+words.map(w=>ABBR[w]||"").join(" ")+" "+dName[n.d]+" "+(DOMAIN_ALIAS[n.d]||"")).toLowerCase();
+  searchText.set(n.id,t); return t;
+}
 function runSearch(){
-  const s = q.value.trim().toLowerCase(); if(!s){ qres.hidden=true; return; }
-  hits = nodes.map(n=>{ const l=n.label.toLowerCase(); const sc = l.startsWith(s)?0 : l.includes(s)?1 : n.desc.toLowerCase().includes(s)?2 : 9; return [sc,n]; })
-    .filter(([sc])=>sc<9).sort((a,b)=>a[0]-b[0]||a[1].lv-b[1].lv).slice(0,9).map(x=>x[1]);
+  let s = q.value.trim().toLowerCase(); if(!s){ qres.hidden=true; return; }
+  const exp = ABBR[s.replace(/[^a-z0-9]/g,"")];
+  // Match from the start of a word, so "rl" doesn't match "Monte Carlo" and "llm" doesn't match "Bellman".
+  const re = x => new RegExp("(^|[^a-z0-9])" + x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"));
+  const rs = re(s), rx = exp ? re(exp) : null;
+  hits = nodes.map(n=>{ const l=n.label.toLowerCase(), t=topicSearchText(n), d=n.desc.toLowerCase();
+      const sc = l.startsWith(s)?0 : rs.test(l)?1 : (rs.test(t)||(rx && rx.test(t)))?1.5 : (rs.test(d)||(rx && rx.test(d)))?2 : 9; return [sc,n]; })
+    .filter(([sc])=>sc<9).sort((a,b)=>a[0]-b[0]||a[1].lv-b[1].lv).slice(0,12).map(x=>x[1]);
   kb=0;
   qres.innerHTML = hits.length? hits.map((n,i)=>`<li><button data-id="${n.id}" class="${i===kb?"kb":""}" style="--c:var(--d-${n.d})"><span class="dot"></span><span>${esc(n.label)}</span><small style="margin-left:auto;color:var(--muted)">L${n.lv}</small></button></li>`).join("")
     : `<li style="padding:8px;color:var(--muted)">No topic matches “${esc(q.value)}”.</li>`;
@@ -2759,7 +2837,7 @@ function homeHTML(){
     <p class="none">Open any topic and tap <b>Where am I?</b> to mark your rung. Your funnel below fills up as you go.</p>
     <div class="btnrow"><button class="btn primary" data-intro>Got it</button></div></div>`;
   const starts = ["gd","backprop","transformer","rag","reasoning","agents"].map(id=>byId.get(id));
-  return `<div class="homewrap">${intro}${cont}<div class="card">${funnelHTML()}</div>
+  return `<div class="homewrap">${intro}${landingAccountHTML()}${cont}<div class="card">${funnelHTML()}</div>
     <div class="card"><h3 style="margin-top:0">Good places to start</h3><div class="links">${starts.map(itemHTML).join("")}</div></div>
     <p class="foot">${nodes.length} topics · ${edges.length} links · frontier through mid-2026. ${syncFooter()}</p></div>`;
 }
@@ -2839,6 +2917,8 @@ q.addEventListener("blur", ()=>setTimeout(()=>{ if(qres.hidden) document.querySe
 
 /* ---------- Android Back button ---------- */
 window.atlasBack = function(){
+  if(!document.getElementById("rpick").hidden){ closeRolePicker(); return true; }
+  { const rk=document.getElementById("rolekey"); if(rk && rk.classList.contains("open")){ rk.classList.remove("open"); return true; } }
   if(!modal.hidden){ closeModal(); return true; }
   const hd=document.querySelector("header");
   if(hd.classList.contains("searching")){ hd.classList.remove("searching"); qres.hidden=true; return true; }
@@ -3033,7 +3113,7 @@ function applyLocal(data){
   const typing = document.activeElement && /^(TEXTAREA|INPUT|SELECT)$/.test(document.activeElement.tagName) && sheet.contains(document.activeElement);
   if(!modal.hidden && modalId && !typing) openModal(modalId, true);
 }
-function setSync(state, msg){ sync.state=state; if(msg!==undefined) sync.msg=msg; const a=document.getElementById("acctStatus"); if(a) a.textContent=syncStatusText(); }
+function setSync(state, msg){ sync.state=state; if(msg!==undefined) sync.msg=msg; document.querySelectorAll("#acctStatus,.acctstatus").forEach(a=>a.textContent=syncStatusText()); }
 function syncStatusText(){
   if(sync.state==="saving") return "Saving…";
   if(sync.state==="synced") return "Synced" + (sync.last ? " · " + sync.last.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"}) : "");
@@ -3089,6 +3169,7 @@ async function initSync(){
   refreshAccountUI();
 }
 function refreshAccountUI(){
+  document.querySelectorAll("#l-acct").forEach(x=>x.outerHTML = landingAccountHTML());
   const a=document.getElementById("acct"); if(a) a.outerHTML = accountSectionHTML();
   if(state.view==="home") renderHome(); else if(!state.sel && !state.role) renderPanel();
 }
@@ -3135,8 +3216,39 @@ function accountSectionHTML(){
   return `<section id="acct"><label class="sl">Account and sync</label>${body}
     <p class="note"><a href="${PRIVACY_URL}" target="_blank" rel="noopener noreferrer">Privacy policy and account deletion ↗</a></p></section>`;
 }
-async function accountAction(k){
-  const email = (document.getElementById("acctEmail")||{}).value||"", pass = (document.getElementById("acctPass")||{}).value||"";
+// Sign-up and sign-in on the landing screen (phone Home, desktop welcome panel).
+function hideSignin(){ try{ return localStorage.getItem("kiss-hide-signin")==="1"; }catch(e){ return false; } }
+function landingAccountHTML(){
+  if(["unavailable","unconfigured"].includes(sync.state)) return `<div id="l-acct"></div>`;
+  if(sync.user) return `<div id="l-acct" class="card landacct signedin"><p style="margin:0"><span class="dotok" aria-hidden="true"></span>Signed in as <b>${esc(sync.user.email||"your account")}</b> · <span class="acctstatus" role="status">${esc(syncStatusText())}</span></p></div>`;
+  if(hideSignin()) return `<div id="l-acct" class="landmini"><button class="linkbtn" data-acct="show">Sign in to sync your progress</button></div>`;
+  return `<div id="l-acct" class="card landacct">
+    <h2>Save your progress</h2>
+    <p class="none">Create a free account or sign in to keep your rungs, notes and links in sync on every device. Everything also works without an account.</p>
+    ${window.AtlasNative ? "" : `<div class="btnrow"><button class="btn primary" data-acct="google">Continue with Google</button></div><p class="note" style="margin:10px 0 6px">or use email</p>`}
+    <form id="l-acctForm" class="acctform" autocomplete="on">
+      <label class="sr" for="l-acctEmail">Email</label>
+      <input id="l-acctEmail" type="email" autocomplete="username" placeholder="Email" required>
+      <label class="sr" for="l-acctPass">Password</label>
+      <input id="l-acctPass" type="password" autocomplete="current-password" placeholder="Password (6+ characters)" minlength="6">
+      <div class="btnrow"><button class="btn primary" data-acct="signup" type="button">Create account</button><button class="btn" type="submit">Sign in</button><button class="linkbtn" data-acct="reset" type="button">Forgot password</button></div>
+    </form>
+    <p class="status acctstatus" role="status">${esc(sync.msg||"")}</p>
+    <p class="note" style="margin-top:4px"><button class="linkbtn" data-acct="hide">Not now</button> · <a href="${PRIVACY_URL}" target="_blank" rel="noopener noreferrer">Privacy ↗</a></p>
+  </div>`;
+}
+document.addEventListener("click", ev=>{
+  const b=ev.target.closest("#l-acct [data-acct]"); if(!b) return;
+  const k=b.dataset.acct;
+  if(k==="hide"||k==="show"){ try{ k==="hide" ? localStorage.setItem("kiss-hide-signin","1") : localStorage.removeItem("kiss-hide-signin"); }catch(e){}
+    const el=document.querySelectorAll("#l-acct"); el.forEach(x=>x.outerHTML=landingAccountHTML()); if(k==="show"){ const e=document.getElementById("l-acctEmail"); if(e) e.focus(); } return; }
+  if(!sync.auth){ setSync(sync.state, "Sign-in is still loading. Try again in a moment."); return; }
+  accountAction(k, "l-", b.closest("#l-acct"));
+});
+document.addEventListener("submit", ev=>{ if(ev.target.id==="l-acctForm"){ ev.preventDefault(); if(!sync.auth){ setSync(sync.state, "Sign-in is still loading. Try again in a moment."); return; } accountAction("signin","l-", ev.target.closest("#l-acct")); } });
+async function accountAction(k, prefix="", root=document){
+  const field = id => root.querySelector("#"+prefix+id) || {};
+  const email = field("acctEmail").value||"", pass = field("acctPass").value||"";
   const say = m => setSync(sync.state, m);
   try{
     if(k==="google"){
