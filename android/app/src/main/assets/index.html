@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>window.ATLAS_BUILD="a4d4e5fbe580";</script>
+<script>window.ATLAS_BUILD="788eed407fe3";</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The K.I.S.S model for mastering AI</title>
@@ -553,6 +553,7 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
         <div class="hthumb" id="hthumb"></div>
       </div>
       <div class="zoombtns" id="zoombtns">
+        <button id="zreset" aria-label="Reset to the default view" title="Reset to the default view">⟲</button>
         <button id="zin" aria-label="Zoom in">+</button>
         <button id="zout" aria-label="Zoom out">−</button>
         <button id="zfit" aria-label="Fit whole map" title="Fit whole map">⤢</button>
@@ -3129,6 +3130,22 @@ window.atlasBack = function(){
 document.getElementById("zin").onclick=()=>svg.transition().duration(250).call(zoom.scaleBy,1.3);
 document.getElementById("zout").onclick=()=>svg.transition().duration(250).call(zoom.scaleBy,1/1.3);
 document.getElementById("zfit").onclick=()=>fit();
+// Reset view: with a role, back to that role's default (focus on, Essential + Optional, no Background);
+// without one, back to the map's starting view. Either way, clears the open topic and domain filter.
+function resetView(){
+  state.sel=null; state.dom=null; focusPaused=false; if(!modal.hidden) closeModal();
+  const rk=document.getElementById("rolekey"); rk.classList.remove("open"); document.getElementById("rkfold").setAttribute("aria-expanded","false");
+  if(state.role){
+    focusOn=true; Object.assign(roleFilter,{ess:true,opt:true,bg:false});
+    try{ localStorage.setItem("atlas-focus","1"); localStorage.setItem("atlas-rolefilter2", JSON.stringify(roleFilter)); }catch(e){}
+    renderPanel(); applyHighlight(); fitFocus();
+  } else {
+    renderPanel(); applyHighlight();
+    if(isPhone()) jumpLevel(0); else fit();
+  }
+  if(location.hash){ try{ history.replaceState(null,"", state.role ? "#role-"+state.role : location.pathname+location.search); }catch(e){} }
+}
+document.getElementById("zreset").onclick=resetView;
 
 /* ---------- Roles UI ---------- */
 function fitNodes(list, anim=true){
