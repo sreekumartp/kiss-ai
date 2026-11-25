@@ -230,6 +230,13 @@ body:not([data-view="graph"]) .rolekey{display:none}
 .rolekey:not([hidden]) ~ .hint{display:none}
 .rolekey .rkrole{min-height:32px;max-width:190px;padding:0 6px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);font:inherit;font-size:.76rem;font-weight:600}
 .rolekey.norole button{opacity:.55}
+.rolekey .rkfocus{display:inline-flex;align-items:center;min-height:32px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);cursor:pointer;font-size:.76rem;font-weight:600;color:var(--muted)}
+.rolekey .rkfocus[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.rolekey .rkfocus[aria-pressed="true"]::before{content:none}
+.rolekey .rkfold{display:none}
+body.focusing .levelbar{display:none!important}
+body.focusing .mapbar{top:8px}
+body.focusvert .edge.on{opacity:.4}
 .rolekey .rkl{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .rolekey button{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-height:32px;padding:0 10px 0 6px;border:1px solid var(--line);border-radius:999px;background:var(--surface);cursor:pointer;font-size:.76rem;color:var(--muted)}
 .rolekey button[aria-pressed="true"]{border-color:var(--fg);color:var(--fg);background:color-mix(in srgb,var(--fg) 7%,var(--surface))}
@@ -400,6 +407,10 @@ a.res .rk{grid-row:1/span 2;grid-column:2;align-self:center;font-family:var(--fo
   .lvl{grid-template-columns:1fr}
   .hint{display:none}
   .rolekey{bottom:42px;max-width:calc(100% - 80px);padding:5px 6px;gap:5px}
+  .rolekey .rkfold{display:inline-flex;align-items:center;min-height:36px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:.8rem;font-weight:600;color:var(--fg)}
+  .rolekey:not(.open){padding:0;border:0;background:none}
+  .rolekey:not(.open) > :not(.rkfold){display:none!important}
+  .rolekey.open .rkfold{width:100%}
   .rolekey .rkl{display:none}
   .rolekey button{padding:0 8px 0 5px;gap:4px}
   .rolekey i{width:16px}
@@ -452,7 +463,7 @@ a.res .rk{grid-row:1/span 2;grid-column:2;align-self:center;font-family:var(--fo
         <button id="zout" aria-label="Zoom out">−</button>
         <button id="zfit" aria-label="Fit whole map" title="Fit whole map">⤢</button>
       </div>
-      <div class="rolekey" id="rolekey" role="group" aria-label="Role filter"><select id="rkrole" class="rkrole" aria-label="Role shown on the map"></select><span class="rkl">Show</span><button data-rf="ess" aria-pressed="true"><i class="k-ess"></i><b>Essential</b></button><button data-rf="opt" aria-pressed="true"><i class="k-opt"></i>Optional</button><button data-rf="bg" aria-pressed="true"><i class="k-bg"></i>Background</button></div>
+      <div class="rolekey" id="rolekey" role="group" aria-label="Role filter"><button id="rkfold" class="rkfold" aria-expanded="false" aria-controls="rolekey"><span id="rkfoldlbl">Choose a role</span> · Show ▾</button><select id="rkrole" class="rkrole" aria-label="Role shown on the map"></select><button id="rkfocus" class="rkfocus" aria-pressed="true" title="Show only this role's topics, packed to fit">Focus</button><span class="rkl">Show</span><button data-rf="ess" aria-pressed="true"><i class="k-ess"></i><b>Essential</b></button><button data-rf="opt" aria-pressed="true"><i class="k-opt"></i>Optional</button><button data-rf="bg" aria-pressed="true"><i class="k-bg"></i>Background</button></div>
       <div class="hint" id="hint">Drag to pan · scroll or pinch to zoom · click a topic</div>
     </div>
     <aside id="panel" aria-live="polite"></aside>
@@ -2137,19 +2148,17 @@ let nodeSel, edgeSel, zoom, maxLen;
 function renderGraph(){
   maxLen = layout();
   const top = -(maxLen-1)*ROWH/2 - 70, H = maxLen*ROWH + 100;
-  const gc = root.append("g");
+  const gc = root.append("g"); bandEls = [];
   [...LEVELS.map(([name],i)=>[`LEVEL ${i}`,name]), ["APPLIED AI · LEVELS 4–7","Applied AI"]].forEach(([num,name],i)=>{
     const applied = i===LEVELS.length;
-    gc.append("rect").attr("class", applied?"colband appband":"colband").attr("x",i*COLW-16).attr("y",top-10).attr("width",COLW-18).attr("height",H).attr("rx",14).style("opacity", applied?1:(i%2?0:1));
-    gc.append("text").attr("class","colnum").attr("x",i*COLW).attr("y",top+16).text(num);
-    gc.append("text").attr("class", applied?"colname appname":"colname").attr("x",i*COLW).attr("y",top+38).text(name);
+    const home = {x:i*COLW-16, y:top-10, w:COLW-18, h:H, tx:i*COLW, numY:top+16, nameY:top+38, op: applied?1:(i%2?0:1)};
+    const rect = gc.append("rect").attr("class", applied?"colband appband":"colband").attr("rx",14);
+    const tn = gc.append("text").attr("class","colnum").text(num);
+    const tm = gc.append("text").attr("class", applied?"colname appname":"colname").text(name);
+    bandEls.push({rect, tn, tm, home});
   });
-  edgeSel = root.append("g").selectAll("path").data(edges).join("path").attr("class","edge")
-    .attr("d", e=>{
-      const x1=e.s.x+e.s.w, y1=e.s.y, x2=e.t.x, y2=e.t.y;
-      if(e.s.col===e.t.col){ const sx=e.s.x, k=Math.min(60,20+Math.abs(y2-y1)*.25); return `M${sx},${y1} C${sx-k},${y1} ${x2-k},${y2} ${x2},${y2}`; }
-      const dx=Math.min(110,(x2-x1)/2); return `M${x1},${y1} C${x1+dx},${y1} ${x2-dx},${y2} ${x2},${y2}`;
-    });
+  placeBands();
+  edgeSel = root.append("g").selectAll("path").data(edges).join("path").attr("class","edge").attr("d", edgeD);
   nodeSel = root.append("g").selectAll("g").data(nodes).join("g").attr("class","node")
     .attr("transform", n=>`translate(${n.x},${n.y-PH/2})`).attr("style", n=>`--c:var(--d-${n.d})`)
     .attr("tabindex",0).attr("role","button").attr("aria-label", n=>`${n.label}, level ${n.lv}`)
@@ -2166,7 +2175,7 @@ function renderGraph(){
   svg.call(zoom).on("dblclick.zoom", null);
   svg.on("click", ()=> { if(state.sel) select(null); else if(state.role){ state.role=null; select(null); } });
 }
-function bounds(){ const xs=nodes.map(n=>n.x), xe=nodes.map(n=>n.x+n.w), ys=nodes.map(n=>n.y); return {x0:Math.min(...xs)-20,x1:Math.max(...xe)+20,y0:Math.min(...ys)-80,y1:Math.max(...ys)+20}; }
+function bounds(){ const vn=nodes.filter(n=>!n.hidden), xs=vn.map(n=>n.x), xe=vn.map(n=>n.x+n.w), ys=vn.map(n=>n.y); return {x0:Math.min(...xs)-20,x1:Math.max(...xe)+20,y0:Math.min(...ys)-80,y1:Math.max(...ys)+20}; }
 function fit(anim=true){ const r=svg.node().getBoundingClientRect(); const b=bounds(); const k=Math.min(r.width/(b.x1-b.x0), r.height/(b.y1-b.y0))*.96;
   const t=d3.zoomIdentity.translate(r.width/2-k*(b.x0+b.x1)/2, r.height/2-k*(b.y0+b.y1)/2).scale(k);
   (anim?svg.transition().duration(600):svg).call(zoom.transform,t); }
@@ -2190,6 +2199,100 @@ function renderList(){
 }
 const itemHTML = n => `<button class="item" data-id="${n.id}" style="--c:var(--d-${n.d})"><span class="dot"></span>${esc(n.label)}${stageBadge(n.id)}</button>`;
 
+/* ---------- Role focus ----------
+   With a role on the map and Focus on, only the role's topics are drawn (as filtered by
+   Essential / Optional / Background), packed tightly and zoomed to fit. Desktop keeps the
+   left-to-right levels; phones stack the levels top to bottom and wrap topics into rows.
+   Links that ran through hidden topics are drawn straight to the nearest shown topic. */
+let focusOn = (()=>{ try{ return localStorage.getItem("atlas-focus")!=="0"; }catch(e){ return true; } })();
+let focusPaused = false, focusKey = "off", focusVertical = false, focusScale = 1, redSel = null, bandEls = [];
+// Opening a topic outside the path pauses focus until that topic is closed or a role is picked.
+function focusActive(){ return focusOn && !focusPaused && !!state.role && state.view==="graph"; }
+function edgeD(e){
+  const s=e.s, t=e.t;
+  if(focusVertical){ const x1=s.x+s.w/2, y1=s.y+PH/2, x2=t.x+t.w/2, y2=t.y-PH/2, dy=Math.max(18,(y2-y1)/2);
+    return `M${x1},${y1} C${x1},${y1+dy} ${x2},${y2-dy} ${x2},${y2}`; }
+  const x1=s.x+s.w, y1=s.y, x2=t.x, y2=t.y;
+  if(s.x===t.x){ const k=Math.min(60,20+Math.abs(y2-y1)*.25); return `M${s.x},${y1} C${s.x-k},${y1} ${x2-k},${y2} ${x2},${y2}`; }
+  const dx=Math.min(110,(x2-x1)/2); return `M${x1},${y1} C${x1+dx},${y1} ${x2-dx},${y2} ${x2},${y2}`;
+}
+function placeBands(pos){
+  bandEls.forEach((b,i)=>{ const p = pos ? pos.get(i) : b.home; const show = !!p;
+    [b.rect,b.tn,b.tm].forEach(el=>el.style("display", show?null:"none")); if(!show) return;
+    b.rect.attr("x",p.x).attr("y",p.y).attr("width",p.w).attr("height",p.h).style("opacity", pos?1:b.home.op);
+    b.tn.attr("x",p.tx).attr("y",p.numY); b.tm.attr("x",p.tx).attr("y",p.nameY); });
+}
+// The topics the role view shows: the role's path, the domain filter, then the tier toggles.
+function roleVisible(){
+  if(!state.role) return null;
+  const r=ROLES.find(x=>x.id===state.role), t=roleTiers(r);
+  let s=new Set(rolePath(r).keys()); t.all.forEach(id=>s.add(byId.get(id)));
+  if(state.dom) s=new Set([...s].filter(n=>n.d===state.dom));
+  return new Set([...s].filter(n=> t.ess.has(n.id) ? roleFilter.ess : t.opt.has(n.id) ? roleFilter.opt : roleFilter.bg));
+}
+// Lays the map out for the current focus state. Returns true when positions changed.
+function applyFocus(){
+  const on = focusActive(), vis = on ? roleVisible() : null, r = svg.node().getBoundingClientRect();
+  const key = on ? [state.role, [...vis].map(n=>n.id).sort().join(","), isPhone(), Math.round(r.width/40), Math.round(r.height/40)].join("|") : "off";
+  document.body.classList.toggle("focusing", on); document.body.classList.toggle("focusvert", on && isPhone());
+  if(key===focusKey) return false;
+  focusKey = key;
+  nodes.forEach(n=>{ if(n.ox!==undefined){ n.x=n.ox; n.y=n.oy; } n.hidden=false; });
+  focusVertical = false;
+  let bands = null;
+  if(on && vis.size){
+    nodes.forEach(n=>{ n.ox=n.x; n.oy=n.y; n.hidden=!vis.has(n); });
+    const shown=[...vis], cols=[...new Set(shown.map(n=>n.col))].sort((a,b)=>a-b);
+    const inCol = c => shown.filter(n=>n.col===c).sort((a,b)=>a.oy-b.oy);
+    bands = new Map();
+    if(isPhone()){
+      focusVertical = true;
+      // Largest scale at which the whole path fits the screen; below that the path scrolls.
+      const avail = r.height - 150; let K = .6, W = 0;
+      for(const k of [.9,.8,.7,.6]){
+        K=k; W=(r.width-28)/k; let y=0;
+        cols.forEach(c=>{ y+=46; let x=0; inCol(c).forEach(n=>{ if(x+n.w>W && x>0){ x=0; y+=ROWH+6; } x+=n.w+10; }); y+=ROWH+30; });
+        if(y*k<=avail) break;
+      }
+      focusScale = K; let y=0;
+      cols.forEach(c=>{ const by=y; y+=46; let x=0;
+        inCol(c).forEach(n=>{ if(x+n.w>W && x>0){ x=0; y+=ROWH+6; } n.x=x; n.y=y; x+=n.w+10; });
+        bands.set(c,{x:-10, y:by-8, w:W+20, h:(y-by)+PH+16, tx:0, numY:by+8, nameY:by+26}); y+=ROWH+30; });
+    } else {
+      const GAP = COLW*.92;
+      cols.forEach((c,ci)=>{ const list=inCol(c); list.forEach((n,i)=>{ n.x=ci*GAP; n.y=(i-(list.length-1)/2)*(ROWH+8); }); });
+      const ys=shown.map(n=>n.y), top=Math.min(...ys)-70, H=Math.max(...ys)-Math.min(...ys)+110;
+      cols.forEach((c,ci)=>bands.set(c,{x:ci*GAP-16, y:top-10, w:GAP-18, h:H, tx:ci*GAP, numY:top+16, nameY:top+38}));
+    }
+  }
+  nodeSel.attr("transform", n=>`translate(${n.x},${n.y-PH/2})`).style("display", n=>n.hidden?"none":null);
+  edgeSel.attr("d", edgeD).style("display", bands ? "none" : null);
+  if(redSel){ redSel.remove(); redSel = null; }
+  if(bands){
+    const shown=new Set(nodes.filter(n=>!n.hidden)), red=[];
+    shown.forEach(n=>{ const seen=new Set(), st=[...n.pre];
+      while(st.length){ const p=st.pop(); if(seen.has(p)) continue; seen.add(p); if(shown.has(p)) red.push({s:p,t:n}); else st.push(...p.pre); } });
+    const order=new Map([...bands.keys()].map((c,i)=>[c,i]));
+    const list = focusVertical ? red.filter(e=>order.get(e.t.col)-order.get(e.s.col)<=1) : red;
+    redSel = d3.select(edgeSel.node().parentNode).selectAll("path.redge").data(list).join("path").attr("class","edge redge").attr("d", edgeD);
+  }
+  placeBands(bands);
+  return true;
+}
+function fitFocus(anim=true){
+  const r=svg.node().getBoundingClientRect(); if(!r.width) return;
+  const shown=nodes.filter(n=>!n.hidden); if(!shown.length) return;
+  let t;
+  if(focusVertical){ t=d3.zoomIdentity.translate(14+10*focusScale, 132).scale(focusScale); }
+  else {
+    const x0=Math.min(...shown.map(n=>n.x))-30, x1=Math.max(...shown.map(n=>n.x+n.w))+30, y0=Math.min(...shown.map(n=>n.y))-84, y1=Math.max(...shown.map(n=>n.y))+40;
+    const availH=r.height-90, k=Math.max(.3, Math.min(1.1, r.width/(x1-x0), availH/(y1-y0)));
+    t=d3.zoomIdentity.translate(r.width/2-k*(x0+x1)/2, availH/2-k*(y0+y1)/2+10).scale(k);
+  }
+  const red = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  (anim && !red ? svg.transition().duration(450) : svg).call(zoom.transform, t);
+}
+
 /* ---------- Highlight ---------- */
 function activeSet(){
   if(state.sel){ const n=byId.get(state.sel); const s=closure(n, state.mode==="pre"?"pre":"kids"); s.add(n); return s; }
@@ -2207,13 +2310,19 @@ function roleTiers(role){
   return {all, ess, opt:new Set([...all].filter(id=>opt.has(id)))};
 }
 // Which role tiers the map shows: essential, optional, background. Remembered per device.
-const roleFilter = (()=>{ try{ const v=JSON.parse(localStorage.getItem("atlas-rolefilter")); if(v && (v.ess||v.opt||v.bg)) return v; }catch(e){} return {ess:true,opt:true,bg:true}; })();
+// Background starts hidden so a role opens on just its own path (stored under a new key so the new default applies).
+const roleFilter = (()=>{ try{ const v=JSON.parse(localStorage.getItem("atlas-rolefilter2")); if(v && (v.ess||v.opt||v.bg)) return v; }catch(e){} return {ess:true,opt:true,bg:false}; })();
 // The role filter is always on the map. Without an active role it offers a role picker,
 // and tapping a toggle brings back your last role.
 document.getElementById("rkrole").innerHTML = `<option value="">Choose a role…</option>` +
   Object.entries(ROLE_FAMILIES).map(([f,fn])=>`<optgroup label="${esc(fn)}">${ROLES.filter(r=>r.fam===f).map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join("")}</optgroup>`).join("");
-document.getElementById("rkrole").addEventListener("change", ev=>{ const v=ev.target.value; if(v) selectRole(v); else { state.role=null; select(null); } });
+document.getElementById("rkrole").addEventListener("change", ev=>{ const v=ev.target.value; document.getElementById("rolekey").classList.remove("open"); if(v) selectRole(v); else { state.role=null; select(null); } });
 document.getElementById("rolekey").addEventListener("click", ev=>{
+  const key=document.getElementById("rolekey");
+  if(ev.target.closest("#rkfold")){ const o=!key.classList.contains("open"); key.classList.toggle("open",o); ev.target.closest("#rkfold").setAttribute("aria-expanded",String(o)); return; }
+  if(ev.target.closest("#rkfocus")){
+    if(!state.role){ const last=(()=>{ try{ return localStorage.getItem("atlas-lastrole"); }catch(e){ return null; } })(); focusOn=true; if(last && ROLES.some(r=>r.id===last)) selectRole(last); else document.getElementById("rkrole").focus(); return; }
+    focusOn=!(focusOn && !focusPaused); focusPaused=false; try{ localStorage.setItem("atlas-focus", focusOn?"1":"0"); }catch(e){} applyHighlight(); return; }
   const b=ev.target.closest("[data-rf]"); if(!b) return;
   if(!state.role){
     const last=(()=>{ try{ return localStorage.getItem("atlas-lastrole"); }catch(e){ return null; } })();
@@ -2222,10 +2331,11 @@ document.getElementById("rolekey").addEventListener("click", ev=>{
   }
   const k=b.dataset.rf; roleFilter[k]=!roleFilter[k];
   if(!roleFilter.ess && !roleFilter.opt && !roleFilter.bg) roleFilter[k]=true;
-  try{ localStorage.setItem("atlas-rolefilter", JSON.stringify(roleFilter)); }catch(e){}
+  try{ localStorage.setItem("atlas-rolefilter2", JSON.stringify(roleFilter)); }catch(e){}
   applyHighlight();
 });
 function applyHighlight(){
+  const moved = typeof nodeSel!=="undefined" && nodeSel ? applyFocus() : false;
   let act = activeSet(); const sel = state.sel && byId.get(state.sel);
   const tiers = state.role ? roleTiers(ROLES.find(x=>x.id===state.role)) : null;
   if(tiers && act){
@@ -2236,14 +2346,18 @@ function applyHighlight(){
     .classed("ess", n=>!!tiers && tiers.ess.has(n.id))
     .classed("optn", n=>!!tiers && tiers.opt.has(n.id))
     .classed("bgn", n=>!!tiers && !!act && act.has(n) && !tiers.all.has(n.id));
-  edgeSel.classed("toopt", e=>!!tiers && (tiers.opt.has(e.t.id) || tiers.opt.has(e.s.id)));
+  const links = redSel ? d3.selectAll([...edgeSel.nodes(), ...redSel.nodes()]) : edgeSel;
+  links.classed("toopt", e=>!!tiers && (tiers.opt.has(e.t.id) || tiers.opt.has(e.s.id)));
   const key=document.getElementById("rolekey");
   if(key){ key.hidden=false; key.classList.toggle("norole", !tiers); const rs=document.getElementById("rkrole"); if(rs.value!==(state.role||"")) rs.value=state.role||"";
     key.querySelectorAll("[data-rf]").forEach(b=>b.setAttribute("aria-pressed", String(!!roleFilter[b.dataset.rf]))); }
   nodeSel.classed("sel", n=>n===sel).classed("on", n=>!!act && act.has(n) && n!==sel).classed("dim", n=>!!act && !act.has(n));
-  edgeSel.classed("on", e=>!!act && act.has(e.s) && act.has(e.t)).classed("dim", e=>!!act && !(act.has(e.s)&&act.has(e.t)))
-    .attr("style", e=> act && act.has(e.s)&&act.has(e.t) ? `--c:var(--d-${(sel||e.t).d})` : null);
-  edgeSel.filter(".on").raise();
+  links.classed("on", e=>!!act && act.has(e.s) && act.has(e.t)).classed("dim", e=>!!act && !(act.has(e.s)&&act.has(e.t)))
+    .style("--c", e=> act && act.has(e.s)&&act.has(e.t) ? `var(--d-${(sel||e.t).d})` : null);
+  edgeSel.filter(".on").raise(); if(redSel) redSel.filter(".on").raise();
+  if(moved){ if(focusKey!=="off" && !sel) fitFocus(); else if(focusKey==="off" && state.role && !sel && state.view==="graph") fitNodes([...rolePath(ROLES.find(x=>x.id===state.role)).keys()]); }
+  const fb=document.getElementById("rkfocus"); if(fb) fb.setAttribute("aria-pressed", String(focusOn && !focusPaused));
+  const fold=document.getElementById("rkfoldlbl"); if(fold) fold.textContent = state.role ? ROLES.find(x=>x.id===state.role).name.replace(/ \(.*\)$/,"") : "Choose a role";
   updateMapbar();
   document.querySelectorAll("#list .item").forEach(b=>{ const n=byId.get(b.dataset.id); b.classList.toggle("sel",n===sel); b.classList.toggle("on",!!act&&act.has(n)&&n!==sel); b.classList.toggle("dim",!!act&&!act.has(n)); });
   document.querySelectorAll("#legend .chip").forEach(c=>c.setAttribute("aria-pressed", String(c.dataset.d===state.dom)));
@@ -2455,9 +2569,11 @@ document.addEventListener("keydown", ev=>{
 
 /* ---------- Select ---------- */
 function select(id, opts={}){
+  if(id && focusActive()){ const vis=roleVisible(); if(vis && !vis.has(byId.get(id))) focusPaused = true; }
+  if(!id) focusPaused = false;
   state.sel = id; if(id){ state.dom = null; }
   renderPanel(); applyHighlight();
-  if(id){ if(state.view==="graph" && opts.focus!==false) focusNode(byId.get(id), opts.anim!==false);
+  if(id){ if(state.view==="graph" && opts.focus!==false && !(focusActive() && !byId.get(id).hidden)) focusNode(byId.get(id), opts.anim!==false);
     if(location.hash.slice(1)!==id){ try{ history.replaceState(null,"","#"+id); }catch(e){ location.hash=id; } }
   }
   if(id && opts.pop) openModal(id);
@@ -2505,9 +2621,10 @@ function setView(v){
   document.getElementById("list").hidden = v!=="list";
   document.getElementById("levelbar").hidden = v!=="graph";
   document.getElementById("zoombtns").hidden = v!=="graph"; document.getElementById("hint").hidden = v!=="graph"; document.getElementById("hscroll").hidden = v!=="graph";
+  if(typeof nodeSel!=="undefined" && nodeSel) applyHighlight();
   if(v==="graph") requestAnimationFrame(()=>updateHScroll(d3.zoomTransform(svg.node())));
-  if(v==="graph" && state.sel) focusNode(byId.get(state.sel), false);
-  if(v==="graph" && !state.sel && state.role) fitNodes([...rolePath(ROLES.find(x=>x.id===state.role)).keys()], false);
+  if(v==="graph" && state.sel && !(focusActive() && !byId.get(state.sel).hidden)) focusNode(byId.get(state.sel), false);
+  if(v==="graph" && !state.sel && state.role){ if(focusActive()) fitFocus(false); else fitNodes([...rolePath(ROLES.find(x=>x.id===state.role)).keys()], false); }
   updateMapbar();
   try{ localStorage.setItem("atlas-view", v); }catch(e){}
 }
@@ -2671,11 +2788,11 @@ function fitNodes(list, anim=true){
   (anim?svg.transition().duration(650):svg).call(zoom.transform,t);
 }
 function selectRole(id, opts={}){
-  state.role=id; state.sel=null; state.dom=null;
+  state.role=id; state.sel=null; state.dom=null; focusPaused=false;
   if(id){ try{ localStorage.setItem("atlas-lastrole", id); }catch(e){} }
   if(!modal.hidden) closeModal();
   renderPanel(); applyHighlight();
-  if(id && state.view==="graph") fitNodes([...rolePath(ROLES.find(x=>x.id===id)).keys()], opts.anim!==false);
+  if(id && state.view==="graph"){ if(focusActive()) fitFocus(opts.anim!==false); else fitNodes([...rolePath(ROLES.find(x=>x.id===id)).keys()], opts.anim!==false); }
   if(id && location.hash.slice(1)!=="role-"+id){ try{ history.replaceState(null,"","#role-"+id); }catch(e){ location.hash="role-"+id; } }
 }
 const RUNG_LABEL = {s:"Build it (Skill)", k:"Teach it (Knowledge)", i:"Be aware of it (Information)"};
@@ -2800,7 +2917,7 @@ hs.addEventListener("keydown", ev=>{
   if(ev.key==="Home"){ ev.preventDefault(); hScrollTo(0, true); }
   if(ev.key==="End"){ ev.preventDefault(); hScrollTo(1, true); }
 });
-window.addEventListener("resize", ()=>updateHScroll(d3.zoomTransform(svg.node())));
+window.addEventListener("resize", ()=>{ updateHScroll(d3.zoomTransform(svg.node())); clearTimeout(window._fr); window._fr=setTimeout(()=>{ if(focusActive()) applyHighlight(); }, 250); });
 
 /* ---------- Account and cloud sync (Firebase, optional) ---------- */
 // Signed out, everything stays on this device as before. Signed in, all "atlas-" keys are
