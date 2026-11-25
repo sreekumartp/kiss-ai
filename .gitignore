@@ -7,3 +7,6 @@ local.properties
 *.aab
 *.keystore
 .DS_Store
+
+# Test screenshots never belong at the repo root
+/*.png

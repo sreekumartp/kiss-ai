@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>window.ATLAS_BUILD="cb4d676ee8a1";</script>
+<script>window.ATLAS_BUILD="eb43a1bfd716";</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The K.I.S.S model for mastering AI</title>
@@ -2489,7 +2489,7 @@ function roleVisible(){
   if(!state.role) return null;
   const r=ROLES.find(x=>x.id===state.role), t=roleTiers(r);
   let s=new Set(rolePath(r).keys()); t.all.forEach(id=>s.add(byId.get(id)));
-  if(state.dom) s=new Set([...s].filter(n=>n.d===state.dom));
+  if(state.dom) s=new Set([...s].filter(inDom));
   return new Set([...s].filter(n=> t.ess.has(n.id) ? roleFilter.ess : t.opt.has(n.id) ? roleFilter.opt : roleFilter.bg));
 }
 // Lays the map out for the current focus state. Returns true when positions changed.
@@ -2562,20 +2562,24 @@ function fitFocus(anim=true){
   (anim && !red ? svg.transition().duration(450) : svg).call(zoom.transform, t);
 }
 
+// The Mathematics chip also covers probability & statistics and optimization; other chips are one area each.
+const DOMAIN_GROUP = {math:["math","prob","opt"]};
+const inDom = n => (DOMAIN_GROUP[state.dom] || [state.dom]).includes(n.d);
+const domLabel = d => d==="math" ? "Mathematics (incl. probability & optimization)" : dName[d];
 // Explains an active area filter, with counts, and offers a way to clear it.
 function updateDomNote(){
   const el=document.getElementById("domnote"); if(!el) return;
   if(!state.dom || state.view!=="graph" || state.sel){ el.hidden=true; return; }
-  const area=dName[state.dom]; let txt;
+  const area=domLabel(state.dom); let txt;
   if(state.role){
     const r=ROLES.find(x=>x.id===state.role), t=roleTiers(r);
-    const inArea=[...t.all].filter(id=>byId.get(id).d===state.dom), e=inArea.filter(id=>t.ess.has(id)).length, o=inArea.length-e;
-    const bg=[...rolePath(r).keys()].filter(n=>n.d===state.dom && !t.all.has(n.id)).length;
+    const inArea=[...t.all].filter(id=>inDom(byId.get(id))), e=inArea.filter(id=>t.ess.has(id)).length, o=inArea.length-e;
+    const bg=[...rolePath(r).keys()].filter(n=>inDom(n) && !t.all.has(n.id)).length;
     txt = inArea.length || bg
       ? `<b>${esc(area)}</b> in ${esc(shortRole(r))}'s path: ${e} essential · ${o} optional${bg && !roleFilter.bg ? ` · ${bg} background off (tap Background to show)` : ""}`
       : `${esc(shortRole(r))}'s path has no <b>${esc(area)}</b> topics.`;
   } else {
-    txt = `Showing <b>${esc(area)}</b>: ${nodes.filter(n=>n.d===state.dom).length} topics`;
+    txt = `Showing <b>${esc(area)}</b>: ${nodes.filter(inDom).length} topics`;
   }
   el.innerHTML = `<span>${txt}</span><button class="btn" data-clrdom>Clear</button>`; el.hidden=false;
 }
@@ -2585,8 +2589,8 @@ document.getElementById("domnote").addEventListener("click", ev=>{ if(ev.target.
 function activeSet(){
   if(state.sel){ const n=byId.get(state.sel); const s=closure(n, state.mode==="pre"?"pre":"kids"); s.add(n); return s; }
   if(state.role){ const r=ROLES.find(x=>x.id===state.role); let s=new Set(rolePath(r).keys()); roleTiers(r).all.forEach(id=>s.add(byId.get(id)));
-    if(state.dom) s=new Set([...s].filter(n=>n.d===state.dom)); return s; }
-  if(state.dom){ return new Set(nodes.filter(n=>n.d===state.dom)); }
+    if(state.dom) s=new Set([...s].filter(inDom)); return s; }
+  if(state.dom){ return new Set(nodes.filter(inDom)); }
   return null;
 }
 // Role view tiers: essential = path topics you need to get started (plus core targets),
@@ -2937,7 +2941,7 @@ window.addEventListener("hashchange", ()=>{ const h=location.hash.slice(1); if(b
 
 /* ---------- Legend ---------- */
 const legend = document.getElementById("legend");
-legend.innerHTML = `<span class="legendlbl">Areas</span>` + DOMAINS.map(([k,name])=>`<button class="chip" data-d="${k}" aria-pressed="false" style="--c:var(--d-${k})" title="Show only ${esc(name)} topics"><span class="dot"></span>${esc(name)}</button>`).join("");
+legend.innerHTML = `<span class="legendlbl">Areas</span>` + DOMAINS.map(([k,name])=>`<button class="chip" data-d="${k}" aria-pressed="false" style="--c:var(--d-${k})" title="Show only ${esc(k==="math" ? "Mathematics, Probability & Statistics and Optimization" : name)} topics"><span class="dot"></span>${esc(name)}</button>`).join("");
 legend.addEventListener("click", ev=>{ const c=ev.target.closest(".chip"); if(!c) return; state.dom = state.dom===c.dataset.d?null:c.dataset.d; state.sel=null; renderPanel(); applyHighlight(); if(focusActive()) fitFocus(); });
 
 /* ---------- Search ---------- */
