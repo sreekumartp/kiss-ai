@@ -10,3 +10,6 @@ local.properties
 
 # Test screenshots never belong at the repo root
 /*.png
+
+# Versioned copies made by the Android CI build
+android/dist/

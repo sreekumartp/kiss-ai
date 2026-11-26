@@ -30,8 +30,8 @@ In https://github.com/sreekumartp/kiss-ai/settings/secrets/actions add four **re
 | `UPLOAD_KEY_ALIAS` | `upload` |
 | `UPLOAD_KEY_PASSWORD` | the key password (same as keystore password if you pressed Enter) |
 
-Then run **Actions → Android app → Run workflow**. Download the **kiss-ai-play-bundle** artifact:
-it contains `app-release.aab`, signed with your upload key.
+Then run **Actions → Android app → Run workflow**. Download the **kiss-ai-play-bundle-<version>** artifact (for example `kiss-ai-play-bundle-4.9-40`):
+it contains `kiss-ai-<version>-release.aab`, signed with your upload key.
 
 ## 3. Create the app in Play Console
 **Create app** → name `K.I.S.S AI: Master AI & ML`, App, Free, accept the declarations.
@@ -62,7 +62,7 @@ Copy the texts and upload the graphics from [`listing.md`](listing.md) and `grap
 
 ## 6. Release
 1. **Testing → Closed testing** → create a track, add your 12+ testers (email list or Google Group),
-   upload `app-release.aab`, write release notes, roll out. Share the opt-in link with testers.
+   upload `kiss-ai-<version>-release.aab`, write release notes, roll out. Share the opt-in link with testers.
 2. After 14 days with 12+ opted-in testers, **apply for production access** from the dashboard.
 3. **Production → Create release** → upload the same or a newer `.aab` → roll out.
 
@@ -71,7 +71,7 @@ download the new `.aab` from Actions, upload it to a new release.
 
 ## Notes
 - Package name (app ID): `io.github.sreekumartp.kissai.app`. It can never change once published.
-  If Play asks for an APK to prove you own the package name, use `app-release.apk` (signed with
-  your upload key), never `app-debug.apk` (signed with a throwaway key that changes every build).
+  If Play asks for an APK to prove you own the package name, use `kiss-ai-<version>-release.apk` (signed with
+  your upload key), never `kiss-ai-<version>-debug.apk` (signed with a throwaway key that changes every build).
 - Target API 36 (Android 16), minimum Android 8.0.
 - Sign-in on Android is email/password (Google blocks its sign-in inside app web views).

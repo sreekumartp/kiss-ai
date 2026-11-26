@@ -56,22 +56,33 @@ jobs:
           unzip -p "$AAB" base/manifest/AndroidManifest.xml | strings | grep -oE 'io\.github\.[a-z0-9_.]+' | sort -u
           echo "Bundle signing certificate:"
           keytool -printcert -jarfile "$AAB" | grep -E 'Owner:|SHA1:'
-          echo "Release APK signing certificate (use app-release.apk for any ownership check):"
+          echo "Release APK signing certificate (use the release APK for any ownership check):"
           keytool -printcert -jarfile app/build/outputs/apk/release/app-release.apk | grep -E 'Owner:|SHA1:' || true
+
+      # Name the downloads after the version, e.g. kiss-ai-4.9-40-release.apk inside kiss-ai-apks-4.9-40.
+      - name: Name outputs with the version
+        run: |
+          NAME=$(grep -oE 'versionName = "[^"]+"' app/build.gradle.kts | head -1 | cut -d'"' -f2)
+          CODE=$(grep -oE 'versionCode = [0-9]+' app/build.gradle.kts | head -1 | grep -oE '[0-9]+')
+          VER="$NAME-$CODE"
+          echo "VER=$VER" >> "$GITHUB_ENV"
+          mkdir -p dist/apks dist/bundle
+          cp app/build/outputs/apk/release/app-release.apk "dist/apks/kiss-ai-$VER-release.apk"
+          cp app/build/outputs/apk/debug/app-debug.apk "dist/apks/kiss-ai-$VER-debug.apk"
+          cp app/build/outputs/bundle/release/app-release.aab "dist/bundle/kiss-ai-$VER-release.aab"
+          ls -l dist/apks dist/bundle
 
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
-          name: kiss-ai-apks
-          path: |
-            android/app/build/outputs/apk/debug/*.apk
-            android/app/build/outputs/apk/release/*.apk
+          name: kiss-ai-apks-${{ env.VER }}
+          path: android/dist/apks/*.apk
 
       - name: Upload Play bundle (.aab)
         uses: actions/upload-artifact@v4
         with:
-          name: kiss-ai-play-bundle
-          path: android/app/build/outputs/bundle/release/*.aab
+          name: kiss-ai-play-bundle-${{ env.VER }}
+          path: android/dist/bundle/*.aab
 
       - name: Upload lint report
         if: always()
