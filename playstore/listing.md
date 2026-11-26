@@ -31,7 +31,7 @@ FOR EVERY TOPIC
 • Save your own learning links to any topic, and suggest the best ones for everyone
 
 LEARNING PATHS FOR 22 AI ROLES
-Data Scientist, ML Engineer, AI Engineer, Forward Deployed Engineer, AI Quality Assurance, Research Scientist, MLOps, AI Safety, AI Product Manager and more. Each role has ordered phases with a teach-back, a capstone project and a milestone. Take the 2-minute self-check and the app marks "You are here" on the map, then ranks the roles by how steep your climb is and how well they fit what you enjoy.
+Data Scientist, ML Engineer, AI Engineer, Forward Deployed Engineer, AI Quality Assurance, Research Scientist, MLOps, AI Safety, AI Product Manager and more. Each role has ordered phases with a teach-back, a capstone project and a milestone. A study timetable turns any path into a week-by-week plan with estimated hours. Take the 2-minute self-check and the app marks "You are here" on the map, then ranks the roles by how steep your climb is and how well they fit what you enjoy.
 
 YOUR PROGRESS, YOUR WAY
 • Works fully offline, no account needed

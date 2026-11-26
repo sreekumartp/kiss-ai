@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>window.ATLAS_BUILD="eb43a1bfd716";</script>
+<script>window.ATLAS_BUILD="0bdbefe6b395";</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The K.I.S.S model for mastering AI</title>
@@ -428,6 +428,28 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
 .delbox{margin-top:10px;padding:12px;border:1px solid color-mix(in srgb,#C0392B 45%,var(--line));border-radius:10px;background:color-mix(in srgb,#C0392B 7%,var(--surface))}
 .delbox p{margin:0 0 4px;font-size:.88rem}
 .settings a{color:var(--accent)}
+.tt h2{margin-bottom:12px}
+.ttctl{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-bottom:10px}
+.ttl{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;margin-bottom:4px}
+.tthpw{min-width:240px}
+.ttchk,.ttdate{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;min-height:40px}
+.ttdate input{min-height:40px;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);font:inherit}
+.ttsum{margin:4px 0 12px;font-size:.92rem}
+.tttable{width:100%;border-collapse:collapse;font-size:.88rem}
+.tttable th{text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;padding:8px 10px;background:var(--surface-2)}
+.tttable td{padding:6px 10px;border-top:1px solid var(--line)}
+.tttable .n{text-align:right;font-variant-numeric:tabular-nums}
+.tttable td{vertical-align:middle}
+.tttable td:first-child{white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--muted);font-size:.8rem}
+.ttphase td{background:var(--surface-2);font-weight:700;font-size:.82rem;letter-spacing:.02em}
+.ttcap td{font-size:.84rem;background:color-mix(in srgb,var(--r-s) 7%,var(--surface))}
+.ttcap .rk2{width:18px;height:18px;font-size:.62rem;margin-right:4px;vertical-align:-3px}
+.ttopic{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:2px 0;min-height:32px;cursor:pointer;color:var(--fg);font:inherit;font-size:.88rem;text-align:left}
+.ttopic:hover{text-decoration:underline}
+.ttopt{font-size:.68rem;color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:0 6px}
+.ttdone td{opacity:.55}
+.ttknown{font-size:.72rem;font-weight:600;color:var(--r-s)}
+.ttnew{font-size:.72rem;color:var(--muted)}
 .herecard h2{margin-bottom:4px}
 .herehead{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .youare{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:700;font-size:1.15rem}
@@ -2196,6 +2218,68 @@ function bgSet(bg){
   const s=new Set(); (bg.topics||"").split(/\s+/).filter(Boolean).forEach(t=>{ const m=t.match(/^@lv<=(\d)$/); if(m) nodes.filter(n=>n.lv<=+m[1]).forEach(n=>s.add(n.id)); else s.add(t); });
   return s;
 }
+/* ---------- Study timetable: a plain week-by-week list for one role ----------
+   Topics in path order, grouped by phase, each with estimated hours from its level, plus a
+   capstone block per phase. Known topics (self-check or rung K and above) take no time.
+   Settings (hours per week, optional topics, start date) are kept per device. */
+const TT_HOURS = [3,4,6,8,10,12,12,14], TT_CAPSTONE = 10;
+let ttRole = null;
+function ttSettings(){ try{ const v=JSON.parse(localStorage.getItem("kiss-tt")||"null"); if(v) return v; }catch(e){} return {hpw:10, opt:false, start:""}; }
+function ttSave(v){ try{ localStorage.setItem("kiss-tt", JSON.stringify(v)); }catch(e){} }
+function ttToday(){ const d=new Date(); return d.toISOString().slice(0,10); }
+function ttPlan(role){
+  const set=ttSettings(), opt=optSet(role), known=bgSet(currentBg()), rows=[]; let cum=0;
+  const wk = h => Math.floor(h/set.hpw)+1;
+  (PHASES[role.id]||[]).forEach((ph,pi)=>{
+    rows.push({phase:true, i:pi+1, name:ph[0]});
+    ph[1].split(/\s+/).forEach(id=>{
+      const n=byId.get(id), isOpt=opt.has(id); if(!n || (isOpt && !set.opt)) return;
+      const isKnown = known.has(id) || STAGE_IDX[getStage(id)]>=1;
+      const h = isKnown ? 0 : TT_HOURS[n.lv]; const w0=wk(cum); cum+=h; const w1=wk(Math.max(cum-0.01,0));
+      rows.push({n, opt:isOpt, known:isKnown, h, w0, w1, stage:getStage(id)});
+    });
+    const w0=wk(cum); cum+=TT_CAPSTONE; rows.push({cap:true, text:ph[3], h:TT_CAPSTONE, w0, w1:wk(cum-0.01)});
+  });
+  const start=new Date((set.start||ttToday())+"T00:00:00"), end=new Date(start.getTime()+Math.ceil(cum/set.hpw)*7*864e5);
+  return {rows, hours:Math.round(cum), weeks:Math.ceil(cum/set.hpw), end, set, topics:rows.filter(r=>r.n).length, todo:rows.filter(r=>r.n && !r.known).length};
+}
+const ttWeeks = r => r.w0===r.w1 ? `Wk ${r.w0}` : `Wk ${r.w0}–${r.w1}`;
+function ttHTML(role){
+  const p=ttPlan(role), set=p.set, fmt=d=>d.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"});
+  const body=p.rows.map(r=>{
+    if(r.phase) return `<tr class="ttphase"><td colspan="5">Phase ${r.i} · ${esc(r.name)}</td></tr>`;
+    if(r.cap) return `<tr class="ttcap"><td>${ttWeeks(r)}</td><td colspan="2"><span class="rk2 r-s">S</span> Capstone: ${esc(r.text)}</td><td class="n">${r.h}</td><td></td></tr>`;
+    const st = r.known ? `<span class="ttknown">Known</span>` : r.stage ? `<span class="stg ${rc(r.stage)}">${STAGE_LETTER[r.stage]}</span>` : `<span class="ttnew">To learn</span>`;
+    return `<tr class="${r.known?"ttdone":""}"><td>${r.known?"–":ttWeeks(r)}</td><td><button class="ttopic" data-id="${r.n.id}" style="--c:var(--d-${r.n.d})"><span class="dot"></span>${esc(r.n.label)}</button>${r.opt?` <span class="ttopt">optional</span>`:""}</td><td class="n">L${r.n.lv}</td><td class="n">${r.h||"–"}</td><td>${st}</td></tr>`;
+  }).join("");
+  return `<button class="xbtn" id="mClose" aria-label="Close">×</button>
+  <div class="tt"><p class="eyebrow">Study timetable</p><h2 id="mTitle">${esc(role.name)}</h2>
+   <div class="ttctl">
+    <div><span class="ttl">Hours per week</span><div class="asseg tthpw" role="radiogroup" aria-label="Hours per week">${[5,10,15,20].map(h=>`<button type="button" role="radio" aria-checked="${set.hpw===h}" data-tt="hpw:${h}">${h} h</button>`).join("")}</div></div>
+    <label class="ttchk"><input type="checkbox" data-tt="opt" ${set.opt?"checked":""}> Include optional topics</label>
+    <label class="ttdate">Start <input type="date" data-tt="start" value="${esc(set.start||ttToday())}"></label>
+   </div>
+   <p class="ttsum"><b>${p.todo}</b> of ${p.topics} topics to learn · about <b>${p.hours} hours</b> · <b>${p.weeks} weeks</b> at ${set.hpw} h/week · finish around <b>${fmt(p.end)}</b></p>
+   <div class="tablewrap"><table class="tttable"><thead><tr><th>When</th><th>Topic</th><th class="n">Level</th><th class="n">Hours</th><th>Status</th></tr></thead><tbody>${body}</tbody></table></div>
+   <p class="note">Hours are planning estimates from each topic's level, plus ${TT_CAPSTONE} hours per capstone. Topics you already know (self-check or rung K and above) take no time. Tap a topic to study it.</p>
+   <div class="btnrow"><button class="btn primary" data-ttcopy>Copy as text</button>${window.AtlasNative?`<button class="btn" data-ttshare>Share</button>`:""}</div>
+   <p class="status" id="ttStatus" role="status"></p></div>`;
+}
+function ttText(role){
+  const p=ttPlan(role); const lines=[`Study timetable: ${role.name}`, `${p.todo} of ${p.topics} topics to learn, about ${p.hours} hours, ${p.weeks} weeks at ${p.set.hpw} h/week`];
+  p.rows.forEach(r=>{ if(r.phase) lines.push("", `Phase ${r.i}: ${r.name}`); else if(r.cap) lines.push(`  ${ttWeeks(r)}  Capstone: ${r.text} (${r.h} h)`);
+    else lines.push(`  ${r.known?"Known   ":ttWeeks(r).padEnd(8)}  ${r.n.label}${r.opt?" (optional)":""}  L${r.n.lv}${r.h?`, ${r.h} h`:""}`); });
+  return lines.join("\n");
+}
+function openTimetable(id){
+  const role=ROLES.find(r=>r.id===id); if(!role) return;
+  ttRole=id; modalId=null; sheet.style.setProperty("--c","var(--accent)");
+  sheet.innerHTML=ttHTML(role);
+  if(modal.hidden) lastFocus=document.activeElement;
+  modal.hidden=false; sheet.scrollTop=0; document.getElementById("mClose").focus();
+}
+function ttRefresh(){ const y=sheet.scrollTop; sheet.innerHTML=ttHTML(ROLES.find(r=>r.id===ttRole)); sheet.scrollTop=y; }
+
 /* ---------- Self-check: "You are here" ----------
    Learners rate eight skill areas and four interests. Skill ratings mark a share of each
    area's topics (basic first) as already known; interests and the remaining climb rank the
@@ -3061,7 +3145,7 @@ function homeHTML(){
       <p class="none">${Math.round(met/need*100)}% ready · ${now?`Phase ${ps.indexOf(now)+1} of ${ps.length}: <b>${esc(now.ph[0])}</b>`:"All phases covered"}</p>
       ${now?`<div class="links" style="margin-top:10px">${now.essNew.slice(0,5).map(id=>itemHTML(byId.get(id))).join("")}</div>
       <p style="margin-top:10px;font-size:.86rem"><b>Capstone:</b> ${esc(now.ph[3])}</p>`:""}
-      <div class="btnrow"><button class="btn primary" data-homerole="${role.id}">Open full path</button><button class="btn" data-goto="roles">Change role</button></div></div>`;
+      <div class="btnrow"><button class="btn primary" data-homerole="${role.id}">Open full path</button><button class="btn" data-timetable="${role.id}">Study timetable</button><button class="btn" data-goto="roles">Change role</button></div></div>`;
   } else {
     cont = `<div class="card"><h2>Pick a role to get a learning path</h2><p class="none">22 AI roles, each with ordered phases, a capstone per phase and a check of your gaps.</p><div class="btnrow"><button class="btn primary" data-goto="roles">Choose a role</button></div></div>`;
   }
@@ -3225,6 +3309,7 @@ function roleHTML(role){
     <h3>Your starting point</h3>
     <select class="bgsel" data-bg aria-label="Your background">${bgList().map(b=>`<option value="${b.id}" ${b.id===getBg()?"selected":""}>${esc(b.name)}</option>`).join("")}</select>
     <h3>Learning path: ${(PHASES[role.id]||[]).length} phases</h3>
+    <div class="btnrow" style="margin:0 0 10px"><button class="btn" data-timetable="${role.id}">Study timetable</button></div>
     <p class="none" style="margin-top:-2px">Essential topics get you started. <b>Optional</b> topics add depth: skip them now and come back when a project needs them.</p>
     <ol class="phases">${phaseStatus(role).map(({ph,ids,st,known,ess,optional,essNew,optNew},i)=>{
       const chip = id => known.has(id)?itemHTML(byId.get(id)).replace('class="item"','class="item known" title="Already covered"'):itemHTML(byId.get(id));
@@ -3274,6 +3359,23 @@ document.getElementById("roles").addEventListener("click", ev=>{
   const c=ev.target.closest("[data-role]"); if(!c) return;
   if(isPhone()){ roleDetail=c.dataset.role; selectRole(c.dataset.role); renderRoles(); document.getElementById("roles").scrollTop=0; return; }
   setView("graph"); selectRole(c.dataset.role);
+});
+
+/* ---------- Study timetable events ---------- */
+document.addEventListener("click", ev=>{ const b=ev.target.closest("[data-timetable]"); if(b){ ev.preventDefault(); openTimetable(b.dataset.timetable); } });
+sheet.addEventListener("click", ev=>{
+  if(!ttRole || modalId || !sheet.querySelector(".tt")) return;
+  const h=ev.target.closest('[data-tt^="hpw:"]'); if(h){ const s=ttSettings(); s.hpw=+h.dataset.tt.split(":")[1]; ttSave(s); ttRefresh(); return; }
+  const t=ev.target.closest(".ttopic"); if(t){ openModal(t.dataset.id); return; }
+  if(ev.target.closest("[data-ttcopy]")){ const txt=ttText(ROLES.find(r=>r.id===ttRole)), st=document.getElementById("ttStatus");
+    try{ navigator.clipboard.writeText(txt).then(()=>st.textContent="Timetable copied. Paste it into your notes or calendar.", ()=>st.textContent="Copy isn't allowed here. Use Share instead."); }catch(e){ st.textContent="Copy isn't allowed here. Use Share instead."; } return; }
+  if(ev.target.closest("[data-ttshare]") && window.AtlasNative){ const r=ROLES.find(x=>x.id===ttRole); window.AtlasNative.share("Study timetable: "+r.name, ttText(r)); }
+});
+sheet.addEventListener("change", ev=>{
+  if(!ttRole || !sheet.querySelector(".tt")) return;
+  const k=ev.target.dataset && ev.target.dataset.tt; if(!k) return; const s=ttSettings();
+  if(k==="opt") s.opt=ev.target.checked; if(k==="start" && ev.target.value) s.start=ev.target.value;
+  ttSave(s); ttRefresh();
 });
 
 /* ---------- Self-check events ---------- */
