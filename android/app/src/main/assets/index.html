@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>window.ATLAS_BUILD="709f63d27d49";</script>
+<script>window.ATLAS_BUILD="57083b2c7f1d";</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The K.I.S.S model for mastering AI</title>
@@ -526,6 +526,16 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
 .jposts li{display:flex;flex-direction:column}
 .jposts span{color:var(--muted);font-size:.76rem}
 .rcard .rjob{color:var(--fg)}
+.rsnav{position:sticky;top:0;z-index:2;display:flex;flex-wrap:wrap;gap:6px;margin:16px -4px 0;padding:8px 4px;background:var(--bg)}
+.rsnav button{min-height:36px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--fg);font:inherit;font-size:.8rem;font-weight:600;cursor:pointer}
+.rsnav button:hover{border-color:var(--fg)}
+.rsec{margin-top:14px;padding:4px 16px 16px;border:1px solid var(--line);border-radius:14px;background:var(--surface);scroll-margin-top:120px}
+aside .rsec h3,.rdetail .rsec h3{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:0 -16px 12px;padding:12px 16px 10px;border-bottom:1px solid var(--line);font-size:.95rem;letter-spacing:0;text-transform:none;color:var(--fg);font-weight:700}
+.rsec h3 ~ h3{margin-top:16px;border-top:1px solid var(--line)}
+.rsec-jobs{border-left:4px solid var(--accent)}
+.rsecn{font-size:.74rem;font-weight:500;color:var(--muted)}
+aside .rsnav{background:var(--surface);top:-18px}
+aside .rsec{background:color-mix(in srgb,var(--surface-2) 40%,var(--surface))}
 .goalmark{display:inline-flex;align-items:center;min-height:44px;padding:0 6px;font-weight:700;color:var(--accent)}
 .ctabs{display:flex;gap:4px;padding:3px;border-radius:10px;background:var(--surface-2);margin-bottom:8px}
 .ctabs button{flex:1;min-height:40px;border:0;border-radius:8px;background:none;cursor:pointer;font-weight:600;color:var(--muted)}
@@ -2664,7 +2674,7 @@ function jobsRoleHTML(role){
       ${tops.length?`<div class="links">${tops.map(itemHTML).join("")}</div>`:`<p class="none">Not a topic on the map.</p>`}</li>`; };
   const top=j.skills.slice(0,6), rest=j.skills.slice(6);
   const mapped=j.skills.filter(x=>x.t.some(id=>byId.has(id))), have=mapped.filter(x=>x.t.every(id=>!byId.has(id)||isLearned(id)));
-  return `<h3>In job posts</h3>
+  return `<h3>In job posts <span class="rsecn">${j.n} postings · ${esc(JOBS_CHECKED)}</span></h3>
     <p class="desc">${esc(j.summary)}</p>
     <div class="stats"><div><b>${j.n}</b><span>postings read</span></div><div><b>${have.length} of ${mapped.length}</b><span>asked skills you have</span></div></div>
     <p class="none">${esc(regs)} · checked ${esc(JOBS_CHECKED)}. A skill counts as yours when you've marked its topics at Knowledge or above.</p>
@@ -3616,13 +3626,14 @@ function roleHTML(role){
     <div class="stats"><div><b>${S.length||"–"}</b><span>topics to build</span></div><div><b>${K.length + (role.depth==="k"?0:0)}</b><span>topics to teach</span></div><div><b>${I.length}</b><span>topics to know of</span></div></div>
     <h3>What success looks like</h3>
     <div class="links">${role.success.map(k=>`<span class="succchip">${esc(FORM[k].name)}</span>`).join("")}</div>
-    <h3>Your readiness</h3>
+    <nav class="rsnav" aria-label="Sections of this role">${[["ready","Readiness"],["jobs","In job posts"],["path","Learning path"],["gaps","Gaps"],["topics","All topics"]].map(([k,l])=>`<button data-rsec="${k}">${l}</button>`).join("")}</nav>
+    <section class="rsec" data-sec="ready"><h3>Your readiness</h3>
     <div class="prog" style="--c:var(--accent)"><div class="track"><div class="fill" style="width:${pct}%"></div></div><span>${met} of ${need.size} at the required rung</span></div>
     <p class="none" style="margin-top:6px">Required rungs come from the map: the role's core topics at ${role.depth==="s"?"Skill":"Knowledge"}, their direct prerequisites at ${role.depth==="s"?"Knowledge":"Information"}, and everything further back at Information. Mark your rungs in any topic to update this.</p>
-    ${jobsRoleHTML(role)}
-    <h3>Your starting point</h3>
-    <select class="bgsel" data-bg aria-label="Your background">${bgList().map(b=>`<option value="${b.id}" ${b.id===getBg()?"selected":""}>${esc(b.name)}</option>`).join("")}</select>
-    <h3>Learning path: ${(PHASES[role.id]||[]).length} phases</h3>
+    <h4 class="jh">Your starting point</h4>
+    <select class="bgsel" data-bg aria-label="Your background">${bgList().map(b=>`<option value="${b.id}" ${b.id===getBg()?"selected":""}>${esc(b.name)}</option>`).join("")}</select></section>
+    <section class="rsec rsec-jobs" data-sec="jobs">${jobsRoleHTML(role)}</section>
+    <section class="rsec" data-sec="path"><h3>Learning path: ${(PHASES[role.id]||[]).length} phases</h3>
     <div class="btnrow" style="margin:0 0 10px">${(()=>{ const c=getCommit(); return c && c.goal==="role:"+role.id ? `<span class="goalmark">✓ Your goal</span>` : `<button class="btn primary" data-commit="role:${role.id}">Commit to this role</button>`; })()}<button class="btn" data-timetable="role:${role.id}">Study timetable</button></div>
     <p class="none" style="margin-top:-2px">Essential topics get you started. <b>Optional</b> topics add depth: skip them now and come back when a project needs them.</p>
     <ol class="phases">${phaseStatus(role).map(({ph,ids,st,known,ess,optional,essNew,optNew},i)=>{
@@ -3639,12 +3650,12 @@ function roleHTML(role){
         <div><dt><span class="rk2 r-s">S</span>Capstone</dt><dd>${esc(ph[3])}</dd></div>
         ${ph[4]?`<div><dt><span class="rk2 r-x">S</span>Milestone</dt><dd>${esc(ph[4])}</dd></div>`:""}
       </dl>`}
-    </li>`;}).join("")}</ol>
-    ${next.length?`<h3>Close these gaps next</h3><div class="links">${next.map(n=>`<button class="item" data-id="${n.id}" style="--c:var(--d-${n.d})"><span class="dot"></span>${esc(n.label)}<span class="need">needs ${STAGE_LETTER[need.get(n)]}</span></button>`).join("")}</div>`:`<p class="none">You meet every required rung for this role.</p>`}
-    <h3>Full topic set by rung</h3>
+    </li>`;}).join("")}</ol></section>
+    <section class="rsec" data-sec="gaps">${next.length?`<h3>Close these gaps next</h3><div class="links">${next.map(n=>`<button class="item" data-id="${n.id}" style="--c:var(--d-${n.d})"><span class="dot"></span>${esc(n.label)}<span class="need">needs ${STAGE_LETTER[need.get(n)]}</span></button>`).join("")}</div>`:`<h3>Close these gaps next</h3><p class="none">You meet every required rung for this role.</p>`}</section>
+    <section class="rsec" data-sec="topics"><h3>Full topic set by rung</h3>
     ${group(RUNG_LABEL[role.depth], role.depth==="s"?S:K, false)}
     ${role.depth==="s"?group(RUNG_LABEL.k, K, false):""}
-    ${group(RUNG_LABEL.i, I, false)}
+    ${group(RUNG_LABEL.i, I, false)}</section>
     <p class="foot">Click empty map space to leave this role. Link to this role: #role-${role.id}</p>`;
 }
 let roleDetail = null;
@@ -3675,6 +3686,10 @@ document.getElementById("roles").addEventListener("click", ev=>{
 });
 
 sheet.addEventListener("click", ev=>{ const b=ev.target.closest("[data-jrole]"); if(!b) return; closeModal(); setView("graph"); selectRole(b.dataset.jrole); });
+
+document.addEventListener("click", ev=>{ const b=ev.target.closest("[data-rsec]"); if(!b) return;
+  const box=b.closest("#panel,#roles,.rdetail")||document, t=box.querySelector(`.rsec[data-sec="${b.dataset.rsec}"]`);
+  if(t) t.scrollIntoView({block:"start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); });
 
 /* ---------- Offline paper events ---------- */
 sheet.addEventListener("click", ev=>{
