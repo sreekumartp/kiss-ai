@@ -1,5 +1,6 @@
 package io.github.sreekumartp.kissai
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -15,6 +16,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.view.ViewCompat
@@ -34,6 +36,14 @@ class MainActivity : AppCompatActivity() {
 
     private val liveUpdate by lazy { LiveUpdate(applicationContext) }
     private val updateExecutor = Executors.newSingleThreadExecutor()
+
+    // A reminder waiting for the notification permission answer (Android 13+).
+    private var pendingReminder: IntArray? = null
+    private val notificationPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        val r = pendingReminder; pendingReminder = null
+        if (granted && r != null) Reminders.schedule(applicationContext, r[0], r[1], r[2])
+        reminderResult(granted)
+    }
 
     private val assetLoader by lazy {
         WebViewAssetLoader.Builder()
@@ -119,6 +129,21 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    /** Schedules or cancels the weekly reminder, asking for notification permission first if needed. */
+    fun setReminder(on: Boolean, day: Int, hour: Int, minute: Int) {
+        if (!on) { Reminders.cancel(applicationContext); reminderResult(true); return }
+        if (Reminders.canNotify(this)) {
+            Reminders.schedule(applicationContext, day, hour, minute); reminderResult(true)
+        } else {
+            pendingReminder = intArrayOf(day, hour, minute)
+            notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
+    private fun reminderResult(ok: Boolean) {
+        if (!isDestroyed) webView.evaluateJavascript("window.atlasReminderResult && window.atlasReminderResult($ok)", null)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -3,6 +3,8 @@
 
     <!-- Only needed to open external learning resources; the atlas itself works offline. -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Weekly study reminders for the learner's committed goal (asked for only when they turn reminders on). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <queries>
         <intent>

@@ -426,6 +426,11 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
 .nextup{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
 .nextup .lbl{flex-basis:100%;margin:0}
 .nextrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;min-width:0}
+.remind{margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+.remind .lbl{margin:0 0 6px}
+.remrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.remrow select,.remrow input{min-height:40px;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);font:inherit;font-size:.88rem}
+.remrow .btn{min-height:40px}
 .goalmark{display:inline-flex;align-items:center;min-height:44px;padding:0 6px;font-weight:700;color:var(--accent)}
 .ctabs{display:flex;gap:4px;padding:3px;border-radius:10px;background:var(--surface-2);margin-bottom:8px}
 .ctabs button{flex:1;min-height:40px;border:0;border-radius:8px;background:none;cursor:pointer;font-weight:600;color:var(--muted)}
@@ -2339,7 +2344,7 @@ function goalProgress(){
   return {c, path, plan, todo:todo.length, done:done.length, expected, week, status, cls, next:todo.find(r=>!isLearned(r.n.id))};
 }
 function goalCardHTML(){
-  const g=goalProgress();
+  const g=goalProgress(); if(g) setTimeout(pushReminderPlan, 0);
   if(!g) return `<div class="card goalcard"><h2>Set your goal</h2>
     <p class="none">Choose a role or an Applied AI area and commit to a weekly pace. Your progress is tracked against it here.</p>
     <div class="btnrow"><button class="btn primary" data-commit>Choose and commit</button></div></div>`;
@@ -2351,8 +2356,75 @@ function goalCardHTML(){
     <p class="gline"><span class="gstat gs-${g.cls}">${esc(g.status)}</span>${g.expected && g.cls!=="wait" && g.status!=="Goal complete" ? ` <span class="ml">The plan had ${g.expected} by now</span>` : ""}</p>
     ${n ? `<div class="nextup"><span class="lbl">Next up</span><div class="nextrow"><button class="item" data-id="${n.n.id}" style="--c:var(--d-${n.n.d})"><span class="dot"></span>${esc(n.n.label)}</button><span class="ml">${ttWeeks(n)} · about ${n.h} h</span></div>
       <button class="btn" data-learned="${n.n.id}">Mark as learned</button></div>` : ""}
+    ${reminderHTML(g)}
     <div class="btnrow"><button class="btn primary" data-timetable="${g.path.key}">Timetable</button><button class="btn" data-goalopen="${g.path.key}">Show path</button></div></div>`;
 }
+
+/* ---------- Weekly reminders for the committed goal ----------
+   Android: a native weekly notification (day and time chosen here). The page sends the fixed plan
+   so the reminder can say "on track / N behind / N ahead" when it fires. Website: a weekly study
+   event to add to the learner's own calendar (.ics). Settings live in the commitment (c.remind). */
+const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const hasNativeReminders = () => !!(window.AtlasNative && window.AtlasNative.setReminder);
+function remindOf(c){ return Object.assign({on:false, day:1, time:"09:00"}, c.remind||{}); }
+function pushReminderPlan(){
+  if(!hasNativeReminders()) return;
+  const g=goalProgress(); if(!g) return;
+  const items=g.plan.rows.filter(r=>r.n && !r.known).map(r=>({label:r.n.label, end:Math.round(r.end*100)/100, hours:r.h, learned:isLearned(r.n.id)}));
+  try{ window.AtlasNative.reminderPlan(JSON.stringify({goal:g.path.name, start:g.c.start, hpw:g.c.hpw, items})); }catch(e){}
+}
+function applyReminder(c){
+  if(!hasNativeReminders()) return; const r=remindOf(c), [h,m]=r.time.split(":").map(Number);
+  try{ window.AtlasNative.setReminder(!!r.on, r.day, h||9, m||0); }catch(e){}
+}
+let reminderMsg = "";
+window.atlasReminderResult = ok => {
+  const c=getCommit(); if(!c) return;
+  if(!ok && remindOf(c).on){ c.remind=Object.assign(remindOf(c),{on:false}); setCommit(c);
+    reminderMsg="Notifications are blocked for this app. Allow them in Android Settings › Apps › K.I.S.S AI › Notifications, then turn the reminder on again."; }
+  else if(ok) reminderMsg = remindOf(c).on ? `Reminder set for ${DAYS[remindOf(c).day-1]}s at ${remindOf(c).time}.` : "Reminder turned off.";
+  rerenderAll();
+};
+function reminderHTML(g){
+  const r=remindOf(g.c);
+  if(hasNativeReminders()) return `<div class="remind"><span class="lbl">Weekly reminder</span>
+    <div class="remrow"><button class="btn ${r.on?"primary":""}" data-remtoggle aria-pressed="${r.on}">${r.on?"On":"Off"}</button>
+    <label class="sr" for="remDay">Day</label><select id="remDay" data-remday>${DAYS.map((d,i)=>`<option value="${i+1}" ${r.day===i+1?"selected":""}>${d}</option>`).join("")}</select>
+    <label class="sr" for="remTime">Time</label><input id="remTime" type="time" data-remtime value="${esc(r.time)}">
+    ${r.on?`<button class="linkbtn" data-remtest>Send a test</button>`:""}</div>
+    ${reminderMsg?`<p class="note" role="status">${esc(reminderMsg)}</p>`:""}</div>`;
+  return `<div class="remind"><span class="lbl">Weekly reminder</span>
+    <div class="remrow"><label class="sr" for="remDay">Day</label><select id="remDay" data-remday>${DAYS.map((d,i)=>`<option value="${i+1}" ${r.day===i+1?"selected":""}>${d}</option>`).join("")}</select>
+    <label class="sr" for="remTime">Time</label><input id="remTime" type="time" data-remtime value="${esc(r.time)}">
+    <button class="btn" data-remics>Add to calendar</button></div>
+    <p class="note">Adds a weekly study session to your calendar app. In the Android app you can get reminders as notifications.</p></div>`;
+}
+// A weekly calendar event (.ics) for the website, from the start date to the planned finish.
+function reminderICS(g){
+  const r=remindOf(g.c), [h,m]=r.time.split(":").map(Number), pad=n=>String(n).padStart(2,"0");
+  const d=new Date(g.plan.start); while(((d.getDay()+6)%7)+1!==r.day) d.setDate(d.getDate()+1);
+  const dt=`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(h||9)}${pad(m||0)}00`;
+  const now=new Date(), stamp=`${now.getUTCFullYear()}${pad(now.getUTCMonth()+1)}${pad(now.getUTCDate())}T${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}00Z`;
+  const icsText=t=>t.replace(/[\;,]/g,m=>"\\"+m).replace(/\n/g,"\\n");
+  return ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//KISS AI//Study plan//EN","BEGIN:VEVENT",
+    `UID:kiss-goal-${g.path.key.replace(/[^a-z0-9]/gi,"-")}-${Date.now()}@kiss-ai`, `DTSTAMP:${stamp}`, `DTSTART:${dt}`, "DURATION:PT1H",
+    `RRULE:FREQ=WEEKLY;COUNT=${g.plan.weeks}`, `SUMMARY:${icsText("Study: "+g.path.name)}`,
+    `DESCRIPTION:${icsText(`K.I.S.S plan: ${g.c.hpw} hours this week. Check your progress and next topic at https://sreekumartp.github.io/kiss-ai/`)}`,
+    "END:VEVENT","END:VCALENDAR"].join("\r\n");
+}
+function saveRemind(patch){ const c=getCommit(); if(!c) return; c.remind=Object.assign(remindOf(c), patch); setCommit(c); return c; }
+document.addEventListener("click", ev=>{
+  if(ev.target.closest("[data-remtoggle]")){ const c=saveRemind({on:!remindOf(getCommit()).on}); reminderMsg=""; pushReminderPlan(); applyReminder(c); rerenderAll(); return; }
+  if(ev.target.closest("[data-remtest]")){ pushReminderPlan(); try{ window.AtlasNative.testReminder(); reminderMsg="Test reminder sent. Check your notifications."; }catch(e){} rerenderAll(); return; }
+  if(ev.target.closest("[data-remics]")){ const g=goalProgress(); if(!g) return;
+    const url=URL.createObjectURL(new Blob([reminderICS(g)],{type:"text/calendar"})), a=document.createElement("a");
+    a.href=url; a.download="kiss-study-plan.ics"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),4000); return; }
+});
+document.addEventListener("change", ev=>{
+  const t=ev.target;
+  if(t.matches("[data-remday]")){ const c=saveRemind({day:+t.value}); if(c && remindOf(c).on){ reminderMsg=""; applyReminder(c); } return; }
+  if(t.matches("[data-remtime]") && t.value){ const c=saveRemind({time:t.value}); if(c && remindOf(c).on){ reminderMsg=""; applyReminder(c); } return; }
+});
 
 /* ---------- Commit sheet: choose a goal, set the pace, commit ---------- */
 let commitDraft = null;
@@ -2391,7 +2463,9 @@ function commitHTML(){
 }
 function doCommit(){
   const d=commitDraft, path=goalPath(d.goal); if(!path) return;
-  setCommit({goal:path.key, hpw:d.hpw, opt:d.opt, start:d.start||ttToday(), known:[...knownNow(path)], at:Date.now()});
+  const prev=getCommit();
+  setCommit({goal:path.key, hpw:d.hpw, opt:d.opt, start:d.start||ttToday(), known:[...knownNow(path)], at:Date.now(), remind:prev ? prev.remind : undefined});
+  if(prev && remindOf(prev).on) setTimeout(()=>{ pushReminderPlan(); applyReminder(getCommit()); }, 0);
   if(path.kind==="role"){ try{ localStorage.setItem("atlas-lastrole", path.id); }catch(e){} }
   commitDraft=null; closeModal(); roleDetail=null;
   if(isPhone()) setView("home"); else { renderPanel(); }
@@ -3497,7 +3571,7 @@ sheet.addEventListener("click", ev=>{
     const g=ev.target.closest("[data-cgoal]"); if(g){ commitDraft.goal=g.dataset.cgoal; const y=sheet.querySelector(".cgoals").scrollTop; sheet.innerHTML=commitHTML(); sheet.querySelector(".cgoals").scrollTop=y; return; }
     const h=ev.target.closest("[data-chpw]"); if(h){ commitDraft.hpw=+h.dataset.chpw; const y=sheet.querySelector(".cgoals").scrollTop; sheet.innerHTML=commitHTML(); sheet.querySelector(".cgoals").scrollTop=y; return; }
     if(ev.target.closest("[data-cdo]")){ doCommit(); return; }
-    if(ev.target.closest("[data-cdrop]")){ setCommit(null); commitDraft=null; closeModal(); rerenderAll(); return; }
+    if(ev.target.closest("[data-cdrop]")){ const prev=getCommit(); setCommit(null); if(prev && remindOf(prev).on && hasNativeReminders()){ try{ window.AtlasNative.setReminder(false,1,9,0); }catch(e){} } commitDraft=null; closeModal(); rerenderAll(); return; }
     return;
   }
   if(!ttGoal || modalId || !sheet.querySelector(".tt")) return;
@@ -3818,6 +3892,7 @@ function start(){
   else { renderPanel(); applyHighlight(); if(state.view==="graph"){ if(isPhone()) jumpLevel(0,false); else fit(false); } }
   if(isPhone() && state.view!=="graph"){ document.getElementById("map").style.display="block"; jumpLevel(0,false); document.getElementById("map").style.display="none"; }
   initSync();
+  setTimeout(()=>{ const c=getCommit(); if(c && remindOf(c).on && hasNativeReminders()){ let ok=false; try{ ok=window.AtlasNative.notificationsAllowed(); }catch(e){} if(ok){ pushReminderPlan(); applyReminder(c); } } }, 1500);
 }
 (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start, start);
 </script>

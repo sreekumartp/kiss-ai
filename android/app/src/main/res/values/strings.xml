@@ -3,4 +3,6 @@
     <string name="launcher_name">K.I.S.S AI</string>
     <string name="share_title">Share topic</string>
     <string name="no_browser">No app found to open this link.</string>
+    <string name="reminder_channel">Weekly study reminders</string>
+    <string name="reminder_channel_desc">A weekly nudge about your goal: on track, behind or ahead, and what to study next.</string>
 </resources>

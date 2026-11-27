@@ -18,4 +18,26 @@ class AtlasBridge(private val activity: MainActivity) {
             activity.startActivity(Intent.createChooser(send, activity.getString(R.string.share_title)))
         }
     }
+
+    /** Stores the committed goal's study plan, used to word the weekly reminder. */
+    @JavascriptInterface
+    fun reminderPlan(json: String) {
+        Reminders.savePlan(activity.applicationContext, json)
+    }
+
+    /** Turns the weekly reminder on or off. day: 1 = Monday … 7 = Sunday. Calls back window.atlasReminderResult(ok). */
+    @JavascriptInterface
+    fun setReminder(on: Boolean, day: Int, hour: Int, minute: Int) {
+        activity.runOnUiThread { activity.setReminder(on, day, hour, minute) }
+    }
+
+    /** True when the app may show notifications (always true before Android 13). */
+    @JavascriptInterface
+    fun notificationsAllowed(): Boolean = Reminders.canNotify(activity.applicationContext)
+
+    /** Shows the reminder now, so the learner can see what it looks like. */
+    @JavascriptInterface
+    fun testReminder() {
+        Reminders.notifyNow(activity.applicationContext)
+    }
 }
