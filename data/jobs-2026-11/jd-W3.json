@@ -1,0 +1,1977 @@
+{
+ "roles": [
+  {
+   "role": "ai-security",
+   "title_variants": [
+    "AI Security Engineer",
+    "AI Red Team Engineer",
+    "Offensive Security Engineer (AI)",
+    "Staff Attack Engineer, AI/LLM",
+    "AI Developer & Cyber-security Specialist",
+    "Research Scientist, Frontier Red Team (Cyber)"
+   ],
+   "postings": [
+    {
+     "title": "Staff Attack Engineer, AI/LLM",
+     "company": "Horizon3.ai",
+     "location": "Remote, US",
+     "region": "US",
+     "url": "https://jobs.signalfire.com/companies/horizon3-ai-2/jobs/74029520-staff-attack-engineer-ai-llm",
+     "requirements": [
+      "design prompt injection attacks",
+      "defense-evasion attacks",
+      "expert Python",
+      "OWASP Top 10 for LLMs",
+      "MITRE ATLAS"
+     ]
+    },
+    {
+     "title": "Senior Application Security Tester & AI Red Team SME",
+     "company": "Evolve Security",
+     "location": "Remote, US",
+     "region": "US",
+     "url": "https://apply.workable.com/evolve-security/jobs/view/21CEB26C9C.md",
+     "requirements": [
+      "OWASP LLM and ML Top 10",
+      "indirect prompt injection",
+      "agent hijacking",
+      "application security testing"
+     ]
+    },
+    {
+     "title": "Security Engineer, AI Red Team",
+     "company": "Refractal",
+     "location": "London, UK (in-office)",
+     "region": "EU",
+     "url": "https://builtinlondon.uk/job/security-engineer-ai-red-team/11893368",
+     "requirements": [
+      "indirect prompt injection",
+      "misuse of connected tools",
+      "sensitive data exposure",
+      "permission boundary attacks"
+     ]
+    },
+    {
+     "title": "AI Red Team Engineer",
+     "company": "White Circle",
+     "location": "UK / Remote",
+     "region": "EU",
+     "url": "https://builtinlondon.uk/job/ai-red-team-engineer/11887283",
+     "requirements": [
+      "adversarial testing of LLMs",
+      "jailbreaks",
+      "prompt injection",
+      "data leakage",
+      "Python attack automation",
+      "repeatable reporting",
+      "LangChain, RAG pipelines, tool calling"
+     ]
+    },
+    {
+     "title": "AI Developer & Cyber-security Specialist - Business AI",
+     "company": "SAP",
+     "location": "Bengaluru East, India",
+     "region": "IN",
+     "url": "https://in.linkedin.com/jobs/view/ai-developer-cyber-security-specialist-business-ai-at-sap-3830474668",
+     "requirements": [
+      "train ML models and break them",
+      "penetration testing of AI cloud services",
+      "threat modelling",
+      "6+ years IT, 4+ relevant"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "Prompt injection & jailbreaks",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "redteam"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Indirect injection / agent & tool hijacking",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "agentsafety",
+      "tooluse",
+      "agents",
+      "redteam"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Python attack automation",
+     "count": 2,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "OWASP LLM Top 10 / MITRE ATLAS threat frameworks",
+     "count": 2,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "redteam",
+      "governance"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Threat modelling",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "cyberai"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Penetration testing / AppSec / cloud security",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "cyberai"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Data leakage / sensitive data exposure",
+     "count": 2,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "privacy"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "RAG pipeline attack surface",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "rag"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Breaking ML models (adversarial ML, model extraction)",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "adversarial"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Defense evasion",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "adversarial",
+      "redteam"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "clear, repeatable bug/finding reports",
+    "client-facing red-team engagement delivery"
+   ],
+   "region_specific": [
+    "UK roles tied to compliance and AISI (UK government) offensive security",
+    "India listing asks for long IT tenure (6+ years) rather than ML depth",
+    "US salaries $160k-275k; frontier-lab cyber red team up to $600k; OSCP listed as preferred"
+   ],
+   "path_hits": [
+    "redteam",
+    "agentsafety",
+    "tooluse",
+    "agents",
+    "rag",
+    "privacy",
+    "adversarial",
+    "programming"
+   ],
+   "path_unasked": [
+    "sets",
+    "probbasics",
+    "backprop",
+    "transformer",
+    "gpt",
+    "incontext",
+    "hallucination",
+    "mcp",
+    "computeruse",
+    "dataeng"
+   ],
+   "suggestions": [
+    "Add cyberai to targets and a phase (classic AppSec/pentest + threat modelling is asked in US and India)",
+    "Add a new topic 'AI threat modelling & frameworks (OWASP LLM Top 10, MITRE ATLAS)' or fold explicit coverage into redteam",
+    "Move mcp from phase 5 into targets: tool/connector misuse and permission-boundary attacks are the main EU ask",
+    "Mark backprop and sets optional; hallucination is rarely asked (keep optional only)"
+   ],
+   "summary": "Employers want hands-on prompt-injection/jailbreak and agent-hijacking skills, Python automation, and fluency with OWASP LLM Top 10 / MITRE ATLAS. US roles lean on classic offensive security experience; UK roles are startup red teams focused on tool misuse and data leakage; India's visible role is an enterprise AppSec/pentest specialist for AI cloud services."
+  },
+  {
+   "role": "responsible-ai",
+   "title_variants": [
+    "Head of Responsible AI",
+    "Director, AI Governance",
+    "AI Governance Manager",
+    "AI Governance Lead",
+    "AI Assurance Specialist",
+    "Responsible AI Consultant",
+    "Responsible AI Solution Risk Assessor",
+    "AI Governance Ethics Expert"
+   ],
+   "postings": [
+    {
+     "title": "Head of Responsible AI - Director",
+     "company": "Citi",
+     "location": "US",
+     "region": "US",
+     "url": "https://jobs.anitab.org/companies/citi-2-db90f7f6-7bfb-4128-83f9-bb534f36fcb7/jobs/78000786-head-of-responsible-ai-director",
+     "requirements": [
+      "AI governance",
+      "model risk management",
+      "regulatory compliance"
+     ]
+    },
+    {
+     "title": "AI Safety and Responsible AI Lead",
+     "company": "(via Dice)",
+     "location": "Jersey City, NJ",
+     "region": "US",
+     "url": "https://www.dice.com/job-detail/0b8212a6-50db-4277-95a5-b7ba942a43c7",
+     "requirements": [
+      "model-risk alignment",
+      "post-production monitoring",
+      "AI risk and impact assessments",
+      "banking or insurance experience"
+     ]
+    },
+    {
+     "title": "Head of AI Governance",
+     "company": "Hays (recruiter)",
+     "location": "London, UK",
+     "region": "EU",
+     "url": "https://www.itjobswatch.co.uk/jv/Hays/Head-of-AI-Governance-Job-London-Area-UK-50lxk0",
+     "requirements": [
+      "ISO/IEC 42001",
+      "EU AI Act",
+      "board-level reporting"
+     ]
+    },
+    {
+     "title": "AI Assurance Specialist",
+     "company": "Danos Group",
+     "location": "London, UK",
+     "region": "EU",
+     "url": "https://www.itjobswatch.co.uk/jv/Danos-Group/AI-Assurance-Specialist-Job-London-UK-4ved20",
+     "requirements": [
+      "lead ISO/IEC 42001 certification of AI management system"
+     ]
+    },
+    {
+     "title": "AI Governance & Responsible AI Consultant",
+     "company": "Bosch Global Software Technologies",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://www.linkedin.com/jobs/search/?currentJobId=3304858690&f_WT=3&geoId=92000000&keywords=%22responsible+AI%22&location=Worldwide&refresh=true",
+     "requirements": [
+      "requirements not reported in search result"
+     ]
+    },
+    {
+     "title": "Responsible AI Solution Risk Assessor",
+     "company": "Microsoft",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://www.linkedin.com/jobs/search/?currentJobId=3304858690&f_WT=3&geoId=92000000&keywords=%22responsible+AI%22&location=Worldwide&refresh=true",
+     "requirements": [
+      "AI solution risk assessment (from title; details not reported)"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "Regulatory frameworks (EU AI Act, NIST AI RMF, ISO/IEC 42001, Colorado AI Act)",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "governance"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "AI management system certification / audit (ISO 42001)",
+     "count": 2,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "governance"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Model risk management (SR 11-7 style)",
+     "count": 2,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "governance",
+      "finance"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "AI risk & impact assessment of use cases",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "governance",
+      "fairness",
+      "frontierevals"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Post-production monitoring",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "mlops",
+      "llmevals"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Privacy / GDPR / ISO 27001",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "privacy"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Shadow AI discovery / enterprise AI inventory",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "enterpriseai",
+      "governance"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "board-level reporting",
+    "building enterprise governance programmes and committees",
+    "stakeholder management across business units",
+    "regulated-industry experience (banking, insurance, pharma)"
+   ],
+   "region_specific": [
+    "EU/UK: EU AI Act and ISO/IEC 42001 dominate; GDPR; IAPP AIGP and ISO 42001 Lead Implementer certifications desirable",
+    "EU AI Office posts (Brussels) require EU citizenship",
+    "US: NIST AI RMF, state laws (Colorado AI Act), bank model-risk management",
+    "India: roles sit in consultancies/GCCs (Infosys, Accenture, Bosch, Microsoft) as consultant/risk assessor titles"
+   ],
+   "path_hits": [
+    "governance",
+    "privacy",
+    "fairness",
+    "mlops",
+    "llmevals"
+   ],
+   "path_unasked": [
+    "descstats",
+    "probbasics",
+    "hyptest",
+    "biasvar",
+    "xai",
+    "alignment",
+    "redteam",
+    "frontierevals",
+    "hallucination"
+   ],
+   "suggestions": [
+    "Split governance into or add a new topic 'AI regulation & standards in practice' (EU AI Act risk tiers, NIST AI RMF, ISO 42001, conformity assessment, AI management system audit)",
+    "Add a new topic 'Model risk management & AI assurance' (inventory, validation, monitoring, documentation such as model cards)",
+    "Add mlops (monitoring) and enterpriseai to phases; keep frontierevals and alignment optional since commercial postings rarely ask for them",
+    "Fairness and xai are expected implicitly; keep them but no posting named them explicitly"
+   ],
+   "summary": "Employers want people who can operationalise AI regulation: EU AI Act, NIST AI RMF and ISO 42001, model-risk management, risk/impact assessments and governance committees, mostly in regulated industries. UK/EU roles are compliance- and certification-heavy, US roles sit in bank model-risk functions, and India roles are consultant/risk-assessor posts in GCCs and IT services."
+  },
+  {
+   "role": "eval-engineer",
+   "title_variants": [
+    "Evals Engineer",
+    "Evaluation Engineer, Applied AI",
+    "Member of Technical Staff, Evaluations",
+    "Research Engineer, Evals",
+    "Senior AI Engineer - LLM Evaluation",
+    "AI QA & Evaluation Engineer",
+    "Model Evaluation & Data Quality Lead"
+   ],
+   "postings": [
+    {
+     "title": "Senior Member of Technical Staff, AI Quality",
+     "company": "Harper",
+     "location": "San Francisco, CA (in person)",
+     "region": "US",
+     "url": "https://talent.emcap.com/companies/harper-yc-w25/jobs/81274344-senior-member-of-technical-staff-ai-quality",
+     "requirements": [
+      "graders: deterministic checks then LLM-as-judge",
+      "human calibration on samples",
+      "production LLM/agent evals",
+      "capability and regression suite design",
+      "golden datasets",
+      "at least one major eval framework"
+     ]
+    },
+    {
+     "title": "Member of Technical Staff - Evaluations",
+     "company": "Reflection AI",
+     "location": "San Francisco, CA",
+     "region": "US",
+     "url": "https://careers.sierraventures.com/companies/reflection-ai/jobs/63807240-member-of-technical-staff-evaluations",
+     "requirements": [
+      "strong statistical analysis",
+      "experimental design to measure model improvements"
+     ]
+    },
+    {
+     "title": "Applied AI, Evaluation Engineer",
+     "company": "Mistral AI",
+     "location": "Paris, France (on-site)",
+     "region": "EU",
+     "url": "https://jobs.generalcatalyst.com/companies/mistral-ai-2/jobs/65731115-applied-ai-evaluation-engineer",
+     "requirements": [
+      "3+ years ML evaluation",
+      "benchmarking LLM and agentic systems",
+      "excellent Python",
+      "strong software design"
+     ]
+    },
+    {
+     "title": "Research Engineer, Evals",
+     "company": "White Circle",
+     "location": "London, UK (hybrid)",
+     "region": "EU",
+     "url": "https://builtinlondon.uk/job/research-engineer-evals/9970642",
+     "requirements": [
+      "published paper(s) in evals / safety evaluation",
+      "eval tooling (Promptfoo, Braintrust, LangSmith, OpenAI Evals, DeepEval or equivalent)"
+     ]
+    },
+    {
+     "title": "Senior AI Engineer - LLM Evaluation",
+     "company": "Sunriver",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://aijobs.net/job/senior-ai-engineer-llm-evaluation-apac-india-bengaluru-sunriver-196748/",
+     "requirements": [
+      "automated evaluation pipelines",
+      "evaluation strategy",
+      "DeepEval, TruLens"
+     ]
+    },
+    {
+     "title": "LLM Operations Engineer",
+     "company": "Accenture",
+     "location": "Pune, India",
+     "region": "IN",
+     "url": "https://www.bayt.com/en/india/jobs/llm-operations-engineer-75076335/",
+     "requirements": [
+      "LLM evaluation frameworks (RAGAS, TruLens, Promptfoo)",
+      "15 years full-time education"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "LLM eval frameworks/tooling (DeepEval, Ragas, TruLens, Promptfoo, LangSmith, Braintrust)",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "llmevals"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "LLM-as-judge / grader design and calibration",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "llmevals"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Benchmark and regression-suite design, golden datasets",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "llmevals",
+      "metrics"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Agent evaluation",
+     "count": 2,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "agents",
+      "llmevals"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Statistics and experimental design",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "hyptest",
+      "mlworkflow"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Automated eval pipelines / LLMOps",
+     "count": 2,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "mlops",
+      "mlworkflow"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "RAG grounding evaluation",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "rag",
+      "hallucination"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Python and production software engineering",
+     "count": 2,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Human annotation / rubric design",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "llmevals"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Safety-evaluation research publications",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "frontierevals",
+      "redteam"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "research writing / publications",
+    "working with expert annotators and review workflows"
+   ],
+   "region_specific": [
+    "EU: Mistral Paris on-site/no remote; London roles in-person or hybrid, no relocation support at one startup",
+    "US: pay $176k-550k; US work authorisation required at some startups",
+    "India: evals often sit inside 'LLM Ops' or 'AI QA' titles at IT services firms; Accenture requires 15 years full-time education"
+   ],
+   "path_hits": [
+    "llmevals",
+    "metrics",
+    "hyptest",
+    "agents",
+    "programming",
+    "hallucination",
+    "frontierevals",
+    "redteam"
+   ],
+   "path_unasked": [
+    "probbasics",
+    "descstats",
+    "cvval",
+    "biasvar",
+    "gpt",
+    "incontext",
+    "decoding",
+    "prm"
+   ],
+   "suggestions": [
+    "Add mlops/mlworkflow (eval pipelines in CI, online vs offline evals) to targets and a phase",
+    "Add rag to phase 4 (RAG grounding/faithfulness evals are the main India ask)",
+    "Add a new topic 'Human evaluation & annotation design' (rubrics, inter-rater agreement, grader calibration) or explicitly cover it inside llmevals",
+    "Keep prm optional; no commercial posting asked for it"
+   ],
+   "summary": "Employers want engineers who build eval systems: graders and LLM-as-judge, regression and benchmark suites, golden datasets, agent evals, wired into pipelines, with strong Python and statistics. US and Paris roles are at labs/startups and value research taste; India roles are framework-heavy (Ragas, DeepEval, TruLens) and often titled LLM Ops or AI QA."
+  },
+  {
+   "role": "ai-pm",
+   "title_variants": [
+    "AI Product Manager",
+    "Senior Product Manager, Generative AI",
+    "Group Product Manager, Generative AI",
+    "Principal Product Manager, AI",
+    "Technical AI Product Manager",
+    "Product Manager - Generative AI",
+    "AI Product Manager I"
+   ],
+   "postings": [
+    {
+     "title": "Senior Product Manager, Generative AI (GenAI)",
+     "company": "MongoDB",
+     "location": "New York, NY",
+     "region": "US",
+     "url": "https://www.linkedin.com/jobs/view/senior-product-manager-generative-artificial-intelligence-genai-at-mongodb-3689653323",
+     "requirements": [
+      "7+ years PM or related technical role",
+      "hands-on AI/ML product experience",
+      "LLM fine-tuning familiarity",
+      "prompt engineering",
+      "vector search",
+      "no production coding required"
+     ]
+    },
+    {
+     "title": "Group Product Manager, Google Cloud Generative AI",
+     "company": "Google",
+     "location": "New York, NY",
+     "region": "US",
+     "url": "https://www.linkedin.com/jobs/view/group-product-manager-google-cloud-generative-ai-at-google-3702386491",
+     "requirements": [
+      "10 years product experience",
+      "5 years shipping technical products",
+      "hands-on LLM work",
+      "responsible AI",
+      "ML frameworks (PyTorch, TensorFlow)"
+     ]
+    },
+    {
+     "title": "Product Manager - Generative AI",
+     "company": "Prosus",
+     "location": "Amsterdam, Netherlands",
+     "region": "EU",
+     "url": "https://jobs.eu.lever.co/prosus/4319d76d-d743-434c-b537-3fd6729b9cef",
+     "requirements": [
+      "explore data",
+      "prototype prompts",
+      "test LLM outputs",
+      "shape evaluation approaches"
+     ]
+    },
+    {
+     "title": "Product Manager - AI Products",
+     "company": "N26",
+     "location": "Berlin, Germany",
+     "region": "EU",
+     "url": "https://jobs.earlybird.com/companies/n26/jobs/92151366-product-manager-ai-products",
+     "requirements": [
+      "2+ years PM in technology-driven environment"
+     ]
+    },
+    {
+     "title": "AI Product Manager I",
+     "company": "HCLTech",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://careers.hcltech.com/job/AI-Product-Manager-I/1361191855/",
+     "requirements": [
+      "foundational AI/ML/GenAI concepts",
+      "cloud-based product environments",
+      "exposure to LLM-based applications",
+      "backlog management and user stories"
+     ]
+    },
+    {
+     "title": "AI Product Manager",
+     "company": "Ctruh",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://www.hirist.tech/j/ctruh-ai-product-manager-1618743",
+     "requirements": [
+      "5+ years product management",
+      "hands-on AI/ML coding experience"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "LLM capabilities and limits / GenAI fundamentals",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "gpt",
+      "incontext",
+      "mlbasics"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Prompt engineering / prototyping prompts",
+     "count": 2,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "incontext"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Vector search / RAG architectures",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "vecdb",
+      "rag"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Tool/API calling and agent features",
+     "count": 2,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "tooluse",
+      "agents"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Evaluation approaches, release criteria, testing LLM outputs",
+     "count": 3,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "llmevals",
+      "metrics"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Fine-tuning familiarity",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "peft",
+      "sft"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Responsible AI principles; security/compliance requirements (sensitive data, human approval)",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "governance",
+      "fairness",
+      "privacy"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "ML frameworks (PyTorch/TensorFlow) / hands-on coding",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "frameworks",
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Cloud AI platforms",
+     "count": 2,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "mlops"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "SQL / data exploration",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "dataeng"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Success metrics / product analytics",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "metrics",
+      "hyptest"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "5-10 years PM experience typical (US); 2-6 in EU/India",
+    "PRDs, specs, user stories, backlog management",
+    "translating business needs into requirements",
+    "cross-functional work with engineering and data science",
+    "roadmap ownership"
+   ],
+   "region_specific": [
+    "Berlin startup requires native German plus fluent English",
+    "EU roles stress compliance and sensitive-data requirements in release criteria",
+    "US pay $208k-375k at Google/Anthropic; in-office/hybrid days common in SF",
+    "India: IT services and consulting (HCLTech, KPMG) and Gurugram senior roles INR 41-52 LPA"
+   ],
+   "path_hits": [
+    "incontext",
+    "rag",
+    "agents",
+    "tooluse",
+    "llmevals",
+    "metrics",
+    "governance",
+    "mlbasics",
+    "gpt",
+    "fairness"
+   ],
+   "path_unasked": [
+    "probbasics",
+    "descstats",
+    "cvval",
+    "decoding",
+    "kvcache",
+    "hallucination"
+   ],
+   "suggestions": [
+    "Add vecdb and peft (as concept-level) to phases; employers expect PMs to judge RAG vs fine-tune",
+    "Add dataeng (SQL/data exploration) to phase 1",
+    "Replace kvcache in phase 5 with privacy; mark kvcache optional (no posting asked for serving internals)",
+    "Add a new topic 'AI product economics & cloud AI platforms' (cost per call, latency, build vs buy, managed model services) shared with solutions-architect"
+   ],
+   "summary": "Employers want PMs fluent in what LLMs can and cannot do, who can prototype prompts, choose between RAG, tools and fine-tuning, and define evals and release criteria with compliance. US roles demand long PM tenure and technical depth; EU roles stress hands-on evaluation and compliance, sometimes German; India roles sit in IT services/consulting with cloud and responsible-AI emphasis."
+  },
+  {
+   "role": "educator",
+   "title_variants": [
+    "AI Developer Advocate",
+    "Developer Relations Engineer",
+    "Developer Educator, Machine Learning",
+    "Senior Developer Advocate, GenAI",
+    "Developer Experience Engineer",
+    "Technology Evangelist",
+    "Developer Advocate, AI Agents"
+   ],
+   "postings": [
+    {
+     "title": "Developer Advocate",
+     "company": "Exa",
+     "location": "San Francisco or New York (in-person)",
+     "region": "US",
+     "url": "https://www.theladders.com/job/developer-advocate-exa-san-francisco-ca_88139652",
+     "requirements": [
+      "building with LLMs, agents and retrieval systems",
+      "3+ years as software engineer and/or developer advocate",
+      "demonstrable coding projects"
+     ]
+    },
+    {
+     "title": "Developer Advocate",
+     "company": "Fireworks AI",
+     "location": "US (San Francisco)",
+     "region": "US",
+     "url": "https://www.indexventures.com/startup-jobs/fireworks/developer-advocate/",
+     "requirements": [
+      "LLM APIs in production",
+      "at least one agent framework",
+      "personally fine-tuned, evaluated and deployed a model"
+     ]
+    },
+    {
+     "title": "AI Developer Advocate",
+     "company": "Mistral AI",
+     "location": "Paris / London",
+     "region": "EU",
+     "url": "https://jobs.lever.co/mistral/fd865fe4-7344-43b0-9d8d-600e8b366725",
+     "requirements": [
+      "6+ years DevRel, developer experience, evangelism or advocacy"
+     ]
+    },
+    {
+     "title": "Senior Developer Advocate (Education), EMEA",
+     "company": "n8n",
+     "location": "EMEA (remote)",
+     "region": "EU",
+     "url": "https://www.workingnomads.com/jobs/senior-developer-advocate-education-emea-n8n",
+     "requirements": [
+      "content across video, courses, blogs and meetups",
+      "roughly 2-5 years experience"
+     ]
+    },
+    {
+     "title": "Senior Developer Advocate, GenAI, AWS Developer Experience",
+     "company": "Amazon Web Services",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://www.amazon.jobs/en/jobs/3150372/senior-developer-advocate-genai-aws-developer-experience",
+     "requirements": [
+      "educate developers on generative AI tooling",
+      "AI-powered software development tools",
+      "technical thought leadership"
+     ]
+    },
+    {
+     "title": "Developer Relations Engineer - Developer Advocate",
+     "company": "Sarvam AI",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://www.sarvam.ai/careers/jobs/730c1766-ad62-4d5d-aa75-b5b0e03409aa",
+     "requirements": [
+      "engineering plus content plus community",
+      "code and content pillars",
+      "1-3 years experience"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "Building LLM apps with APIs",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "incontext",
+      "gpt"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Agents and agent frameworks",
+     "count": 2,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "agents",
+      "tooluse"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Retrieval systems / vector databases",
+     "count": 2,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "rag",
+      "vecdb"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Fine-tune, evaluate and deploy a model",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "peft",
+      "sft",
+      "llmevals",
+      "mlops"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Python and real coding projects",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "AI coding tools",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "codingagents"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Distributed systems / data platforms / ML (Anyscale)",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "disttrain",
+      "dataeng"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Technical content creation (video, courses, blogs, talks)",
+     "count": 3,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [],
+     "gap": true
+    }
+   ],
+   "soft_skills": [
+    "technical writing and content production",
+    "public speaking, meetups, hackathons",
+    "community building and feedback loops to product",
+    "take-home content test (Tessl)"
+   ],
+   "region_specific": [
+    "EU: must be eligible to work in Germany or UK and based in Berlin/London at some roles; Mistral Paris/London",
+    "US: in-person SF/NY common; pay $130k-210k",
+    "India: AWS, Google DeepMind (India DevRel strategy), NVIDIA DLI hackathons; Indian-language model labs (Sarvam)"
+   ],
+   "path_hits": [
+    "agents",
+    "rag",
+    "programming"
+   ],
+   "path_unasked": [
+    "deriv",
+    "chainrule",
+    "matrices",
+    "probbasics",
+    "gd",
+    "mlp",
+    "backprop",
+    "transformer",
+    "ddpm",
+    "reasoning",
+    "rlvr",
+    "mechinterp"
+   ],
+   "suggestions": [
+    "Path is theory-heavy; postings want builders. Add incontext, tooluse, vecdb, llmevals, codingagents and mcp to targets and phases",
+    "Mark deriv, chainrule, ddpm, rlvr and mechinterp optional",
+    "Add programming to phase 1 (Python is a must in every region)",
+    "Consider using/adding edtech as an optional topic and a non-map 'technical content & teaching craft' item (content creation is the main non-technical ask)"
+   ],
+   "summary": "Employers want developer advocates who are practising builders: Python, LLM APIs, agents, retrieval and sometimes fine-tune/eval/deploy, plus content and community skills. US roles are startup and in-person; EU roles are senior (Mistral 6+ years) or remote education roles with work-right limits; India roles come from AWS, DeepMind, NVIDIA and local model labs like Sarvam."
+  },
+  {
+   "role": "solutions-architect",
+   "title_variants": [
+    "AI Solutions Architect",
+    "Generative AI Solutions Architect",
+    "GenAI Solution Architect",
+    "Gen AI Architect",
+    "Solution Architect - Agentic Solutions",
+    "Applied AI Architect",
+    "Sr. Specialist Solution Architect - GenAI"
+   ],
+   "postings": [
+    {
+     "title": "AI Solutions Architect - Generative AI & Enterprise AI Strategy",
+     "company": "(via Dice)",
+     "location": "Remote, US",
+     "region": "US",
+     "url": "https://www.dice.com/job-detail/3dfb0bab-a176-4deb-bd16-8a9673dbf405",
+     "requirements": [
+      "enterprise-scale GenAI, LLM and RAG architectures",
+      "enterprise AI adoption",
+      "15+ years IT (one listing)"
+     ]
+    },
+    {
+     "title": "Generative AI Solutions Architect",
+     "company": "(via Dice)",
+     "location": "Remote, US",
+     "region": "US",
+     "url": "https://www.dice.com/job-detail/030a3165-f6e5-43ba-a015-0e59ae0ea8d0",
+     "requirements": [
+      "RAG pipelines",
+      "vector databases (Pinecone, FAISS, Weaviate)",
+      "multi-agent / agentic patterns",
+      "multiple model families (GPT, Claude, Gemini, Mistral, Llama)",
+      "cloud strategy, data governance, security and compliance",
+      "presales support"
+     ]
+    },
+    {
+     "title": "Senior AI Architect - Presales & Delivery",
+     "company": "Nagarro",
+     "location": "Munich, Germany",
+     "region": "EU",
+     "url": "https://www.ziprecruiter.de/jobs/558844380-senior-ai-architect-presales-delivery-m-f-d-bei-nagarro",
+     "requirements": [
+      "architect and ship AI in production",
+      "LLM applications",
+      "RAG",
+      "MLOps"
+     ]
+    },
+    {
+     "title": "Senior Solution Architect",
+     "company": "deeprec.ai (client)",
+     "location": "Munich, Germany",
+     "region": "EU",
+     "url": "https://www.ziprecruiter.de/jobs/573214594-senior-solution-architect-munich-bei-deeprec-ai",
+     "requirements": [
+      "Solutions Architect / Sales Engineer / Pre-Sales / Consulting experience",
+      "AWS, Azure or GCP",
+      "AI/ML technologies",
+      "modern MLOps practices"
+     ]
+    },
+    {
+     "title": "Sr Solution Architect",
+     "company": "HCLTech",
+     "location": "India (HCLTech careers)",
+     "region": "IN",
+     "url": "https://careers.hcltech.com/job/Sr-Solution-Architect/1361321355/",
+     "requirements": [
+      "17+ years IT, 6+ years AI/ML",
+      "Azure AI Foundry / Microsoft Foundry",
+      "Google Vertex AI / Gemini Enterprise Agent platform",
+      "LangGraph or ADK"
+     ]
+    },
+    {
+     "title": "Gen AI Architect",
+     "company": "GlobalLogic",
+     "location": "Hyderabad, India",
+     "region": "IN",
+     "url": "https://www.globallogic.com/careers/gen-ai-architect-irc293604/",
+     "requirements": [
+      "15-18 years IT, 4+ years GenAI/AI-ML architecture",
+      "secure, scalable production GenAI and agentic systems",
+      "identity, access control, data privacy, governance, compliance"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "RAG architecture",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "rag"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Vector databases",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "vecdb"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Agentic / multi-agent systems and frameworks (LangGraph, ADK)",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "agents",
+      "multiagent",
+      "tooluse"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Cloud AI platforms (Azure AI Foundry, Vertex AI, AWS Bedrock-style)",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "mlops"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "MLOps / CI/CD / Kubeflow / Airflow",
+     "count": 3,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "mlops",
+      "mlworkflow"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Security, identity, access control, data privacy",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "privacy",
+      "agentsafety"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Governance and compliance",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN",
+      "EU"
+     ],
+     "topics": [
+      "governance"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Model selection across vendors / open models",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "gpt",
+      "enterpriseai"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Enterprise AI adoption strategy",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "enterpriseai"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "presales and customer-facing solutioning",
+    "translating business needs into technical design",
+    "stakeholder coordination",
+    "mentoring engineers",
+    "very long IT tenure (10-18 years) in India and US staffing roles"
+   ],
+   "region_specific": [
+    "Zurich: German C2 + English C1 and regulatory-aware architecture standards",
+    "EU: presales/consulting background prized; hyperscaler and OpenAI Munich roles",
+    "India: IT services (HCLTech, GlobalLogic, Capgemini, EPAM) demand 13-18 years total IT and a specific hyperscaler stack; INR 40-45 lakh in one listing",
+    "US: many staffing-agency remote roles; one lists $92k-131k"
+   ],
+   "path_hits": [
+    "rag",
+    "vecdb",
+    "agents",
+    "mlops",
+    "governance",
+    "privacy",
+    "tooluse",
+    "enterpriseai"
+   ],
+   "path_unasked": [
+    "programming",
+    "dataeng",
+    "mlbasics",
+    "metrics",
+    "incontext",
+    "transformer",
+    "peft",
+    "sft",
+    "llmevals",
+    "kvcache",
+    "quant",
+    "mcp"
+   ],
+   "suggestions": [
+    "Add a new topic 'Cloud AI platforms & managed model services' (Azure AI Foundry, Vertex AI, Bedrock; build vs buy, cost) and put it in targets",
+    "Add a new topic 'Enterprise AI security architecture' (identity, access control, data residency, secrets) or extend privacy to cover it",
+    "Add multiagent to phase 5",
+    "Mark kvcache and quant optional for this role (no posting asked for serving internals); keep peft at concept level"
+   ],
+   "summary": "Employers want architects who design production RAG and agentic systems on a specific hyperscaler (Azure, Google, AWS), with MLOps, security/identity and compliance baked in, and who can do presales. India roles are IT-services posts requiring 13-18 years total experience; EU roles prize consulting/presales and in Switzerland German fluency; US listings are largely remote staffing-agency roles."
+  },
+  {
+   "role": "fde",
+   "title_variants": [
+    "Forward Deployed Engineer",
+    "Forward Deployed Engineer, GenAI",
+    "AI Forward Deployed Engineer",
+    "Forward Deployed Machine Learning Engineer",
+    "Forward Deployed AI Engineer",
+    "Forward Deployment Engineer"
+   ],
+   "postings": [
+    {
+     "title": "Forward Deployed Engineer (FDE) - NYC",
+     "company": "OpenAI",
+     "location": "New York, NY (hybrid, 3 days in office)",
+     "region": "US",
+     "url": "https://jobs.thrivecap.com/companies/openai/jobs/92970128-forward-deployed-engineer-fde-nyc",
+     "requirements": [
+      "customer-facing technical work",
+      "travel up to 50%"
+     ]
+    },
+    {
+     "title": "Forward Deployed Engineer, GenAI",
+     "company": "Scale AI",
+     "location": "New York / San Francisco",
+     "region": "US",
+     "url": "https://jobs.spacecapital.com/companies/scale-ai/jobs/69454082-forward-deployed-engineer-genai",
+     "requirements": [
+      "large-scale data processing",
+      "distributed systems",
+      "3-5 years customer-facing technical experience"
+     ]
+    },
+    {
+     "title": "Applied AI, Senior/Staff Forward Deployed Machine Learning Engineer - EMEA",
+     "company": "Mistral AI",
+     "location": "Paris / London / Amsterdam",
+     "region": "EU",
+     "url": "https://jobs.lever.co/mistral/fbd01aee-5831-48f0-984d-abbce728a2c5",
+     "requirements": [
+      "7-10+ years IC on AI products",
+      "LLM fine-tuning",
+      "RAG or agentic work"
+     ]
+    },
+    {
+     "title": "Applied AI, Forward Deployed Machine Learning Engineer - Amsterdam",
+     "company": "Mistral AI",
+     "location": "Amsterdam, Netherlands",
+     "region": "EU",
+     "url": "https://jobs.generalcatalyst.com/companies/mistral-ai-2/jobs/96602932-applied-ai-forward-deployed-machine-learning-engineer-amsterdam",
+     "requirements": [
+      "2+ years",
+      "fluent English",
+      "deep learning with PyTorch"
+     ]
+    },
+    {
+     "title": "Forward Deployed Engineer, GenAI, Google Cloud",
+     "company": "Google",
+     "location": "Bengaluru / Mumbai / Gurugram, India",
+     "region": "IN",
+     "url": "https://jobs.anitab.org/companies/google-24698/jobs/70593973-forward-deployed-engineer-generative-ai-google-cloud",
+     "requirements": [
+      "secure agentic workflows",
+      "MCP",
+      "tool-calling",
+      "OAuth-based authentication"
+     ]
+    },
+    {
+     "title": "Forward Deployment Engineer",
+     "company": "Weekday AI (client)",
+     "location": "Bengaluru, India (on-site)",
+     "region": "IN",
+     "url": "https://apply.workable.com/weekday-1/jobs/view/A14BDB8E7C.md",
+     "requirements": [
+      "AI, GenAI, LLM and agent work",
+      "strong Python/Java/TypeScript/Go/C#",
+      "REST APIs, microservices, distributed systems, enterprise integrations (second listing)"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "LLM-powered / agentic applications",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "agents",
+      "tooluse"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "RAG",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "rag",
+      "vecdb"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "LLM fine-tuning",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "sft",
+      "peft"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "MCP, tool-calling and OAuth auth for agents",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "mcp",
+      "tooluse",
+      "agentsafety"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Deep learning with PyTorch",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "frameworks"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Distributed systems / large-scale data processing",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "dataeng",
+      "parallel"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "APIs, microservices, enterprise integrations",
+     "count": 2,
+     "regions": [
+      "IN",
+      "EU"
+     ],
+     "topics": [
+      "programming",
+      "enterpriseai"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Docker/Kubernetes production deployment",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "mlops"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Deployment evaluation and iteration",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "llmevals"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Strong software engineering in a modern language",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "programming",
+      "datastruct"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "customer-facing technical work (3-5+ years typical)",
+    "requirements discovery and technical scoping",
+    "heavy travel (up to 50%)",
+    "owning deployments end to end"
+   ],
+   "region_specific": [
+    "US: on-site 3-5 days/week; travel up to 50%; $165k-250k plus equity",
+    "EU: Mistral multi-city EMEA; Databricks prefers London then Munich/Paris/Amsterdam; Amsterdam startups EUR 50-70k",
+    "India: Google Cloud multi-city (Bengaluru, Mumbai, Gurugram); IT services senior FDE 10-15 years; INR 15-80 LPA"
+   ],
+   "path_hits": [
+    "agents",
+    "tooluse",
+    "mcp",
+    "rag",
+    "vecdb",
+    "sft",
+    "peft",
+    "llmevals",
+    "mlops",
+    "programming",
+    "datastruct",
+    "dataeng",
+    "agentsafety",
+    "enterpriseai"
+   ],
+   "path_unasked": [
+    "mlbasics",
+    "metrics",
+    "gpt",
+    "incontext",
+    "decoding",
+    "hallucination",
+    "sentemb",
+    "contexteng",
+    "kvcache",
+    "quant",
+    "privacy",
+    "redteam",
+    "governance"
+   ],
+   "suggestions": [
+    "Path fits well; mark kvcache and quant optional (no posting asked for serving internals)",
+    "Add frameworks (PyTorch) as optional for ML-flavoured FDE roles (Mistral)",
+    "Add a new topic 'Enterprise integration & auth for AI systems' (APIs, OAuth, identity, connectors) or extend enterpriseai to cover it",
+    "Add parallel/distributed data processing as optional; redteam can move to optional"
+   ],
+   "summary": "Employers want strong software engineers who can scope, build and deploy LLM and agent systems at the customer, with fine-tuning/RAG for ML-flavoured roles and secure tool/MCP integration for cloud vendors. US roles are lab/startup with heavy travel and in-office days; EU roles cluster around Mistral and Databricks across London/Paris/Amsterdam; India roles are Google Cloud and staffing/IT-services posts emphasising APIs, microservices and integrations."
+  },
+  {
+   "role": "ai-qa",
+   "title_variants": [
+    "AI QA Engineer",
+    "LLM Test Engineer",
+    "AI Test Engineer (Generative AI / LLM)",
+    "GenAI QA Engineer",
+    "Senior LLM AQA Engineer",
+    "Agentic QA Engineer",
+    "Head of Testing (AI)",
+    "Lead AI Red Teaming & QA Engineer"
+   ],
+   "postings": [
+    {
+     "title": "AI QA Engineer (Agentic & Generative)",
+     "company": "(via Dice, contract)",
+     "location": "Dallas, TX",
+     "region": "US",
+     "url": "https://www.dice.com/job-detail/279117b3-b2fd-4049-9662-314e4230d8d8?q=Java+SE",
+     "requirements": [
+      "validate orchestrator logic, retries and failover",
+      "reusable test artifacts: synthetic datasets and simulators"
+     ]
+    },
+    {
+     "title": "QA Engineer (AI) - Contract - Financial Services",
+     "company": "Vertus Partners",
+     "location": "City of London, UK",
+     "region": "EU",
+     "url": "https://www.itjobswatch.co.uk/jv/Vertus-Partners/QA-Engineer-AI-Contract-Financial-Services-Job-City-of-London-London-UK-50c85l",
+     "requirements": [
+      "validate LLM and RAG systems",
+      "measure hallucinations",
+      "GBP 650/day inside IR35"
+     ]
+    },
+    {
+     "title": "Lead AI Red Teaming & QA Engineer",
+     "company": "Randstad Digital (client)",
+     "location": "City of London, UK",
+     "region": "EU",
+     "url": "https://www.randstad.co.uk/jobs/lead-ai-red-teaming-qa-engineer_city-of-london_46860122/",
+     "requirements": [
+      "automated adversarial testing of agentic AI platforms",
+      "map OWASP LLM Top 10 / agentic threats to automated tests",
+      "evidence for EU AI Act, DORA, FCA"
+     ]
+    },
+    {
+     "title": "Head of Testing (AI)",
+     "company": "Newcode.ai",
+     "location": "Dublin, Ireland (hybrid)",
+     "region": "EU",
+     "url": "https://apply.workable.com/newcode/jobs/view/E1BBDAB6A4.md",
+     "requirements": [
+      "testing AI-powered products",
+      "AI evaluation methods"
+     ]
+    },
+    {
+     "title": "Senior LLM AQA Engineer",
+     "company": "GlobalLogic",
+     "location": "Hyderabad, India",
+     "region": "IN",
+     "url": "https://www.globallogic.com/jp/careers/senior-llm-aqa-engineer-hyd-irc297064/",
+     "requirements": [
+      "AI/GenAI/LLM/chatbot/RAG testing (as reported for Hyderabad listings in the result)",
+      "Python automation"
+     ]
+    },
+    {
+     "title": "AI QA Engineer - LLM, RAG, Prompt Testing",
+     "company": "StatusNeo",
+     "location": "Gurugram, India",
+     "region": "IN",
+     "url": "https://www.foundit.in/job/ai-qa-engineer-llm-rag-prompt-testing-statusneo-gurugram-60663568",
+     "requirements": [
+      "LLM testing",
+      "RAG testing",
+      "prompt testing (from title)"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "LLM output testing (quality, consistency, accuracy, robustness)",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "llmevals"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "RAG testing (faithfulness, retrieval precision, citations)",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "rag",
+      "llmevals"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Hallucination detection / grounding checks",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "hallucination"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Agent/orchestrator testing (retries, failover)",
+     "count": 2,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "agents",
+      "tooluse"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Prompt injection / jailbreak / OWASP LLM Top 10 testing",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "redteam",
+      "agentsafety"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Eval tools (DeepEval, RAGAS, LangSmith, LLM-as-judge)",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "llmevals"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Python test automation; Playwright/Selenium/Postman",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "CI/CD integration of AI tests",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "mlops",
+      "mlworkflow"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Synthetic test data and simulators",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "synthetic"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "PII masking / data leakage prevention",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "privacy"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Regulatory test evidence (EU AI Act, DORA, FCA)",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "governance"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Using AI coding tools for testing (Claude Code, Cursor)",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "codingagents"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "test planning for large combinatorial matrices",
+    "5+ years classic QA (functional, regression, integration, performance) often required",
+    "clear defect reporting"
+   ],
+   "region_specific": [
+    "UK/EU: financial-services contracts (GBP 650/day inside IR35); EU AI Act, DORA and FCA evidence",
+    "US: sparse results; many contract and remote listings; no San Francisco postings found",
+    "India: largest volume; IT services (GlobalLogic, Deloitte) from 0-2 to 8+ years; Java/Selenium/Playwright stacks plus PySpark frameworks"
+   ],
+   "path_hits": [
+    "llmevals",
+    "rag",
+    "hallucination",
+    "agents",
+    "tooluse",
+    "redteam",
+    "agentsafety",
+    "privacy",
+    "mlops",
+    "governance",
+    "programming"
+   ],
+   "path_unasked": [
+    "hyptest",
+    "metrics",
+    "cvval",
+    "fairness",
+    "biasvar",
+    "descstats",
+    "probbasics",
+    "decoding",
+    "uncertainty",
+    "xai",
+    "dataeng",
+    "mlbasics"
+   ],
+   "suggestions": [
+    "Add a new topic 'Software testing fundamentals for AI' (test automation frameworks, regression suites, CI/CD test gates, flaky/non-deterministic test strategy); classic QA tooling is the main gap",
+    "Add synthetic to phase 4 (synthetic test data and simulators)",
+    "Mark cvval, biasvar, fairness and xai optional; postings focus on LLM apps, not classical ML",
+    "Keep governance in phase 6 but emphasise test evidence for regulation (EU)"
+   ],
+   "summary": "Employers want testers of LLM apps: output quality, RAG faithfulness, hallucination, agent failure handling and prompt-injection checks, automated in Python with eval tools and CI. UK/EU roles are finance contracts with regulatory evidence (EU AI Act, DORA, FCA); India has by far the most postings, in IT services with classic Selenium/Playwright stacks; US results were thin and mostly contract or remote."
+  }
+ ]
+}

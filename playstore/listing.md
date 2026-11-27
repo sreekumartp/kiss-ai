@@ -38,6 +38,7 @@ YOUR PROGRESS, YOUR WAY
 • Optional sign-in syncs your progress across phone and web
 • Save research papers as PDFs and read them offline
 • Study groups: learn with others on the same goal, ask questions and share progress
+• Job market signals: see what real job postings ask for in each role, by region
 • Back up and restore at any time
 • No ads, no tracking
 

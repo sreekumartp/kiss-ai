@@ -1,0 +1,1991 @@
+{
+ "roles": [
+  {
+   "role": "research-scientist",
+   "title_variants": [
+    "Research Scientist",
+    "Research Scientist, Machine Learning (PhD)",
+    "Lead Researcher - LLM",
+    "ML Research Scientist, Foundation Models",
+    "AI Research Scientist",
+    "Principal Research Scientist"
+   ],
+   "postings": [
+    {
+     "title": "Lead Researcher - LLM",
+     "company": "NeuralRec",
+     "location": "San Francisco Bay Area",
+     "region": "US",
+     "url": "https://www.linkedin.com/jobs/view/researcher-llm-at-neuralrec-3803048340",
+     "requirements": [
+      "PhD",
+      "5+ years machine learning",
+      "recent focus on LLMs"
+     ]
+    },
+    {
+     "title": "Research Scientist, FAIR SGT",
+     "company": "Meta",
+     "location": "New York, NY",
+     "region": "US",
+     "url": "https://jobs.accel.com/companies/facebook-2-07d2eb1b-d3ad-4084-93df-74a124ac9233/jobs/81106449-research-scientist-fair-sgt-new-york",
+     "requirements": [
+      "PhD",
+      "first-author publications at NeurIPS/ICML/ICLR"
+     ]
+    },
+    {
+     "title": "Machine Learning Research Scientist",
+     "company": "nPlan",
+     "location": "London, UK",
+     "region": "EU",
+     "url": "https://uk.linkedin.com/jobs/view/machine-learning-research-scientist-at-nplan-2832064383",
+     "requirements": [
+      "PhD in machine learning or related field, or peer-reviewed publications"
+     ]
+    },
+    {
+     "title": "Research Scientist (all levels), Machine Learning for Computational Biology",
+     "company": "Isomorphic Labs",
+     "location": "London, UK",
+     "region": "EU",
+     "url": "https://uk.linkedin.com/jobs/machine-learning-researcher-jobs-london",
+     "requirements": [
+      "ML for computational biology (details not in search result)"
+     ]
+    },
+    {
+     "title": "Research Scientist",
+     "company": "Wipro",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://careers.wipro.com/job/Research-Scientist/192406-en_US/",
+     "requirements": [
+      "PhD or Master's in CS/AI/ML",
+      "hands-on LLMs and generative models",
+      "implementing/reproducing papers from arXiv, NeurIPS, ICML"
+     ]
+    },
+    {
+     "title": "Principal Research Scientist",
+     "company": "Microsoft",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://jobs.anitab.org/companies/microsoft-2/jobs/87099278-principal-research-scientist",
+     "requirements": [
+      "doctorate",
+      "3+ years research experience",
+      "publications in NeurIPS, ICML"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "PhD / advanced degree",
+     "count": 6,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [],
+     "gap": false
+    },
+    {
+     "skill": "Top-venue publications (NeurIPS/ICML/ICLR)",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [],
+     "gap": true
+    },
+    {
+     "skill": "LLMs / foundation models",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "gpt",
+      "pretrain",
+      "transformer"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Generative models",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "ddpm",
+      "flowmatch",
+      "vae"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Reproducing/implementing research papers",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "frameworks"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "ML for computational biology",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "drugdisc",
+      "geodl",
+      "aiscience"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "PyTorch / JAX (seen in other foundation-model RS postings: Apple, Boston Dynamics AI Institute)",
+     "count": 0,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "frameworks"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Distributed training of large models on GPU clusters (other foundation-model RS postings)",
+     "count": 0,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "disttrain",
+      "gputrain"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "independent research agenda",
+    "scientific writing / publishing",
+    "PhD-level rigor",
+    "collaboration with research teams"
+   ],
+   "region_specific": [
+    "India postings accept Master's in place of PhD at entry level (Wipro); US/EU frontier labs expect PhD plus first-author top-venue papers",
+    "No EU AI Act / GDPR asks seen for this role"
+   ],
+   "path_hits": [
+    "transformer",
+    "gpt",
+    "ddpm",
+    "flowmatch",
+    "drugdisc"
+   ],
+   "path_unasked": [
+    "dlth",
+    "learnth",
+    "convex",
+    "ssm",
+    "moe",
+    "jepa",
+    "latentreason",
+    "diffusionlm",
+    "hybrid",
+    "mechinterp",
+    "svd",
+    "eigen"
+   ],
+   "suggestions": [
+    "Add frameworks (PyTorch & JAX) to phase 3: postings name PyTorch/JAX and paper reproduction but the path never teaches a framework",
+    "Add gpt and pretrain to phase 4 or targets: 'LLM/foundation models' is the most common technical ask",
+    "Add a new topic 'Research Methods & Paper Writing' (ablations, baselines, reproducing papers, writing for NeurIPS/ICML) - the most universal ask has no concept in the map",
+    "Add disttrain/gputrain as optional: foundation-model RS postings expect running on GPU clusters",
+    "Keep ssm, moe, jepa, diffusionlm, hybrid, latentreason optional (none were asked); keep dlth/learnth as depth but they are not screening criteria"
+   ],
+   "summary": "Employers screen research scientists mainly on credentials: PhD plus first-author papers at NeurIPS/ICML/ICLR, with hands-on LLM / generative-model work as the dominant topic. US and EU (London) frontier labs and startups want PhD and publications; India roles (Wipro, Microsoft Bengaluru) are similar at senior level but accept a Master's plus ability to reproduce papers at entry level. Specific theory topics in the path (learning theory, SSMs, JEPA) are almost never named."
+  },
+  {
+   "role": "research-engineer",
+   "title_variants": [
+    "Research Engineer, Pretraining",
+    "Research Engineer / Research Scientist, Pre-training",
+    "Research Engineer, Large-Scale Training",
+    "Senior Research Engineer, LLM Training & Post-Training",
+    "ML Research Engineer, Post-training (LLMs)",
+    "Member of Technical Staff (Research Engineer)"
+   ],
+   "postings": [
+    {
+     "title": "Research Engineer, Pretraining Scaling",
+     "company": "Anthropic",
+     "location": "San Francisco, CA (in-office 5 days)",
+     "region": "US",
+     "url": "https://jobs.generalcatalyst.com/companies/anthropic/jobs/59684642-research-engineer-pretraining-scaling",
+     "requirements": [
+      "previous experience training LLMs",
+      "JAX/TPU, PyTorch or other frameworks at scale"
+     ]
+    },
+    {
+     "title": "Research Engineer, Large-Scale Training",
+     "company": "Together AI",
+     "location": "San Francisco, CA",
+     "region": "US",
+     "url": "https://jobs.generalcatalyst.com/companies/together-ai-2/jobs/88189822-research-engineer-large-scale-training",
+     "requirements": [
+      "data/tensor/pipeline/expert parallelism",
+      "GPU architecture",
+      "mixed-precision training",
+      "distributed training paradigms",
+      "compute and memory optimisation"
+     ]
+    },
+    {
+     "title": "Research Engineer (ML track)",
+     "company": "Mistral AI",
+     "location": "Paris, France",
+     "region": "EU",
+     "url": "https://www.indexventures.com/startup-jobs/mistral/research-engineer-machine-learning-parislondonzurichwarsaw/",
+     "requirements": [
+      "Master's or PhD",
+      "4+ years on large-scale ML codebases",
+      "PyTorch, JAX or TensorFlow",
+      "distributed training with DeepSpeed, FSDP",
+      "SLURM or Kubernetes"
+     ]
+    },
+    {
+     "title": "Research Engineer (LLM Training and Performance)",
+     "company": "JetBrains",
+     "location": "London, UK (in-office)",
+     "region": "EU",
+     "url": "https://builtinlondon.uk/job/research-engineer-llm-training-and-performance/8006737",
+     "requirements": [
+      "PyTorch and PyTorch Distributed",
+      "multi-node jobs across tens to hundreds of GPUs",
+      "Megatron-LM/Megatron-Core/NeMo, DeepSpeed or FSDP/ZeRO"
+     ]
+    },
+    {
+     "title": "ML Research Engineer, Post-training (LLMs)",
+     "company": "EkaCare",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://ekacare.keka.com/careers/jobdetails/155623",
+     "requirements": [
+      "4-8 years experience",
+      "post-training models of 7B+ parameters",
+      "SFT plus at least one preference-optimisation method",
+      "TRL, NeMo RL or OpenRLHF; vLLM for rollouts",
+      "ablation discipline",
+      "LLM-as-judge evaluation"
+     ]
+    },
+    {
+     "title": "ML Research Engineer, Pre-training (LLMs)",
+     "company": "EkaCare",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://ekacare.keka.com/careers/jobdetails/155617",
+     "requirements": [
+      "2-4 years experience",
+      "continued-pretraining and mid-training ablations at proxy scale",
+      "MoE training exposure (preferred)",
+      "scaling-laws familiarity (preferred)",
+      "Indic-language / domain pretraining (preferred)",
+      "profiling or kernel work (preferred)"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "Distributed training (FSDP/ZeRO/DeepSpeed/Megatron)",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "disttrain"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "PyTorch / JAX",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "frameworks"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Hands-on LLM training / pretraining",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "pretrain",
+      "gpt"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Parallelism strategies (data/tensor/pipeline/expert)",
+     "count": 2,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "disttrain",
+      "parallel",
+      "moe"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "GPU architecture & mixed precision",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "parallel",
+      "gputrain",
+      "lowprec"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Cluster tooling (SLURM, Kubernetes)",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "mlops"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Post-training: SFT + preference optimisation",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "sft",
+      "dpo",
+      "rlhf"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Post-training stack (TRL, OpenRLHF, NeMo RL, vLLM rollouts)",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "rlhf",
+      "kvcache"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Ablation methodology / experiment rigor",
+     "count": 2,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "mlworkflow",
+      "hyptest"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "LLM-as-judge evaluation",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "llmevals"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "MoE training",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "moe",
+      "moemodern"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Scaling laws",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "scaling"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Profiling / kernel work",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "parallel",
+      "flashattn"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Multilingual / Indic pretraining data",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "datacuration",
+      "tokenization"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Large-scale ML codebases (software engineering)",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "debugging large-scale systems",
+    "rigorous experimentation",
+    "working closely with research scientists",
+    "ownership of training runs"
+   ],
+   "region_specific": [
+    "Anthropic requires in-office 5 days/week in San Francisco",
+    "Prime Intellect (US) advertises visa sponsorship and relocation",
+    "EU roles (Mistral, Cohere, H Company) often allow hybrid/remote within EU/UK and span Paris/London/Zurich",
+    "India roles emphasise post-training of open 7B+ models and Indic-language pretraining"
+   ],
+   "path_hits": [
+    "disttrain",
+    "frameworks",
+    "pretrain",
+    "gpt",
+    "moe",
+    "scaling",
+    "gputrain",
+    "parallel",
+    "sft",
+    "rlhf",
+    "dpo",
+    "lowprec",
+    "tokenization"
+   ],
+   "path_unasked": [
+    "muon",
+    "init",
+    "rlvr",
+    "reasoning",
+    "numstab",
+    "lrsched",
+    "flashattn"
+   ],
+   "suggestions": [
+    "Add llmevals to phase 5: post-training roles ask for LLM-as-judge evals and benchmarking",
+    "Add mlworkflow (ablations) to phase 2 or 5: 'ablation discipline' is a repeated ask",
+    "Add a new topic 'GPU Profiling & Kernels (CUDA/Triton)' or extend parallel to cover it; profiling/kernel work shows up for pretraining roles",
+    "Add a new topic or sub-section 'Training Clusters & Job Orchestration (SLURM, Kubernetes, checkpointing)' - not covered by mlops which is deployment-focused",
+    "Keep muon and init optional; they were not asked. Keep rlvr in frontier phase but not as a target (no posting named it)"
+   ],
+   "summary": "Research engineers are hired on hands-on large-scale training: PyTorch/JAX, multi-node distributed training (FSDP, ZeRO, DeepSpeed, Megatron), parallelism strategies and GPU efficiency. US and EU postings focus on pretraining infrastructure and scale (hundreds to thousands of GPUs, SLURM/K8s), while India postings lean toward post-training open 7B+ models (SFT, DPO/RLHF with TRL/OpenRLHF), ablations and Indic-language data. The path's core matches well; optimizer and init frontier topics are rarely asked."
+  },
+  {
+   "role": "ai-scientist",
+   "title_variants": [
+    "AI/ML Scientist",
+    "Machine Learning Scientist, Protein Design",
+    "Machine Learning Scientist - Molecular AI",
+    "Research Scientist, ML and Computational Biology",
+    "Senior Expert, Data Science & AI (Drug Discovery)",
+    "Senior Principal, AI for Biologics"
+   ],
+   "postings": [
+    {
+     "title": "AI/ML Scientist",
+     "company": "Manifold Bio",
+     "location": "Boston, MA or San Francisco, CA",
+     "region": "US",
+     "url": "https://job-boards.greenhouse.io/manifoldbio/jobs/5106949007",
+     "requirements": [
+      "PhD",
+      "5+ years industry ML research, ideally biotech/pharma",
+      "expert PyTorch and/or JAX",
+      "transformers for molecular applications",
+      "generative modeling (autoregressive, diffusion, flow matching)"
+     ]
+    },
+    {
+     "title": "Machine Learning Scientist, Protein Design",
+     "company": "Lila Sciences",
+     "location": "San Francisco, CA",
+     "region": "US",
+     "url": "https://jobs.generalcatalyst.com/companies/lila-sciences-2/jobs/93180115-machine-learning-scientist-protein-design",
+     "requirements": [
+      "MS or PhD in CS/ML/computational biology/biophysics/bioengineering",
+      "designing antibodies, nanobodies, enzymes, peptides or therapeutic proteins",
+      "design-test-learn loops with wet lab"
+     ]
+    },
+    {
+     "title": "Machine Learning Scientist - Molecular AI",
+     "company": "Nxera Pharma",
+     "location": "London, UK (hybrid)",
+     "region": "EU",
+     "url": "https://www.itjobswatch.co.uk/jv/Nxera-Pharma/Machine-Learning-Scientist-Molecular-AI-Job-London-Area-UK-51p7rf",
+     "requirements": [
+      "PhD in ML/CS/computational biology/physics/maths or equivalent",
+      "publications at NeurIPS/ICML/ICLR",
+      "molecular structures, proteins, drug discovery or computational chemistry",
+      "3D ML / geometric deep learning",
+      "molecular generation, protein modeling, docking or structure prediction"
+     ]
+    },
+    {
+     "title": "Research Scientist, Machine Learning and Computational Biology",
+     "company": "InstaDeep",
+     "location": "London, UK",
+     "region": "EU",
+     "url": "https://jobs.eu.lever.co/instadeep/b03e4fa0-7339-4a7e-b1b1-c33b9a756e4e",
+     "requirements": [
+      "MSc/PhD or equivalent industry experience",
+      "biological or chemical data and software",
+      "scaling experiments and moving research into production with engineering teams"
+     ]
+    },
+    {
+     "title": "Senior Principal, Data Science - AI for Biologics",
+     "company": "Novartis",
+     "location": "Hyderabad, India",
+     "region": "IN",
+     "url": "https://www.novartis.com/careers/career-search/job/details/req-10092233-associate-director-senior-principal-data-science-ai-biologics",
+     "requirements": [
+      "doctorate in ML/computational biology/bioinformatics/structural biology/protein engineering",
+      "5+ years turning biomedical problems into ML solutions",
+      "antibody discovery expertise"
+     ]
+    },
+    {
+     "title": "Senior Expert, Data Science & AI - Low Molecular Weight Drug Discovery",
+     "company": "Novartis",
+     "location": "Hyderabad, India",
+     "region": "IN",
+     "url": "https://www.novartis.com/al-sq/careers/career-search/job/details/req-10081176-senior-expert-data-science-ai-low-molecular-weight-drug-discovery",
+     "requirements": [
+      "4+ years ML incl. deployment and model lifecycle",
+      "ML for drug discovery: generative models and molecular design",
+      "strong Python and deep learning",
+      "Git",
+      "foundation models and geometric deep learning (desirable)"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "Drug discovery / protein & molecular design",
+     "count": 6,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "drugdisc"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "PhD / graduate degree in ML or comp-bio",
+     "count": 6,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [],
+     "gap": false
+    },
+    {
+     "skill": "Generative models (diffusion, flow matching, autoregressive) for molecules",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "ddpm",
+      "flowmatch",
+      "gpt"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Geometric / 3D deep learning",
+     "count": 2,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "geodl",
+      "gnn"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Biological / chemical data and domain software (cheminformatics, structural biology)",
+     "count": 3,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "aiscience",
+      "dataeng"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "PyTorch / JAX, deep learning",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "frameworks",
+      "mlp"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Transformers / foundation models for molecules",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "transformer",
+      "selfsup"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Structure prediction, docking",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "drugdisc",
+      "geodl"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Design-test-learn loops / lab-in-the-loop",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "aiscience",
+      "gp"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Publications at top ML venues",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [],
+     "gap": true
+    },
+    {
+     "skill": "Productionising research, model lifecycle, Git",
+     "count": 2,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "mlworkflow",
+      "mlops"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "working across ML, computational biology and experimental (wet-lab) science",
+    "collaborating with engineering teams",
+    "translating biomedical problems into ML problems",
+    "publications/patents/open-source as evidence"
+   ],
+   "region_specific": [
+    "US startups (Manifold, Lila) are on-site in Boston/SF",
+    "India demand concentrated in Hyderabad big-pharma GCCs (Novartis) at senior level; Bengaluru postings were scarce",
+    "London postings show GBP 85k-100k for molecular AI",
+    "No EU AI Act / GDPR asks seen"
+   ],
+   "path_hits": [
+    "drugdisc",
+    "geodl",
+    "gnn",
+    "aiscience",
+    "transformer",
+    "frameworks",
+    "selfsup",
+    "gp"
+   ],
+   "path_unasked": [
+    "weather",
+    "sciml",
+    "causal",
+    "uncertainty",
+    "hyptest",
+    "bayesinf",
+    "agents",
+    "reasoning"
+   ],
+   "suggestions": [
+    "Add ddpm and flowmatch to phase 4 (structure-aware models) or targets: generative diffusion/flow models for molecules are asked in all three regions",
+    "Add a new topic 'Molecular & Protein Representations (SMILES, structures, protein language models, docking)' as the bridge between drugdisc and geodl - domain data handling is a gap",
+    "Mark weather and sciml as optional (already) and consider moving uncertainty/causal to optional; postings were dominated by bio/chem",
+    "Add mlworkflow or mlops as optional: India/EU postings ask for model lifecycle and research-to-production",
+    "Consider making drugdisc a required target rather than optional - it was the single most common ask"
+   ],
+   "summary": "In 2026 'AI for science' hiring is overwhelmingly drug discovery and protein design: employers want a PhD (or MS + experience), molecular generative models (diffusion/flow matching), geometric deep learning and real biological/chemical data experience. US startups emphasise generative protein design with wet-lab loops; London adds top-venue publications and 3D/geometric DL; India demand sits in Hyderabad pharma centres (Novartis) at senior levels with production/lifecycle skills. Physics/weather topics were not asked."
+  },
+  {
+   "role": "mlops",
+   "title_variants": [
+    "MLOps Engineer",
+    "Senior MLOps Engineer",
+    "ML Platform Engineer",
+    "MLOps / LLMOps Engineer",
+    "Machine Learning Operations Lead",
+    "SRE, ML Platform"
+   ],
+   "postings": [
+    {
+     "title": "Sr. ML Ops Engineer, Forward-Deployed",
+     "company": "6sense",
+     "location": "San Francisco, CA",
+     "region": "US",
+     "url": "https://job-boards.greenhouse.io/6sense/jobs/8304088",
+     "requirements": [
+      "Airflow",
+      "Spark",
+      "MLflow",
+      "model registries",
+      "feature pipelines"
+     ]
+    },
+    {
+     "title": "MLOps Lead",
+     "company": "Fundamental",
+     "location": "San Francisco HQ / remote US",
+     "region": "US",
+     "url": "https://swooped.co/job-postings/mlops-lead-remote-fundamental-5e992",
+     "requirements": [
+      "build model-serving infrastructure",
+      "Triton, TorchServe, TensorFlow Serving, KServe"
+     ]
+    },
+    {
+     "title": "Senior MLOps Engineer (ML workflows engineering)",
+     "company": "JetBrains",
+     "location": "Amsterdam, NL / Berlin, DE",
+     "region": "EU",
+     "url": "https://job-boards.eu.greenhouse.io/jetbrains/jobs/4764813101",
+     "requirements": [
+      "Kubernetes",
+      "GCP and AWS",
+      "ML orchestration frameworks"
+     ]
+    },
+    {
+     "title": "MLOps Engineer",
+     "company": "Adyen",
+     "location": "Amsterdam, NL",
+     "region": "EU",
+     "url": "https://www.themuse.com/jobs/adyen/mlops-engineer",
+     "requirements": [
+      "(py)spark",
+      "MLflow or similar MLOps frameworks",
+      "Airflow"
+     ]
+    },
+    {
+     "title": "MLOps / LLMOps Engineer",
+     "company": "NIIT Technologies",
+     "location": "Hyderabad, India",
+     "region": "IN",
+     "url": "https://www.foundit.in/job/mlops-llmops-engineer-niit-technologies-hyderabad-secunderabad-telangana-57795185",
+     "requirements": [
+      "6+ years",
+      "Docker, Kubernetes, cloud-native architecture",
+      "MLOps/LLMOps",
+      "RAG",
+      "MCP",
+      "agentic AI orchestration",
+      "LLMs",
+      "Python",
+      "AWS/Azure/GCP"
+     ]
+    },
+    {
+     "title": "MLOps Engineer",
+     "company": "Capgemini",
+     "location": "Pune, India",
+     "region": "IN",
+     "url": "https://careers.capgemini.com/job/Pune-MLops-Engineer/1407316433/",
+     "requirements": [
+      "Python",
+      "TensorFlow, PyTorch, scikit-learn",
+      "MLflow, Kubeflow or TFX"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "Kubernetes / Docker / containers",
+     "count": 2,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "mlops"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "MLflow / model registry / experiment tracking",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "mlworkflow",
+      "mlops"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Pipeline orchestration (Airflow, Kubeflow, TFX)",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "mlworkflow",
+      "dataeng"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Spark / big-data processing",
+     "count": 2,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "dataeng"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Feature pipelines / feature stores",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "features",
+      "dataeng"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Model serving (Triton, TorchServe, KServe; vLLM/TGI/TensorRT-LLM in other postings)",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "mlops",
+      "kvcache"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Cloud platforms (AWS/GCP/Azure, SageMaker, Vertex)",
+     "count": 2,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "mlops"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "ML frameworks (PyTorch, TensorFlow, scikit-learn)",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "frameworks"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Python",
+     "count": 2,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "LLMOps: RAG, MCP, agent orchestration",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "rag",
+      "mcp",
+      "agents"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "CI/CD, Terraform/IaC (other postings: GlobalLogic, fintech EU)",
+     "count": 0,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "mlops"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "GPU scheduling & resource management (other postings)",
+     "count": 0,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "parallel",
+      "gputrain"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Monitoring, drift detection, rollback (other postings)",
+     "count": 0,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "mlops",
+      "anomaly"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "production reliability / on-call ownership",
+    "working with data scientists and researchers",
+    "forward-deployed customer work (6sense)"
+   ],
+   "region_specific": [
+    "Some US postings (Dice, Austin/Sunnyvale SRE ML Platform) state no visa sponsorship",
+    "US roles lean to on-site/hybrid Bay Area; EU roles often hybrid with GCP/AWS",
+    "India postings are heavily services firms (Capgemini, NIIT, NTT DATA, GlobalLogic) and increasingly bundle LLMOps (RAG, MCP, agents) and Azure/AWS Bedrock",
+    "No EU AI Act / GDPR asks seen"
+   ],
+   "path_hits": [
+    "mlops",
+    "mlworkflow",
+    "dataeng",
+    "frameworks",
+    "programming",
+    "kvcache",
+    "rag",
+    "mcp",
+    "agents",
+    "features"
+   ],
+   "path_unasked": [
+    "complexity",
+    "datastruct",
+    "disttrain",
+    "specdec",
+    "quant",
+    "vecdb",
+    "cvval",
+    "metrics",
+    "agentsafety"
+   ],
+   "suggestions": [
+    "Add a new topic 'Containers, Kubernetes & Cloud for ML' (Docker, K8s, Helm, SageMaker/Vertex, IaC, CI/CD) - the single most common MLOps ask and missing from the map",
+    "Add a new topic 'Model Monitoring & Drift' (data/concept drift, observability, rollback) or expand mlops to include it",
+    "Add 'Workflow Orchestration & Feature Stores' (Airflow, Kubeflow, feature stores) to mlworkflow/dataeng content or as a new topic",
+    "Add rag and agents as optional in phase 5 for LLMOps (India and US postings ask)",
+    "Move specdec and disttrain to optional; keep quant/kvcache in Serving but not as core targets for classic MLOps"
+   ],
+   "summary": "MLOps employers want production platform skills: Kubernetes/Docker, cloud (AWS/GCP/Azure), pipeline orchestration (Airflow, Kubeflow), MLflow/model registries, CI/CD and model serving. US postings add LLM serving engines (vLLM, Triton, KServe) and feature stores; EU (Amsterdam/Berlin) emphasise Kubernetes + MLflow + Spark; India (Pune/Hyderabad services firms) increasingly bundle LLMOps (RAG, MCP, agents). The map's biggest hole is infrastructure: no topic covers containers, Kubernetes, cloud or monitoring."
+  },
+  {
+   "role": "inference-perf",
+   "title_variants": [
+    "Inference Engineer",
+    "LLM Inference Frameworks and Optimization Engineer",
+    "GPU Optimization Engineer",
+    "Member of Technical Staff, Kernel Engineering",
+    "Performance Engineer, Inference",
+    "Senior Inference Engineer, GPU Kernel Optimization"
+   ],
+   "postings": [
+    {
+     "title": "Member of Technical Staff, Kernel Engineering",
+     "company": "Inferact",
+     "location": "San Francisco, CA",
+     "region": "US",
+     "url": "https://www.theladders.com/job/member-of-technical-staff-kernel-engineering-inferact-san-francisco-ca_87424404",
+     "requirements": [
+      "deep experience writing CUDA kernels or equivalents (CuTeDSL, Triton, TileLang, Pallas)",
+      "vLLM ecosystem"
+     ]
+    },
+    {
+     "title": "GPU Optimization Engineer",
+     "company": "(employer not named in result)",
+     "location": "San Francisco, CA",
+     "region": "US",
+     "url": "https://www.tealhq.com/job/gpu-optimization-engineer_7ea1a6cfaf71b8d3b0f87bbb4cde20755bb28",
+     "requirements": [
+      "strong CUDA and/or Triton",
+      "GPU memory hierarchy, scheduling and occupancy"
+     ]
+    },
+    {
+     "title": "GPU Engineer",
+     "company": "Kog",
+     "location": "Paris, France (remote-friendly, 1 week/month in office)",
+     "region": "EU",
+     "url": "https://www.ziprecruiter.fr/jobs/563450897-gpu-engineer-a-kog-labs",
+     "requirements": [
+      "CUDA",
+      "HIP",
+      "GEMM",
+      "profiling",
+      "optimisation of LLM inference engine"
+     ]
+    },
+    {
+     "title": "Member of Technical Staff, Inference",
+     "company": "Genesis AI",
+     "location": "Paris / London (hybrid)",
+     "region": "EU",
+     "url": "https://swooped.co/job-postings/member-technical-staff-inference-paris-london-paris-genesis-ai-httpsjobsashbyhqcomgenesis-ai5a9a58b4-3c11-4eb0-bc1f-58f8b34d676crefdailyremoteutmsourcedailyremotecomutmcampaigndailyremotecomutmmediumdailyremotecom-fab24",
+     "requirements": [
+      "CUDA",
+      "Triton",
+      "kernel optimisation",
+      "quantization",
+      "memory and compute scheduling",
+      "on-device robotics inference"
+     ]
+    },
+    {
+     "title": "Kernel Optimisation & Inference Engineer",
+     "company": "EkaCare",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://ekacare.keka.com/careers/jobdetails/155614",
+     "requirements": [
+      "2-5 years",
+      "working CUDA knowledge",
+      "GPU memory hierarchy",
+      "explain why FlashAttention is fast"
+     ]
+    },
+    {
+     "title": "Performance Engineer, Inference",
+     "company": "Sarvam AI",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://jobs.khoslaventures.com/companies/sarvam-ai-2/jobs/89399732-performance-engineer-inference",
+     "requirements": [
+      "C++ and CUDA (read and modify)",
+      "on-call ownership of inference SLO",
+      "upstream contributions to open-source serving engines (plus)"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "CUDA kernel programming",
+     "count": 6,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "parallel"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Triton / kernel DSLs (CuTe, TileLang, Pallas)",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "parallel",
+      "frameworks"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "GPU memory hierarchy, occupancy, scheduling",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "parallel"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Profiling and benchmarking",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "parallel"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "LLM serving engines (vLLM, SGLang, TensorRT-LLM)",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "kvcache"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Efficient attention (FlashAttention)",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "flashattn"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Quantization",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "quant"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "GEMM / matrix kernels",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "matrices",
+      "parallel"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Non-NVIDIA hardware (AMD ROCm/HIP, TPU/XLA)",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "parallel"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "C++",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "On-device / edge inference",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "smallmodels",
+      "quant"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Production serving reliability (SLOs, on-call)",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "mlops"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Speculative decoding, continuous batching, KV cache mgmt (other IN postings)",
+     "count": 0,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "specdec",
+      "kvcache"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Collective comms (AllReduce/AllGather) multi-GPU (NVIDIA EU posting)",
+     "count": 0,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "disttrain",
+      "parallel"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "open-source contributions (vLLM, SGLang, FlashInfer, CUTLASS)",
+    "measurable latency/throughput wins",
+    "ownership/on-call"
+   ],
+   "region_specific": [
+    "US startup Luminal restricts cloud inference role to US citizens/visa holders",
+    "US base pay roughly $150k-$400k (Inferact $200k-400k)",
+    "EU roles hybrid in Paris/London; some Germany roles focus on mobile GPU kernels",
+    "India (Bengaluru) Indic-LLM labs (Sarvam) and NVIDIA Bengaluru/Hyderabad; one Bengaluru role at ~INR 24-36 LPA"
+   ],
+   "path_hits": [
+    "parallel",
+    "flashattn",
+    "kvcache",
+    "quant",
+    "specdec",
+    "matrices",
+    "programming",
+    "smallmodels",
+    "disttrain",
+    "frameworks"
+   ],
+   "path_unasked": [
+    "binary",
+    "numstab",
+    "complexity",
+    "lowprec",
+    "moemodern",
+    "distill",
+    "selfattn"
+   ],
+   "suggestions": [
+    "Add a new topic 'GPU Kernel Programming (CUDA, Triton, CUTLASS)' after parallel - CUDA kernels are asked in every posting and the map only has a generic parallel-computing topic",
+    "Add a new topic 'Performance Profiling & Roofline Analysis' (Nsight, memory-bound vs compute-bound, benchmarking)",
+    "Add a new topic or section on 'LLM Serving Engines (vLLM, SGLang, TensorRT-LLM, continuous batching)' or make kvcache explicitly cover it",
+    "Add programming note for C++ or a 'Systems Programming (C++)' topic",
+    "Keep lowprec, moemodern and distill optional (not asked); binary/numstab are useful foundations but not screening criteria"
+   ],
+   "summary": "Inference/GPU performance roles screen almost entirely on hands-on CUDA (and increasingly Triton/CuTe) kernel work, GPU memory-hierarchy understanding and LLM serving engines (vLLM, SGLang, TensorRT-LLM), plus quantization and profiling. US startups pay $150k-$400k and prize open-source vLLM/SGLang contributions; EU (Paris/London/Germany) roles add AMD/HIP and on-device kernels; India (Bengaluru) roles mirror the US stack with C++/CUDA and SLO ownership. The path's serving topics fit, but kernel programming and profiling have no dedicated topic."
+  },
+  {
+   "role": "data-engineer",
+   "title_variants": [
+    "LLM Dataset Engineer",
+    "Pre-Training Data Infrastructure Engineer",
+    "Member of Technical Staff, Data Curation",
+    "ML Engineer (Data), Foundational Models",
+    "AI Data Engineer",
+    "Synthetic Data Engineer",
+    "Data Engineer (GenAI / LLM Applications)"
+   ],
+   "postings": [
+    {
+     "title": "LLM Dataset Engineer",
+     "company": "Sciforium",
+     "location": "San Francisco, CA",
+     "region": "US",
+     "url": "https://jobs.signalfire.com/companies/sciforium/jobs/64663193-llm-dataset-engineer",
+     "requirements": [
+      "5+ years in data science or ML",
+      "pipelines for data cleaning",
+      "exact/fuzzy deduplication",
+      "high-quality signal extraction from petabytes of unstructured data"
+     ]
+    },
+    {
+     "title": "Research / Data role (pretraining data)",
+     "company": "PRIME Intellect",
+     "location": "San Francisco, CA / remote",
+     "region": "US",
+     "url": "https://www.primeintellect.ai/careers/eecf9af5-46fb-4b62-b8c8-921098fd6514",
+     "requirements": [
+      "web crawling",
+      "document extraction",
+      "code-data collection",
+      "large-scale corpus curation"
+     ]
+    },
+    {
+     "title": "AI Specialist - LLM & Data Engineering",
+     "company": "Bolt Insight",
+     "location": "London, UK (hybrid)",
+     "region": "EU",
+     "url": "https://www.itjobswatch.co.uk/jv/Bolt-Insight/AI-Specialist-LLM-Data-Engineering-Job-London-UK-4wfoaj",
+     "requirements": [
+      "building datasets and pipelines for LLM training, evaluation or retrieval",
+      "automated evaluation frameworks for LLM quality",
+      "benchmark datasets"
+     ]
+    },
+    {
+     "title": "Senior Staff Data Engineer",
+     "company": "DeepL",
+     "location": "London, UK / Berlin, DE",
+     "region": "EU",
+     "url": "https://www.indexventures.com/startup-jobs/deepl/senior-staff-data-engineer/",
+     "requirements": [
+      "Apache Airflow",
+      "dbt",
+      "Apache Spark",
+      "Kafka or similar"
+     ]
+    },
+    {
+     "title": "ML Engineer (Data), Foundational Models",
+     "company": "Sarvam AI",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://jobs.khoslaventures.com/companies/sarvam-ai-2/jobs/79666573-ml-engineer-data-foundational-models",
+     "requirements": [
+      "large-scale curation and filtering pipelines for pre- and post-training",
+      "data-quality classifiers",
+      "tokenizer choices",
+      "ingestion through packing at petabyte scale",
+      "multilingual data (desirable)",
+      "first-author papers on data curation (desirable)"
+     ]
+    },
+    {
+     "title": "Senior Technical Specialist (GenAI data)",
+     "company": "HCLTech",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://careers.hcltech.com/job/Senior-Technical-Specialist/1363661455/",
+     "requirements": [
+      "RAG architecture",
+      "vector databases",
+      "LLM integration",
+      "cloud data platforms"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "Large-scale data pipelines / ETL",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "dataeng"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Pretraining corpus curation & filtering",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "datacuration"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Deduplication (exact/fuzzy)",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "datacuration"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Quality classifiers / signal extraction",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "datacuration",
+      "logreg",
+      "tfidf"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Web crawling & document extraction",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "datacuration",
+      "docai"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Spark / Airflow / dbt / Kafka",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "dataeng"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Datasets for LLM evaluation / benchmarks",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "llmevals"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Tokenizer choices / sequence packing",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "tokenization",
+      "pretrain"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Multilingual data",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "datacuration",
+      "tokenization"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "RAG and vector databases",
+     "count": 2,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "rag",
+      "vecdb"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Cloud data platforms",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "dataeng"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Synthetic data generation (Typesafe, Subquadratic, London startup postings)",
+     "count": 0,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "synthetic"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Training-data contamination analysis (other US posting)",
+     "count": 0,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "llmevals",
+      "datacuration"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Fine-tuning exposure LoRA/PEFT (EXL, GlobalLogic India postings)",
+     "count": 0,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "peft"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "defending dataset choices with evidence",
+    "working with research teams",
+    "research papers on data curation (desirable)"
+   ],
+   "region_specific": [
+    "US frontier labs pay very high ($200k-$555k) and some (Pantheon, PRIME Intellect) offer visa sponsorship; Typesafe AI is fully on-site SF",
+    "EU (London/Berlin) roles are classic data-platform stacks (Spark, Airflow, dbt, Kafka); none found in Dublin",
+    "India: only Sarvam is a true pretraining-data role (multilingual/Indic); most Bengaluru/Gurugram 'AI data engineer' roles are services-firm RAG/ETL jobs with 4-12 years experience",
+    "No GDPR/EU AI Act data-governance asks surfaced in results"
+   ],
+   "path_hits": [
+    "dataeng",
+    "datacuration",
+    "tokenization",
+    "vecdb",
+    "llmevals",
+    "tfidf",
+    "synthetic"
+   ],
+   "path_unasked": [
+    "viz",
+    "descstats",
+    "hyptest",
+    "ngram",
+    "sentemb",
+    "distill",
+    "privacy",
+    "metrics",
+    "mlworkflow"
+   ],
+   "suggestions": [
+    "Add a new topic 'Data Platform Tooling (Spark, Airflow, dbt, Kafka, cloud warehouses)' - classic big-data stack is asked in EU/India but dataeng is a generic wrangling topic",
+    "Add rag to phase 4 or as optional: India and London 'AI data engineer' roles are RAG-pipeline jobs",
+    "Add pretrain (sequence packing, mixtures) as optional in phase 4",
+    "Move privacy to optional: no posting asked for it despite being a target; keep synthetic as target (asked in US/EU)",
+    "Make ngram and viz optional or drop; consider adding 'Deduplication & Near-Duplicate Detection (MinHash/LSH)' explicitly inside datacuration"
+   ],
+   "summary": "Two distinct jobs share this title: frontier-lab pretraining-data engineers (US, Sarvam in India) who curate, dedupe, filter and classify petabyte-scale web/code corpora, and enterprise 'AI data engineers' (EU and most India roles) who build Spark/Airflow/dbt pipelines and RAG/vector-DB ingestion. US roles pay most and add synthetic data and contamination analysis; London/Berlin emphasise data-platform tools; India is dominated by services-firm GenAI/RAG pipelines. The path fits the curation side well but misses the platform tooling and RAG ingestion side."
+  },
+  {
+   "role": "safety-researcher",
+   "title_variants": [
+    "Research Engineer / Scientist, Alignment Science",
+    "Researcher, Alignment Interpretability",
+    "Research Scientist, AI Safety and Alignment",
+    "Research Scientist - Model Transparency",
+    "(Alignment) Research Engineer/Scientist - Red Team",
+    "Research Engineer, AGI Safety and Alignment",
+    "Research Scientist - RLHF, RLAIF & Reward Modeling"
+   ],
+   "postings": [
+    {
+     "title": "Researcher, Alignment Interpretability",
+     "company": "OpenAI",
+     "location": "San Francisco, CA",
+     "region": "US",
+     "url": "https://openai.com/careers/researcher-alignment-interpretability-san-francisco/",
+     "requirements": [
+      "experience in AI safety, alignment or mechanistic interpretability",
+      "drive a mechanistic interpretability research plan"
+     ]
+    },
+    {
+     "title": "Research Scientist, AI Safety and Alignment",
+     "company": "Scale AI (Scale Labs)",
+     "location": "San Francisco, CA",
+     "region": "US",
+     "url": "https://www.indexventures.com/startup-jobs/scale/research-scientist-ai-safety-and-alignment/",
+     "requirements": [
+      "track record of published ML research, especially AI safety",
+      "familiarity with NIST AI RMF and EU AI Act"
+     ]
+    },
+    {
+     "title": "Research Engineer/Research Scientist - Model Transparency",
+     "company": "AI Security Institute (UK)",
+     "location": "London, UK",
+     "region": "EU",
+     "url": "https://job-boards.eu.greenhouse.io/aisi/jobs/4848454101",
+     "requirements": [
+      "hands-on interpretability / white-box work",
+      "familiarity with alignment literature and post-training methods",
+      "technical safety mentorship/training e.g. MATS",
+      "strong software engineering (RE)",
+      "mechanistic interpretability tooling at scale",
+      "open-source work",
+      "proficient with LLM coding tools and agents"
+     ]
+    },
+    {
+     "title": "Research Engineer, AGI Safety and Alignment",
+     "company": "Google DeepMind",
+     "location": "London, UK",
+     "region": "EU",
+     "url": "https://jobs.anitab.org/companies/google-24698/jobs/87274115-research-engineer-agi-safety-and-alignment-deepmind",
+     "requirements": [
+      "applied research on safety/alignment of frontier AI",
+      "training large models via SFT or RLHF",
+      "areas: alignment stress testing, LM interpretability, agent control, amplified oversight"
+     ]
+    },
+    {
+     "title": "Research Scientist - RLHF, RLAIF & Reward Modeling",
+     "company": "Weekday (client)",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://apply.workable.com/weekday-1/jobs/view/00DE8D2969.md",
+     "requirements": [
+      "3+ years",
+      "RLHF, RLAIF and reward modeling",
+      "model evaluation",
+      "red-teaming",
+      "AI safety or alignment research"
+     ]
+    },
+    {
+     "title": "Senior Researcher (LLM safety & security)",
+     "company": "Fujitsu Research India",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://www.jobs.global.fujitsu.com/job/Senior-Researcher/8547-en_US/",
+     "requirements": [
+      "PhD",
+      "LLM safety, security and alignment",
+      "robustness against adversarial prompts and jailbreaks"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "AI safety / alignment research experience",
+     "count": 5,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "alignment"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Mechanistic interpretability / white-box methods",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "mechinterp",
+      "saes"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Published research / fellowships (MATS) / open source",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [],
+     "gap": true
+    },
+    {
+     "skill": "Post-training: SFT, RLHF, RLAIF, reward modeling",
+     "count": 3,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "sft",
+      "rlhf",
+      "cai"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Red-teaming / jailbreak robustness",
+     "count": 2,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "redteam",
+      "adversarial"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Model evaluation",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "llmevals",
+      "frontierevals"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Agent control / amplified oversight",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "scalableov",
+      "agentsafety"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Alignment stress testing",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "frontierevals",
+      "redteam"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Strong software / ML engineering (Python, PyTorch, Inspect)",
+     "count": 2,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "programming",
+      "frameworks"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "LLM coding tools and agents",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "codingagents"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Governance frameworks (NIST AI RMF, EU AI Act)",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "governance"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "PhD",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [],
+     "gap": false
+    },
+    {
+     "skill": "CoT monitorability (OpenAI posting title)",
+     "count": 0,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "cotmon"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "independent research agenda",
+    "research communication / writing papers",
+    "mentorship through programmes like MATS",
+    "collaboration across safety teams",
+    "application deadlines and expression-of-interest processes (AISI, Anthropic)"
+   ],
+   "region_specific": [
+    "Scale (US) asks for NIST AI RMF and EU AI Act familiarity",
+    "UK AISI is a government body: fixed deadlines (e.g. 11 Oct 2026) and likely UK nationality/security vetting requirements (not stated in results)",
+    "US/UK labs accept a bachelor's or equivalent experience (Anthropic) whereas India research roles (Fujitsu) expect a PhD",
+    "India safety roles lean to RLHF/reward modeling and jailbreak robustness; some India 'AI safety analyst' listings are language-fluency red-teaming gigs (e.g. English + Odia)",
+    "US pay very high: OpenAI $295k-$500k, Anthropic $280k-$690k; Anthropic London GBP 260k-370k; Bengaluru RLHF role INR 50-100 LPA"
+   ],
+   "path_hits": [
+    "alignment",
+    "mechinterp",
+    "saes",
+    "rlhf",
+    "cai",
+    "redteam",
+    "frontierevals",
+    "scalableov",
+    "agentsafety",
+    "cotmon",
+    "governance"
+   ],
+   "path_unasked": [
+    "infotheory",
+    "kl",
+    "gd",
+    "xai",
+    "hallucination"
+   ],
+   "suggestions": [
+    "Add sft and frameworks (PyTorch) to phase 2/3: postings expect hands-on training of large models and ML engineering, which the path omits",
+    "Add llmevals to phase 5 and mention evaluation harnesses like Inspect",
+    "Add governance as optional: US industry postings ask for NIST AI RMF / EU AI Act familiarity",
+    "Add codingagents as optional: AISI explicitly asks for proficiency with LLM coding agents",
+    "Keep xai and hallucination optional; infotheory/kl are useful foundations but never asked",
+    "Consider a new topic 'Research Practice for Safety (running experiments, writing papers, fellowships like MATS)' since a public research record is a top screening criterion"
+   ],
+   "summary": "Safety employers want demonstrated alignment research (papers, MATS-style fellowships, open-source), hands-on interpretability and post-training (SFT/RLHF), plus strong Python/PyTorch engineering. US labs (OpenAI, Anthropic, Scale) pay $216k-$690k and accept non-PhDs with strong output, sometimes asking for governance frameworks; London (AISI, DeepMind) emphasises interpretability, red-teaming, oversight and agent control; Bengaluru roles centre on RLHF/reward modeling and jailbreak robustness, with research tracks expecting a PhD. The path's targets match well; it under-weights hands-on training and evals."
+  }
+ ]
+}

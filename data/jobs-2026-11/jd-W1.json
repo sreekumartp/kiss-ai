@@ -1,0 +1,1837 @@
+{
+ "roles": [
+  {
+   "role": "data-scientist",
+   "title_variants": [
+    "Data Scientist",
+    "Senior Data Scientist",
+    "Data Scientist, Product",
+    "Data Scientist, Analytics",
+    "Data Scientist, Core Experimentation",
+    "Data Scientist Consultant"
+   ],
+   "postings": [
+    {
+     "title": "Data Scientist",
+     "company": "Happyrobot",
+     "location": "San Francisco, US",
+     "region": "US",
+     "url": "https://www.talentify.io/data-scientist-san-francisco-us-happyrobot-inc",
+     "requirements": [
+      "experimental design",
+      "A/B testing",
+      "statistics",
+      "causal inference",
+      "hypothesis-driven analysis"
+     ]
+    },
+    {
+     "title": "Data Scientist, Product",
+     "company": "OpenAI",
+     "location": "San Francisco, CA",
+     "region": "US",
+     "url": "https://linkedin.com/jobs/view/founding-data-scientist-at-openai-3477151156",
+     "requirements": [
+      "rigorous experiments",
+      "SQL",
+      "Python",
+      "product recommendations from insights",
+      "5+ years quantitative role"
+     ]
+    },
+    {
+     "title": "Data Scientist",
+     "company": "Depop",
+     "location": "London, UK",
+     "region": "EU",
+     "url": "https://uk.linkedin.com/jobs/view/data-scientist-at-depop-3813078493",
+     "requirements": [
+      "production-grade Python",
+      "scikit-learn, TensorFlow or PyTorch",
+      "predictive modelling / ML"
+     ]
+    },
+    {
+     "title": "Data Scientist",
+     "company": "Transport for London",
+     "location": "London, UK",
+     "region": "EU",
+     "url": "https://uk.linkedin.com/jobs/view/data-scientist-at-transport-for-london-3516873402",
+     "requirements": [
+      "cloud services (Azure, AWS or Google Cloud)",
+      "UK data protection law / GDPR",
+      "Python"
+     ]
+    },
+    {
+     "title": "Data Scientist",
+     "company": "Kenvue",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://in.linkedin.com/jobs/view/data-scientist-at-kenvue-3822297839",
+     "requirements": [
+      "4+ years as data scientist",
+      "R, Python",
+      "SQL, Hadoop/Hive, Scala",
+      "Azure and AWS data tools"
+     ]
+    },
+    {
+     "title": "Data Scientist Consultant",
+     "company": "EY",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://in.linkedin.com/jobs/view/data-scientist-consultant-at-ey-3527473898",
+     "requirements": [
+      "storytelling for non-technical audiences",
+      "PowerPoint / Power BI",
+      "ML and statistics"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "Python",
+     "count": 5,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "SQL",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "dataeng"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "A/B testing and experiment design",
+     "count": 2,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "hyptest",
+      "mlworkflow"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Statistics / hypothesis testing",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "hyptest",
+      "descstats"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Causal inference",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "causal"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Predictive modelling / ML",
+     "count": 2,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "mlbasics",
+      "linreg",
+      "logreg",
+      "boosting"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "scikit-learn / TensorFlow / PyTorch",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "frameworks",
+      "mlbasics"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Cloud data platforms (Azure, AWS, GCP)",
+     "count": 2,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "mlops",
+      "dataeng"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Big data (Hadoop/Hive, Spark, Scala)",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "dataeng",
+      "parallel"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "BI / dashboards (Power BI, Tableau)",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "viz"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "R",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "LLM outputs / LLM-as-judge (aggregator listing, not counted as posting)",
+     "count": 0,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "llmevals",
+      "sentemb"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "communicating results to non-technical stakeholders",
+    "turning insights into product recommendations",
+    "data storytelling (slides, dashboards)",
+    "stakeholder partnership with product and commercial teams"
+   ],
+   "region_specific": [
+    "EU/UK: GDPR and UK data protection law (TfL)",
+    "EU/UK: some postings prefer top-tier university degree (Bank of England, Lorien) and sector regulation knowledge (Bank of England)",
+    "IN: heavier emphasis on big-data stack (Hadoop/Hive/Scala) and consulting-style storytelling (EY)"
+   ],
+   "path_hits": [
+    "programming",
+    "dataeng",
+    "hyptest",
+    "causal",
+    "mlbasics",
+    "linreg",
+    "logreg",
+    "boosting",
+    "viz",
+    "descstats",
+    "mlworkflow"
+   ],
+   "path_unasked": [
+    "kmeans",
+    "pca",
+    "timeseries",
+    "bayesinf",
+    "mle",
+    "clt",
+    "anomaly",
+    "vectors",
+    "rag",
+    "incontext"
+   ],
+   "suggestions": [
+    "Add an 'Experimentation & A/B testing' topic (power analysis, sequential tests, CUPED, guardrail metrics) or expand hyptest; it is the single most US-specific DS ask",
+    "Add a 'SQL & Analytics Engineering' topic or make SQL explicit in dataeng, since SQL is near-universal",
+    "Add a 'Big data processing (Spark, distributed SQL)' topic, or note Spark under parallel/dataeng; asked in India and EU (Databricks/PySpark)",
+    "Move llmevals from phase 6 into targets as optional: 2026 postings start asking for LLM-as-judge and embedding analysis",
+    "Mark rag and incontext optional for DS; no posting asked for building RAG",
+    "Keep kmeans/pca/timeseries in path but no posting named them explicitly"
+   ],
+   "summary": "Employers want Python+SQL, statistics and experimentation (A/B tests, causal inference) and the ability to turn analysis into product decisions. US postings lean on product experimentation and causal methods; UK/EU add cloud platforms and GDPR awareness; India emphasises big-data tooling, cloud and consulting-style communication. Note: several LinkedIn results carry older job IDs and could not be confirmed as 2026; the Happyrobot posting is dated 2026."
+  },
+  {
+   "role": "ml-engineer",
+   "title_variants": [
+    "Machine Learning Engineer",
+    "Senior Machine Learning Engineer",
+    "Machine Learning Engineer \u2013 LLMs",
+    "Applied Machine Learning Engineer",
+    "Machine Learning Engineer - MLOps",
+    "ML Engineer (Forward Deployed)"
+   ],
+   "postings": [
+    {
+     "title": "Senior Machine Learning Engineer",
+     "company": "Movable Ink",
+     "location": "United States",
+     "region": "US",
+     "url": "https://www.linkedin.com/jobs/view/senior-machine-learning-engineer-at-movable-ink-3707175222",
+     "requirements": [
+      "MLOps infrastructure for retraining, evaluation and releases",
+      "~3 years ML work",
+      "$195k-215k listed"
+     ]
+    },
+    {
+     "title": "Sr. Machine Learning Engineer",
+     "company": "Runway",
+     "location": "New York, NY",
+     "region": "US",
+     "url": "https://www.linkedin.com/jobs/view/sr-machine-learning-engineer-at-runway-3372248072",
+     "requirements": [
+      "PyTorch",
+      "inference engines such as TensorRT or TVM"
+     ]
+    },
+    {
+     "title": "Machine Learning Engineer \u2013 LLMs",
+     "company": "Prosus",
+     "location": "Amsterdam, NL",
+     "region": "EU",
+     "url": "https://jobs.eu.lever.co/prosus/efae773e-7804-4fd2-939d-03a7b2d332ca",
+     "requirements": [
+      "expert Python and PyTorch with production experience",
+      "Hugging Face Transformers, DeepSpeed",
+      "open-source contributions / Hugging Face releases or published research preferred"
+     ]
+    },
+    {
+     "title": "Machine Learning Engineer II",
+     "company": "sennder",
+     "location": "Amsterdam, NL",
+     "region": "EU",
+     "url": "https://jobs.earlybird.com/companies/sennder/jobs/68790480-machine-learning-engineer-ii",
+     "requirements": [
+      "Docker and Kubernetes",
+      "TensorFlow and PyTorch"
+     ]
+    },
+    {
+     "title": "Senior Software Engineer, Machine Learning",
+     "company": "Lyric",
+     "location": "Hyderabad, India",
+     "region": "IN",
+     "url": "https://www.hirist.tech/j/lyric-senior-software-engineer-machine-learning-1666851",
+     "requirements": [
+      "deploying ML models in production (APIs, batch jobs, streaming)",
+      "PyTorch or TensorFlow"
+     ]
+    },
+    {
+     "title": "Machine Learning Engineer",
+     "company": "Weekday Works (client role)",
+     "location": "India (Bengaluru/Hyderabad search)",
+     "region": "IN",
+     "url": "https://jobs.lever.co/weekdayworks/468c7d59-cdbc-4164-bd5c-0844c8ebb6c5",
+     "requirements": [
+      "high-performance inference services",
+      "REST and gRPC APIs"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "PyTorch (and TensorFlow)",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "frameworks"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Production model deployment / serving APIs (REST, gRPC, batch, streaming)",
+     "count": 3,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "mlops"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Inference optimisation (TensorRT, TVM, vLLM)",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "quant",
+      "kvcache"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "MLOps pipelines: retraining, evaluation, CI/CD",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "mlops",
+      "mlworkflow"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Docker / Kubernetes",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "mlops"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Hugging Face Transformers / DeepSpeed",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "transformer",
+      "disttrain"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Python",
+     "count": 2,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Backend / software engineering for ML services",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Open-source contributions / research",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "end-to-end ownership from training data to production",
+    "open-source track record",
+    "debugging in production"
+   ],
+   "region_specific": [
+    "EU (Berlin, Enjins): German and English fluency and right to work in Berlin",
+    "EU: many 2026 Amsterdam/Munich roles are LLM-focused (Prosus, Nebius, Mistral) with vLLM/SGLang/TensorRT-LLM inference stacks",
+    "IN: more on-site/hybrid roles; emphasis on deployment, APIs and Docker/Kubernetes/OpenShift"
+   ],
+   "path_hits": [
+    "frameworks",
+    "mlops",
+    "mlworkflow",
+    "quant",
+    "kvcache",
+    "transformer",
+    "disttrain",
+    "programming"
+   ],
+   "path_unasked": [
+    "boosting",
+    "cnnarch",
+    "transfer",
+    "hpo",
+    "gputrain",
+    "bert",
+    "gpt",
+    "peft",
+    "distill",
+    "resnet",
+    "complexity",
+    "datastruct"
+   ],
+   "suggestions": [
+    "Add a 'Model serving & ML systems engineering' topic (APIs, batching, streaming, latency/throughput, containers and Kubernetes) or split it out of mlops; it is the most consistent ask after PyTorch",
+    "Promote kvcache from phase 6 into targets: 2026 EU postings ask for LLM inference stacks (vLLM, SGLang, TensorRT-LLM)",
+    "Mark cnnarch and bert optional; no posting asked for specific architectures",
+    "Keep boosting in phase 2 but optional for MLE (XGBoost appears only as a nice-to-have in Hyderabad listings)",
+    "Add a 'Data pipelines & orchestration (Spark, Kafka, Airflow)' topic or fold into dataeng; listed as nice-to-have in India",
+    "Consider adding an LLM-focused variant (LLM MLE) linking rag/llmevals since many 2026 EU MLE roles are LLM roles"
+   ],
+   "summary": "Employers want strong Python and PyTorch plus the ability to put models into production: serving APIs, containers/Kubernetes, CI/CD and retraining pipelines, and increasingly LLM inference optimisation. 2026 EU postings (Amsterdam, Munich) are notably LLM- and inference-heavy and value open-source work, with Berlin roles sometimes requiring German; India postings stress deployment and backend skills. Several US LinkedIn results could not be confirmed as 2026."
+  },
+  {
+   "role": "ai-engineer",
+   "title_variants": [
+    "AI Engineer",
+    "Applied AI Engineer",
+    "AI Agent Engineer",
+    "Generative AI Engineer",
+    "Senior GenAI Engineer",
+    "Software Engineer, AI Engineering",
+    "Frontier Agents Engineer"
+   ],
+   "postings": [
+    {
+     "title": "Frontier Agents Engineer (Applied AI)",
+     "company": "Scale AI",
+     "location": "San Francisco / New York",
+     "region": "US",
+     "url": "https://job-boards.greenhouse.io/scaleai/jobs/4720573005",
+     "requirements": [
+      "evaluation frameworks for LLMs and agentic systems",
+      "offline benchmarks, A/B experiments, LLM-as-a-judge",
+      "RAG and semantic search",
+      "$180K-225K base"
+     ]
+    },
+    {
+     "title": "Senior Software Engineer - AI Engineering",
+     "company": "Mercury",
+     "location": "San Francisco or New York",
+     "region": "US",
+     "url": "https://job-boards.greenhouse.io/mercury/jobs/5850044004",
+     "requirements": [
+      "shipped RAG pipelines, agents or eval frameworks to production",
+      "5+ years backend experience"
+     ]
+    },
+    {
+     "title": "AI Agent Engineer (Relocation Provided)",
+     "company": "Wypoon Technologies",
+     "location": "Amsterdam, NL (hybrid)",
+     "region": "EU",
+     "url": "https://jobs.eu.lever.co/wypoon/136cfee2-28f2-46b0-b634-99a563b9b059",
+     "requirements": [
+      "5+ years software engineering",
+      "strong Python",
+      "production RAG: ingestion, embeddings, retrieval optimisation, re-ranking"
+     ]
+    },
+    {
+     "title": "Generative AI Engineer",
+     "company": "Wipro",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://careers.wipro.com/job/Generative-AI-Engineer/187523-en_US/",
+     "requirements": [
+      "2+ years building production RAG pipelines and multi-agent systems"
+     ]
+    },
+    {
+     "title": "Deputy Manager, Engineering Foundry & Managed Services",
+     "company": "Deloitte",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://southasiacareers.deloitte.com/job/Bengaluru-Deputy-Manager-Engineering-Foundry-&-Managed-Services-Bengaluru-Engineering-as-a-Service-Oper/53007044",
+     "requirements": [
+      "Python",
+      "LangChain, Transformers, OpenAI SDK or Hugging Face"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "RAG pipelines (chunking, embeddings, retrieval, re-ranking)",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "rag",
+      "sentemb"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Agents / multi-agent workflows (LangGraph, CrewAI, AutoGen)",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "agents",
+      "tooluse",
+      "multiagent"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "LLM evals (LLM-as-judge, benchmarks, A/B)",
+     "count": 2,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "llmevals",
+      "hyptest"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Python",
+     "count": 2,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Backend / production software engineering",
+     "count": 2,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Semantic search / vector DBs (Pinecone, FAISS, Weaviate, Qdrant, pgvector)",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "vecdb",
+      "sentemb"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "LLM SDKs / frameworks (LangChain, OpenAI SDK, Hugging Face)",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "incontext",
+      "tooluse",
+      "transformer"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "LLM observability, tracing, cost/token tracking (search-level, not attributed)",
+     "count": 0,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "llmevals",
+      "kvcache"
+     ],
+     "gap": true
+    }
+   ],
+   "soft_skills": [
+    "shipping to production rather than demos",
+    "using eval results to make go/no-go decisions",
+    "customer-facing / forward-deployed work"
+   ],
+   "region_specific": [
+    "US: 4-5 days in-office common in SF; visa sponsorship inconsistent",
+    "EU/UK: some London roles cannot sponsor visas; others require an MSc for sponsorship; relocation offered (Wypoon Amsterdam); Azure and Amazon Bedrock named",
+    "IN: hybrid/5-day office in Gurugram/Noida (GlobalLogic); IT-services employers (Wipro, Deloitte, Infosys) add Databricks/PySpark/MLflow; experience asks range 2 to 12 years"
+   ],
+   "path_hits": [
+    "rag",
+    "sentemb",
+    "vecdb",
+    "agents",
+    "tooluse",
+    "llmevals",
+    "incontext",
+    "programming",
+    "hyptest"
+   ],
+   "path_unasked": [
+    "decoding",
+    "mcp",
+    "contexteng",
+    "hallucination",
+    "peft",
+    "kvcache",
+    "quant",
+    "tokenization",
+    "selfattn",
+    "normsip",
+    "redteam",
+    "codingagents"
+   ],
+   "suggestions": [
+    "Add multiagent to the Agents phase: Indian postings explicitly ask for multi-agent workflows",
+    "Add an 'LLM observability & cost' topic (tracing, token/cost tracking, latency budgets) or extend llmevals; repeatedly mentioned in US/UK search summaries",
+    "Add a 'Retrieval quality: hybrid search & re-ranking' topic or extend rag/vecdb to cover re-rankers and chunking strategy",
+    "Mark peft optional (already listed as optional; remove from targets) since no posting asked for fine-tuning as core",
+    "Keep hallucination in targets; US summaries mention handling hallucinations and edge cases",
+    "Consider a 'Backend engineering for AI apps' topic (APIs, auth, retries, timeouts) since agent roles stress robust tool integration"
+   ],
+   "summary": "Employers want engineers who have shipped RAG pipelines, tool-using agents and eval frameworks to production, on top of strong Python/backend skills. US roles stress evals (LLM-as-judge, A/B) and production robustness with high pay and in-office expectations; EU roles add relocation/visa nuances and cloud-specific stacks; India roles focus on RAG plus LangChain/LangGraph multi-agent orchestration, often at IT-services firms."
+  },
+  {
+   "role": "cv-engineer",
+   "title_variants": [
+    "Computer Vision Engineer",
+    "AI Engineer, Computer Vision",
+    "Senior Machine Learning Engineer - Computer Vision",
+    "Computer Vision Research Engineer",
+    "Edge AI Engineer",
+    "Machine Learning Engineer, Vision"
+   ],
+   "postings": [
+    {
+     "title": "AI Engineer, Computer Vision",
+     "company": "Niantic Spatial",
+     "location": "San Francisco, CA (hybrid, 3 days)",
+     "region": "US",
+     "url": "https://jobs.ashbyhq.com/niantic-spatial/aa5cac58-e677-4238-9d90-f05f3da9cd4f",
+     "requirements": [
+      "train deep learning models in PyTorch",
+      "visual localization, pose estimation or 3D geometry",
+      "TensorRT / ONNX inference optimisation (nice-to-have)",
+      "$165.6K-221K"
+     ]
+    },
+    {
+     "title": "Computer Vision Research Engineer",
+     "company": "Bobyard",
+     "location": "SF Bay Area (in-person)",
+     "region": "US",
+     "url": "https://jobs.ashbyhq.com/bobyard/a3ec573b-483b-4bb2-8844-1a3d05377168",
+     "requirements": [
+      "detection and segmentation models (construction drawings)",
+      "trained and shipped models in production"
+     ]
+    },
+    {
+     "title": "Computer Vision Engineer (VIO)",
+     "company": "Harmattan AI",
+     "location": "Zurich, CH (on-site)",
+     "region": "EU",
+     "url": "https://jobs.ashbyhq.com/harmattan-ai/58363924-2bd6-457f-8530-138812c544a3",
+     "requirements": [
+      "master's (PhD a plus)",
+      "strong math",
+      "Python and C++",
+      "visual-inertial odometry projects"
+     ]
+    },
+    {
+     "title": "Senior Machine Learning Engineer (m/f/d) Computer Vision for Robotics",
+     "company": "Agile Robots SE",
+     "location": "Munich, DE (onsite 4 days)",
+     "region": "EU",
+     "url": "https://job-boards.eu.greenhouse.io/agilerobotsse/jobs/4998200101",
+     "requirements": [
+      "master's/PhD or equivalent, 3+ years ML/CV/robotics",
+      "end-to-end PyTorch",
+      "2D/3D geometry",
+      "Python with some C++",
+      "ONNX/TensorRT deployment a plus",
+      "visual servoing for manipulation"
+     ]
+    },
+    {
+     "title": "Manager, Edge AI Engineering",
+     "company": "Deloitte",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://southasiacareers.deloitte.com/job/Bengaluru-Manager-Edge-AI-Engineering-Bengaluru-Engineering-as-a-Service-Operate/57419044/",
+     "requirements": [
+      "PyTorch, TensorFlow, OpenCV",
+      "deploy models on NVIDIA Jetson or similar edge hardware"
+     ]
+    },
+    {
+     "title": "Computer Vision role",
+     "company": "Skild AI",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://job-boards.greenhouse.io/skildai-careers/jobs/5031480008",
+     "requirements": [
+      "detection, segmentation and tracking",
+      "PyTorch, TensorFlow or JAX"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "PyTorch (TF/JAX)",
+     "count": 5,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "frameworks"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Object detection / segmentation / tracking",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "detection",
+      "cnnarch"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Edge deployment & inference optimisation (TensorRT, ONNX, Jetson)",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "quant",
+      "mlops",
+      "smallmodels"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "3D geometry, pose estimation, visual localization, VIO/SLAM",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "imgproc",
+      "robotics"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "C++",
+     "count": 2,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "OpenCV / classical CV",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "imgproc"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Production model shipping",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "mlops"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Strong math",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "matrices",
+      "multivar"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Visual servoing for robot manipulation",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "robotics"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "VLM training on multi-GPU (Sarvam, closed listing; not counted)",
+     "count": 0,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "vlm",
+      "disttrain"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "shipping models to production",
+    "research-to-product translation"
+   ],
+   "region_specific": [
+    "EU: defense-adjacent roles (Comand AI Paris) require EU citizenship; Harmattan AI prefers top-tier engineering schools; Munich roles ask about relocation and 4-day onsite",
+    "EU: C++ plus Python is near-universal for real-time/robotics CV",
+    "US: hybrid/in-person; 3D/spatial CV prominent (Niantic)",
+    "IN: edge AI on Jetson/OpenVINO, IT-services employers (Deloitte, Infosys); mostly on-site"
+   ],
+   "path_hits": [
+    "frameworks",
+    "detection",
+    "cnnarch",
+    "quant",
+    "mlops",
+    "imgproc",
+    "programming",
+    "matrices"
+   ],
+   "path_unasked": [
+    "vit",
+    "sslvision",
+    "sam",
+    "clip",
+    "vlm",
+    "ldm",
+    "fourier",
+    "transfer",
+    "medai",
+    "industrial",
+    "docai",
+    "autodrive"
+   ],
+   "suggestions": [
+    "Add a new topic '3D Vision & Multi-View Geometry' (camera models, pose estimation, SLAM/VIO, depth, NeRF/Gaussian splatting); the largest CV gap, asked in US and EU",
+    "Add a new topic 'Object Tracking & Sensor Fusion' or fold into detection; tracking appears in India and EU (Harmattan, Alpine Eagle)",
+    "Promote smallmodels (or add 'Edge AI deployment: TensorRT, ONNX, Jetson') into targets/phase 5; edge deployment asked in all three regions",
+    "Mark vit/sslvision/clip/sam optional-leaning; no sampled posting named them (sslvision and sam already optional)",
+    "Add C++ for performance-critical code, e.g. as an optional part of programming, for EU robotics/real-time CV roles",
+    "Keep vlm in targets for frontier roles (Sarvam VLM listing) but treat as advanced"
+   ],
+   "summary": "Employers want PyTorch, production detection/segmentation/tracking and deployment on edge hardware (TensorRT, ONNX, Jetson). US and EU 2026 roles lean heavily on 3D/spatial vision (pose, localization, VIO) and C++ for real-time systems, with EU defence roles sometimes requiring EU citizenship; India roles centre on edge AI and classical OpenCV pipelines at services firms and robotics startups."
+  },
+  {
+   "role": "nlp-speech",
+   "title_variants": [
+    "NLP Engineer",
+    "Speech Software Engineer",
+    "Machine Learning Engineer, Speech LLM",
+    "ML Engineer - NLP",
+    "Senior ML Engineer - Speech/ASR",
+    "Voice AI Engineer",
+    "ML ASR Engineer",
+    "Conversational AI Engineer"
+   ],
+   "postings": [
+    {
+     "title": "Machine Learning Engineer, Speech LLM Training",
+     "company": "Plaud",
+     "location": "San Francisco, CA",
+     "region": "US",
+     "url": "https://jobs.ashbyhq.com/Plaud/4d892e32-6245-4ce4-8047-d77394b8932a",
+     "requirements": [
+      "built large-scale audio/speech models: unified SpeechLLMs, advanced ASR, expressive TTS or generative audio",
+      "deep PyTorch or JAX expertise"
+     ]
+    },
+    {
+     "title": "Speech Software Engineer",
+     "company": "ASAPP",
+     "location": "New York / Mountain View",
+     "region": "US",
+     "url": "https://jobs.lever.co/asapp-2/db710f05-da3e-4d78-b174-91a9c10f8b68",
+     "requirements": [
+      "5+ years software engineering",
+      "ASR and/or TTS in production",
+      "speech quality metrics WER, CER, MOS"
+     ]
+    },
+    {
+     "title": "Machine Learning Engineer",
+     "company": "Speechmatics",
+     "location": "London, UK",
+     "region": "EU",
+     "url": "https://job-boards.eu.greenhouse.io/speechmatics/jobs/4660424101",
+     "requirements": [
+      "large-scale self-supervised learning",
+      "training on millions of hours of audio",
+      "advance ASR engines",
+      "interactive voice interfaces",
+      "own areas of code"
+     ]
+    },
+    {
+     "title": "Senior ML Engineer - Speech/ASR (m/f/d)",
+     "company": "voize",
+     "location": "Berlin, DE (remote options)",
+     "region": "EU",
+     "url": "https://www.workatastartup.com/jobs/74093",
+     "requirements": [
+      "several years deep learning for speech recognition",
+      "developing and optimising ASR systems"
+     ]
+    },
+    {
+     "title": "Machine Learning Engineer - Speech AI (ASR/TTS), 2-3 years",
+     "company": "Sarvam AI",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://jobs.khoslaventures.com/companies/sarvam-ai-2/jobs/51571077-machine-learning-engineer-speech-ai-asr-tts-2-3-years",
+     "requirements": [
+      "low-resource and Indic language recognition",
+      "low-latency inference",
+      "edge/offline deployment",
+      "CUDA optimisation",
+      "low-bit quantization"
+     ]
+    },
+    {
+     "title": "Voice AI Engineer (Python, PyTorch)",
+     "company": "KGeN",
+     "location": "India (Bengaluru search)",
+     "region": "IN",
+     "url": "https://www.hirist.tech/j/voice-ai-engineer-python-pytorch-1653197",
+     "requirements": [
+      "2-4 years speech AI, audio ML, NLP pipelines or ML infra",
+      "code-switching, transliteration, script normalisation",
+      "Python, PyTorch"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "ASR (speech recognition) development and optimisation",
+     "count": 5,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "speech"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "TTS / expressive speech generation",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "speech",
+      "audiollm"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "PyTorch / JAX",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "frameworks"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Speech LLMs / audio foundation models",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "audiollm"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Speech evaluation metrics (WER, CER, MOS, latency)",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "metrics",
+      "speech"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Self-supervised learning at scale on audio",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "selfsup",
+      "disttrain"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Low-latency / streaming inference, quantization, edge deployment",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "quant",
+      "kvcache",
+      "smallmodels"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "CUDA optimisation",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "parallel"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Multilingual / low-resource / code-switching (Indic, Hinglish), transliteration",
+     "count": 2,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "tokenization",
+      "speech"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Voice interfaces / voice agents (LiveKit, Pipecat; streaming endpointing, VAD)",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "agents",
+      "speech"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Production software engineering",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "programming",
+      "mlops"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "owning areas of code and seeking alignment rather than guidance",
+    "customer-facing applied work (AssemblyAI, 10-25% travel)"
+   ],
+   "region_specific": [
+    "US: some speech roles require US citizenship (LILT real-time speech translation)",
+    "EU: London/Berlin speech companies (Speechmatics, voize, ElevenLabs); Berlin NLP roles list Transformers/BERT/NER and MLOps tools (Docker, MLflow, W&B)",
+    "IN: strong emphasis on Indic and low-resource languages, Hinglish code-switching, edge/offline deployment for cost"
+   ],
+   "path_hits": [
+    "speech",
+    "audiollm",
+    "frameworks",
+    "metrics",
+    "quant",
+    "selfsup",
+    "tokenization"
+   ],
+   "path_unasked": [
+    "ngram",
+    "tfidf",
+    "wordemb",
+    "rnn",
+    "lstm",
+    "seq2seq",
+    "t5",
+    "bert",
+    "sentemb",
+    "vecdb",
+    "rag",
+    "llmevals",
+    "decoding",
+    "gpt"
+   ],
+   "suggestions": [
+    "Add a new topic 'Real-time Voice Agents' (streaming ASR, VAD/endpointing, turn-taking, latency budgets, LiveKit/Pipecat) bridging speech, audiollm and agents",
+    "Add a new topic 'Multilingual & Low-Resource NLP/Speech' (code-switching, transliteration, cross-lingual transfer); India-specific but central there",
+    "Split 'speech' into ASR and TTS/voice cloning, or add speech metrics (WER, CER, MOS) explicitly",
+    "Add selfsup (audio SSL, wav2vec-style) to the Speech phase; asked by Speechmatics",
+    "Add quant and smallmodels to phase 5 for on-device/low-latency speech",
+    "Mark ngram, tfidf, rnn, lstm optional (ngram/rnn/lstm already optional; add tfidf); no posting asked for classic text methods",
+    "Note NLP-titled roles have largely become LLM roles (RAG, vector DBs, LLM evals in Berlin and NY postings); keep sentemb/rag/llmevals in phase 4"
+   ],
+   "summary": "In 2026 'NLP & speech' hiring is dominated by speech: production ASR/TTS, speech LLMs and low-latency serving, while text-NLP titles mostly turn into LLM roles (RAG, evals, transformers). The US stresses speech LLM training and speech metrics, the EU (London/Berlin) stresses large-scale self-supervised ASR, and India stresses Indic/low-resource languages, code-switching and edge deployment."
+  },
+  {
+   "role": "genai-media",
+   "title_variants": [
+    "ML Researcher - Image/Video Diffusion",
+    "Machine Learning Engineer (generative media)",
+    "Research Engineer - Video Foundation Models",
+    "Research Scientist, Visual Generative AI & World Models",
+    "Generative AI Engineer (diffusion)",
+    "Applied AI Engineer - Vision/GenAI"
+   ],
+   "postings": [
+    {
+     "title": "ML Researcher - Image / Video Diffusion",
+     "company": "Krea",
+     "location": "San Francisco, CA (on-site)",
+     "region": "US",
+     "url": "https://jobs.ashbyhq.com/krea/845dce21-e270-49a2-9229-5becd256b829",
+     "requirements": [
+      "track record with image/video models at scale (publications or open source)",
+      "strong PyTorch",
+      "distributed training and profiling",
+      "low-precision training (FP8)",
+      "diffusion pipeline from pretraining through RL"
+     ]
+    },
+    {
+     "title": "Machine Learning Engineer",
+     "company": "Krea",
+     "location": "San Francisco, CA",
+     "region": "US",
+     "url": "https://jobs.ashbyhq.com/krea/06a135f6-fb4c-446c-ac99-be1af655b964",
+     "requirements": [
+      "train foundation diffusion models for image and video",
+      "controllability modules (ControlNets)",
+      "deep learning frameworks and distributed training",
+      "(listing ~480 days old, may be closed)"
+     ]
+    },
+    {
+     "title": "Senior Research Engineer - Video Foundation Models (Pre-Training)",
+     "company": "Synthesia",
+     "location": "London, UK (remote-friendly UK/DE/CH)",
+     "region": "EU",
+     "url": "https://jobs.ashbyhq.com/synthesia/8a09fe17-c01c-4e35-9394-abd339bbfdf3",
+     "requirements": [
+      "training deep learning models at scale",
+      "strong Python and PyTorch",
+      "hands-on diffusion (image required, video preferred)",
+      "avatar/human-centric generation, GANs or VAEs (nice-to-have)"
+     ]
+    },
+    {
+     "title": "Research Scientist (Visual Generative AI & World Models)",
+     "company": "Graphcore",
+     "location": "London / Cambridge / Bristol, UK",
+     "region": "EU",
+     "url": "https://job-boards.greenhouse.io/graphcore/jobs/8632579002",
+     "requirements": [
+      "Master's or PhD or equivalent",
+      "visual generative AI, visual understanding or world models",
+      "Python with PyTorch or JAX",
+      "C++/CUDA/Triton a plus"
+     ]
+    },
+    {
+     "title": "AI Research Engineer",
+     "company": "Weekday (client)",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://apply.workable.com/weekday-1/jobs/view/1BBADFBA27.md",
+     "requirements": [
+      "CV and generative models for autonomous systems",
+      "diffusion models: DDPM, LDM, ControlNet",
+      "strong research publications"
+     ]
+    },
+    {
+     "title": "Applied AI Engineer - Vision/GenAI",
+     "company": "Gloroots (client role)",
+     "location": "Pune among preferred locations, India",
+     "region": "IN",
+     "url": "https://gloroots.com/career/applied-ai-engineer-vision-genai-prodglmtb004",
+     "requirements": [
+      "Stable Diffusion",
+      "LoRA training",
+      "prompt engineering"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "Diffusion models (DDPM/LDM/Stable Diffusion) training",
+     "count": 5,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "ddpm",
+      "ldm"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "PyTorch (JAX)",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "frameworks"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Distributed / large-scale training and profiling",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "disttrain",
+      "gputrain"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Video generation / video foundation models",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "videogen"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "ControlNet / controllable generation",
+     "count": 2,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "ldm"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Publications / open-source track record",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [],
+     "gap": false
+    },
+    {
+     "skill": "Low-precision training (FP8)",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "lowprec"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "RL / post-training for diffusion",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "rlhf",
+      "dpo"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "GANs / VAEs",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "gan",
+      "vae"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "World models",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "worldmodels"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Human-centric / avatar generation",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "videogen"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "C++ / CUDA / Triton kernels",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "parallel"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "LoRA fine-tuning",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "peft"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Prompt engineering for image models",
+     "count": 1,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "incontext"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "research track record (papers or open source)",
+    "in-person research collaboration (Krea)"
+   ],
+   "region_specific": [
+    "US: frontier image/video labs in SF, on-site, research-heavy",
+    "EU: London hub (Synthesia, Graphcore); remote-friendly within UK/DE/CH for Synthesia; advanced degree often expected",
+    "IN: mostly applied roles adapting Stable Diffusion/LoRA, often at services/consulting firms; some generative-vision research roles (autonomous systems, defect synthesis) in Bengaluru; video generation rarely asked"
+   ],
+   "path_hits": [
+    "ddpm",
+    "ldm",
+    "videogen",
+    "frameworks",
+    "gan",
+    "vae",
+    "peft",
+    "worldmodels"
+   ],
+   "path_unasked": [
+    "dit",
+    "flowmatch",
+    "vqvae",
+    "flows",
+    "autoenc",
+    "gaussian",
+    "kl",
+    "sampling",
+    "omni",
+    "cnn"
+   ],
+   "suggestions": [
+    "Add disttrain and gputrain to the path (e.g. new phase 'Training at scale'); asked by Krea, Synthesia and Graphcore but absent from this role's path",
+    "Add a new topic 'Controllable Generation & Editing' (ControlNet, adapters, inpainting, guidance) or extend ldm; asked in US and India",
+    "Add a new topic 'Post-training generative media models (RL/preference tuning for diffusion)', or note diffusion-DPO under dpo",
+    "Add lowprec as optional for frontier lab roles",
+    "Keep dit and flowmatch in targets as modern architecture knowledge even though no posting named them explicitly; they underpin current video models",
+    "Add an 'Evaluating generative media' topic (FID, CLIP score, human preference evals); not asked explicitly in snippets but implied by training-at-scale roles - treat as low priority"
+   ],
+   "summary": "Employers want hands-on diffusion training (image required, video preferred) in PyTorch at scale, with distributed training and a publication or open-source track record. US (SF) and UK (London) roles are frontier image/video foundation-model work; India roles are mostly applied Stable Diffusion/LoRA fine-tuning plus a few research roles, with video generation rarely requested."
+  },
+  {
+   "role": "rl-robotics",
+   "title_variants": [
+    "Robot Learning Engineer",
+    "Research Engineer / Scientist (Robot Learning)",
+    "Senior Reinforcement Learning Engineer",
+    "Machine Learning Engineer, Robotics",
+    "Robotics Simulation Engineer - RL/DL",
+    "Software Engineer, Humanoid Whole Body Learning"
+   ],
+   "postings": [
+    {
+     "title": "Research Engineer / Scientist (Robot Learning)",
+     "company": "World Labs",
+     "location": "San Francisco Bay Area",
+     "region": "US",
+     "url": "https://job-boards.greenhouse.io/worldlabs/jobs/4333272009",
+     "requirements": [
+      "end-to-end policy training with sim-to-real transfer",
+      "6+ years manipulation, locomotion or robot policy training",
+      "robot policy designs: VLA, WAM, diffusion",
+      "$250K-350K base"
+     ]
+    },
+    {
+     "title": "Robot Learning Engineer",
+     "company": "Gritt Robotics",
+     "location": "South San Francisco, CA (in-person)",
+     "region": "US",
+     "url": "https://jobs.ashbyhq.com/gritt/22718c8d-02d4-4507-9e67-fccddeb3fbb1",
+     "requirements": [
+      "RL and imitation learning research",
+      "real/sim data pipelines",
+      "4+ years applied robotics AI",
+      "VLAs, deep RL, imitation learning, diffusion, world models"
+     ]
+    },
+    {
+     "title": "Senior Reinforcement Learning Engineer",
+     "company": "ANYbotics",
+     "location": "Zurich, CH (hybrid)",
+     "region": "EU",
+     "url": "https://jobs.lever.co/anybotics/63f0c6db-0a1f-4a4a-87dd-9a43c9c2bdd2",
+     "requirements": [
+      "PhD with RL focus, or top-university master's + 5 years",
+      "shipped ML models to the field",
+      "Python, PyTorch, working C++",
+      "Gazebo or Isaac Sim",
+      "sim-to-real methods"
+     ]
+    },
+    {
+     "title": "Senior Reinforcement Learning Engineer",
+     "company": "Gravis Robotics",
+     "location": "Zurich, CH (hybrid)",
+     "region": "EU",
+     "url": "https://jobs.lever.co/gravisrobotics/fe9d2c3e-84d6-4b0f-ad31-70176d175c5c",
+     "requirements": [
+      "2-5 years deploying RL on real robots for customers (simulation-only unlikely to fit)",
+      "C++ proficiency",
+      "GPU-accelerated simulators"
+     ]
+    },
+    {
+     "title": "CTO Robotics Simulation Engineer",
+     "company": "Wipro",
+     "location": "Bengaluru, India",
+     "region": "IN",
+     "url": "https://careers.wipro.com/job/Bengaluru-CTO-Robotics-Simulation-Engineer-IND-560035/1326873955/",
+     "requirements": [
+      "ROS",
+      "Gazebo, Isaac Sim",
+      "build simulation environments for robotic systems"
+     ]
+    },
+    {
+     "title": "Robotics Simulation Engineer - RL/DL",
+     "company": "Antal (client role)",
+     "location": "Pune, India",
+     "region": "IN",
+     "url": "https://www.antal.com/job/robotics-simulation-engineer---rl-dl",
+     "requirements": [
+      "deep RL policies for robotic manipulation",
+      "hands-on Sim2Real transfer",
+      "ROS2 MoveIt!, Orocos",
+      "NVIDIA Isaac Sim, GR00T, Omniverse"
+     ]
+    }
+   ],
+   "skills": [
+    {
+     "skill": "Sim-to-real transfer",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "sim2real"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Deep RL (PPO, SAC etc.)",
+     "count": 4,
+     "regions": [
+      "US",
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "ppo",
+      "polgrad"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Simulators (Isaac Sim/Lab, MuJoCo, Gazebo, Omniverse)",
+     "count": 4,
+     "regions": [
+      "EU",
+      "IN"
+     ],
+     "topics": [
+      "sim2real"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Real-robot deployment experience",
+     "count": 3,
+     "regions": [
+      "US",
+      "EU"
+     ],
+     "topics": [
+      "robotics",
+      "embodied"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Imitation learning / learning from demonstration",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "offlinerl",
+      "diffpolicy"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "VLA / diffusion policies / world models",
+     "count": 2,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "embodied",
+      "diffpolicy",
+      "worldmodels"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Manipulation and locomotion",
+     "count": 3,
+     "regions": [
+      "US",
+      "IN"
+     ],
+     "topics": [
+      "robotics"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "C++",
+     "count": 2,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "Python / PyTorch",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "frameworks",
+      "programming"
+     ],
+     "gap": false
+    },
+    {
+     "skill": "ROS / ROS 2, MoveIt",
+     "count": 2,
+     "regions": [
+      "IN"
+     ],
+     "topics": [
+      "robotics"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "Robot data pipelines (real + sim)",
+     "count": 1,
+     "regions": [
+      "US"
+     ],
+     "topics": [
+      "dataeng"
+     ],
+     "gap": true
+    },
+    {
+     "skill": "GPU-accelerated / parallel simulation",
+     "count": 1,
+     "regions": [
+      "EU"
+     ],
+     "topics": [
+      "sim2real",
+      "parallel"
+     ],
+     "gap": false
+    }
+   ],
+   "soft_skills": [
+    "shipping to the field / customer deployments",
+    "in-person hardware lab collaboration"
+   ],
+   "region_specific": [
+    "EU (Munich, Clera): right to work in Germany required, no visa sponsorship; ROS 2",
+    "EU (Zurich): PhD or top-technical-university degree preferred; real-robot (not sim-only) experience demanded",
+    "US: very high pay at frontier robot-learning labs; VLA/diffusion policy focus; in-person",
+    "IN: simulation-engineering heavy (ROS, Gazebo, Isaac Sim, Omniverse), often at IT-services firms (Wipro)"
+   ],
+   "path_hits": [
+    "sim2real",
+    "ppo",
+    "polgrad",
+    "robotics",
+    "embodied",
+    "diffpolicy",
+    "worldmodels",
+    "offlinerl",
+    "frameworks",
+    "programming"
+   ],
+   "path_unasked": [
+    "dqn",
+    "mcts",
+    "modelrl",
+    "bandits",
+    "qlearning",
+    "dynprog",
+    "markov",
+    "autodrive",
+    "rlvr",
+    "mdp",
+    "bellman"
+   ],
+   "suggestions": [
+    "Add a new topic 'Robot Software Stack: ROS 2, MoveIt, control' (or expand robotics) since ROS is the top India ask and appears in Munich",
+    "Add a new topic 'Robot Data Collection & Teleoperation' (real/sim data pipelines, demonstrations, dataset scaling) feeding diffpolicy/embodied",
+    "Add a 'Classical control & motion planning' topic (kinematics, MPC, trajectory optimisation) or make it explicit inside robotics; asked in Wipro controls roles and implied by manipulation",
+    "Mark dqn and mcts optional for this role; no robotics posting asked for them (keep for game/planning learners)",
+    "Move autodrive to optional only (already optional; remove from targets) since no sampled robot-learning posting asked for it",
+    "Add C++ emphasis and GPU-parallel simulation (Isaac Lab) to phase 5"
+   ],
+   "summary": "Employers want deep RL and imitation learning applied to real robots, with sim-to-real transfer, simulators (Isaac Sim/Lab, MuJoCo, Gazebo) and modern policy architectures (VLA, diffusion policies). US labs pay very highly for VLA/diffusion-policy and world-model experience; Zurich roles demand C++ and proven real-robot deployment; India roles are more simulation- and ROS-engineering-heavy, and Munich requires German work rights."
+  }
+ ]
+}
