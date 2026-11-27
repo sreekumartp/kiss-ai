@@ -61,3 +61,12 @@ device, local progress merges with the account (the higher rung wins, ticked sub
 existing success definitions are kept). After that every change is saved within a couple of seconds
 and other signed-in devices update live. Signing out leaves a copy on the device.
 
+## Publishing the Firestore rules
+
+Sign-in sync and study groups depend on the rules in [`firestore.rules`](firestore.rules). After
+changing them, publish them: Firebase console → Firestore Database → Rules → paste the file → Publish.
+Until the current rules are published, study groups show a permission error.
+
+Reports from study groups arrive in the `reports` collection (Firebase console → Firestore Database).
+Check it regularly and remove anything harmful.
+

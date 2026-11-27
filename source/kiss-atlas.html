@@ -424,6 +424,51 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
 .wncard h2{margin:0}
 .wnlist{margin:10px 0 0;padding-left:18px;font-size:.9rem}
 .wnlist li{margin-bottom:4px}
+#groups{height:100%;overflow:auto;padding:18px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+.gwrap{max-width:820px;margin:0 auto}
+.ghead h2{font-family:var(--font-display);font-size:1.4rem;margin:0 0 4px}
+.gsec{margin-top:20px}
+.gsec h3,.gbody h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0 0 8px;font-weight:600}
+.gbody h3{margin-top:18px}
+.gsechead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.gsechead h3{margin:0}
+.gfilt{margin:0;min-width:240px}
+.gcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.gcard,.gmember,.gpost{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);min-width:0}
+.gpost{margin-bottom:10px}
+.gctop{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.gctop b{font-size:.98rem}
+.gcount{font-size:.74rem;color:var(--muted);white-space:nowrap}
+.ggoal{font-size:.8rem;font-weight:600;color:var(--accent)}
+.gdesc{margin:4px 0 0;font-size:.88rem}
+.gpend{font-size:.8rem;font-weight:600;color:var(--muted);align-self:center}
+.gform{display:flex;flex-direction:column;gap:8px;margin:0}
+.gform input,.gform select,.gform textarea{min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg);font:inherit;min-width:0}
+.gform textarea{resize:vertical}
+.gform .btnrow{margin-top:0}
+.greq{flex-direction:row;flex-wrap:wrap;align-items:center}
+.greq input{flex:1 1 180px}
+.gask{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:14px}
+.gtabs{margin-top:14px}
+.gbody{padding-top:14px}
+.gmsg{margin:10px 0;padding:8px 12px;border-radius:10px;background:var(--surface-2);font-size:.86rem}
+.gpmeta{font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.gpmeta b{color:var(--fg)}
+.gtext{margin:2px 0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.92rem}
+.gprow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px}
+.pacts{display:flex;flex-wrap:wrap;gap:0 12px}
+.linkbtn.danger{color:#C0392B;font-weight:600}
+.ganswers{margin-top:6px;padding-left:12px;border-left:2px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.ganswer{display:flex;flex-direction:column;gap:2px}
+.item.mini{min-height:0;padding:1px 8px;font-size:.74rem}
+.gladsum{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:.82rem;margin-top:4px}
+.gladsum .rk2{width:18px;height:18px;font-size:.62rem}
+.gladder{margin-top:6px}
+.gmlist{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.gmrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 14px;border-top:1px solid var(--line);min-height:48px}
+.gmrow:first-child{border-top:0}
+.gowner{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-left:4px}
+.gguide{margin-top:22px}
 .paperrow{display:flex;flex-direction:column;gap:4px}
 .pact{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding-left:2px}
 .pact .btn{min-height:36px;padding:0 12px;font-size:.8rem}
@@ -534,7 +579,7 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
   main{display:block;position:relative}
   .pane{height:100%}
   aside{display:none}
-  .bnav{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:var(--surface);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+  .bnav{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);background:var(--surface);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
   .bnav button{min-height:58px;border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.74rem;font-weight:600;color:var(--muted);cursor:pointer}
   .bnav .bi{font-size:1.15rem;line-height:1}
   .bnav button[aria-current="page"]{color:var(--fg)}
@@ -592,6 +637,7 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
           <button id="vGraph" aria-pressed="true">Map</button>
           <button id="vList" aria-pressed="false">Curriculum</button>
           <button id="vRoles" aria-pressed="false">Roles</button>
+          <button id="vGroups" aria-pressed="false">Groups</button>
         </div>
         <button class="iconbtn" id="openSettings" aria-label="Settings" title="Settings">⚙</button>
       </div>
@@ -607,6 +653,7 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
       <div class="domnote" id="domnote" hidden role="status"></div>
       <div id="list" hidden></div>
       <div id="roles" hidden></div>
+      <div id="groups" hidden></div>
       <div class="hscroll" id="hscroll" role="scrollbar" aria-orientation="horizontal" aria-controls="map" aria-label="Scroll the map left and right" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
         <div class="hthumb" id="hthumb"></div>
       </div>
@@ -626,6 +673,7 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
     <button data-view="graph"><span class="bi">◎</span>Map</button>
     <button data-view="list"><span class="bi">≡</span>Curriculum</button>
     <button data-view="roles"><span class="bi">◆</span>Roles</button>
+    <button data-view="groups"><span class="bi">⁂</span>Groups</button>
   </nav>
 </div>
 <div class="rpick" id="rpick" hidden><div class="rpsheet" role="dialog" aria-modal="true" aria-labelledby="rpTitle">
@@ -2512,8 +2560,9 @@ function phaseStatus(role){
    Topics added in recent releases get a NEW tag on the map, in search and in lists, and Home shows
    a short release note until the learner taps "Got it". Update this block with each release. */
 const WHATS_NEW = {
-  release: "5.3",
+  release: "5.4",
   features: [
+    "Study groups: start or discover a group around a goal, ask to join, ask and answer questions, and share your progress and topic ladder.",
     "Commit to a goal, a role or an Applied AI area, and see on Home whether you are on track, behind or ahead.",
     "Weekly study reminders in the Android app, or a weekly calendar event on the website.",
     "A study timetable for every role and Applied AI area, with hours and an estimated finish date.",
@@ -3247,10 +3296,11 @@ const isPhone = () => window.matchMedia("(max-width:860px)").matches;
 function setView(v){
   if(v==="home" && !isPhone()) v="graph";
   state.view=v; document.body.dataset.view=v;
-  document.getElementById("vGraph").setAttribute("aria-pressed",v==="graph"); document.getElementById("vList").setAttribute("aria-pressed",v==="list"); document.getElementById("vRoles").setAttribute("aria-pressed",v==="roles");
+  document.getElementById("vGraph").setAttribute("aria-pressed",v==="graph"); document.getElementById("vList").setAttribute("aria-pressed",v==="list"); document.getElementById("vRoles").setAttribute("aria-pressed",v==="roles"); document.getElementById("vGroups").setAttribute("aria-pressed",v==="groups");
   document.querySelectorAll("#bnav [data-view]").forEach(b=> b.dataset.view===v ? b.setAttribute("aria-current","page") : b.removeAttribute("aria-current"));
   document.getElementById("home").hidden = v!=="home"; if(v==="home") renderHome();
   document.getElementById("roles").hidden = v!=="roles"; if(v==="roles") renderRoles();
+  document.getElementById("groups").hidden = v!=="groups"; if(v==="groups") openGroupsView(); else commUnsubscribe();
   document.getElementById("map").style.display = v==="graph"?"block":"none";
   document.getElementById("list").hidden = v!=="list";
   document.getElementById("levelbar").hidden = v!=="graph";
@@ -3265,6 +3315,7 @@ function setView(v){
 document.getElementById("vGraph").onclick=()=>setView("graph");
 document.getElementById("vList").onclick=()=>setView("list");
 document.getElementById("vRoles").onclick=()=>setView("roles");
+document.getElementById("vGroups").onclick=()=>setView("groups");
 document.getElementById("bnav").addEventListener("click", ev=>{ const b=ev.target.closest("[data-view]"); if(!b) return; if(b.dataset.view==="roles" && state.view==="roles"){ roleDetail=null; } setView(b.dataset.view); });
 
 /* ---------- Phone map: readable zoom, level jumps, info bar ---------- */
@@ -3407,6 +3458,7 @@ window.atlasBack = function(){
   if(hd.classList.contains("searching")){ hd.classList.remove("searching"); qres.hidden=true; return true; }
   if(!qres.hidden){ qres.hidden=true; return true; }
   if(state.view==="roles" && roleDetail){ roleDetail=null; renderRoles(); return true; }
+  if(state.view==="groups" && comm.gid){ closeGroup(); return true; }
   if(state.view==="graph" && state.sel){ select(null); return true; }
   if(state.view==="graph" && state.role){ state.role=null; select(null); return true; }
   if(isPhone() && state.view!=="home"){ setView("home"); return true; }
@@ -3577,6 +3629,294 @@ sheet.addEventListener("change", ev=>{
 });
 
 
+/* ---------- Study groups ----------
+   Anyone signed in can create a group around a goal, discover groups and ask to join; the group's
+   creator approves requests and can remove posts or members. Inside a group, members ask and answer
+   questions, post progress updates, and share their goal, progress and full topic ladder.
+   Data lives in Firestore under groups/{gid} (see firestore.rules for who can read and write what).
+   "atlas-mygroups" (synced) remembers which groups this learner belongs to or has asked to join. */
+const comm = { gid:null, tab:"questions", groups:null, loading:false, unsub:[], group:null, members:[], posts:[], requests:[],
+  open:{}, answers:{}, msg:"", creating:false, filter:"all", confirm:null, reportFor:null, pubTimer:null };
+const myName = () => { try{ return (localStorage.getItem("atlas-displayname")||"").trim(); }catch(e){ return ""; } };
+function myGroups(){ try{ const v=JSON.parse(localStorage.getItem("atlas-mygroups")||"[]"); return Array.isArray(v) ? v : []; }catch(e){ return []; } }
+function setMyGroups(list){ try{ localStorage.setItem("atlas-mygroups", JSON.stringify(list)); }catch(e){} }
+function blockedSet(){ try{ return new Set(JSON.parse(localStorage.getItem("kiss-blocked")||"[]")); }catch(e){ return new Set(); } }
+function blockUser(uid){ const b=blockedSet(); b.add(uid); try{ localStorage.setItem("kiss-blocked", JSON.stringify([...b])); }catch(e){} }
+const FV = () => firebase.firestore.FieldValue;
+const gref = gid => sync.db.collection("groups").doc(gid);
+const meUid = () => sync.user && sync.user.uid;
+function commErr(e){
+  const c=(e && e.code)||"";
+  if(c.includes("permission-denied")) return "You don't have access to that. If Groups never work, the Firestore rules may not be published yet.";
+  if(c.includes("unavailable")) return "No connection. Check your internet and try again.";
+  return (e && e.message) || "Something went wrong. Try again.";
+}
+function ago(ts){
+  const d = ts && ts.toDate ? ts.toDate() : null; if(!d) return "just now";
+  const m=Math.round((Date.now()-d.getTime())/60000);
+  if(m<1) return "just now"; if(m<60) return m+" min ago"; const h=Math.round(m/60); if(h<24) return h+" h ago";
+  const dd=Math.round(h/24); return dd<14 ? dd+" d ago" : d.toLocaleDateString(undefined,{day:"numeric",month:"short"});
+}
+function commUnsubscribe(){ comm.unsub.forEach(f=>{ try{ f(); }catch(e){} }); comm.unsub=[]; }
+
+// What a member shares with their groups: name, goal, progress and the full topic ladder.
+function myShare(){
+  const g=goalProgress(), ladder={};
+  nodes.forEach(n=>{ const st=getStage(n.id); if(st) ladder[n.id]=st; });
+  return { name:myName(), goal:g ? g.path.key : null, goalName:g ? g.path.name : null,
+    pct:g && g.todo ? Math.round(g.done/g.todo*100) : 0, status:g ? g.status : null, done:g ? g.done : 0, todo:g ? g.todo : 0,
+    ladder, updatedAt:FV().serverTimestamp() };
+}
+async function publishProgress(gid){ if(!sync.db || !sync.user || !myName()) return; await gref(gid).collection("members").doc(meUid()).update(myShare()); }
+function queueCommunity(){
+  clearTimeout(comm.pubTimer);
+  comm.pubTimer=setTimeout(()=>{ if(!sync.db || !sync.user) return; myGroups().filter(g=>g.status==="member").forEach(g=>publishProgress(g.gid).catch(()=>{})); }, 4000);
+}
+
+// Check which groups this learner belongs to (approved, still pending, declined or removed).
+async function refreshMembership(){
+  const list=myGroups(), out=[];
+  for(const g of list){
+    let member=false;
+    try{ member=(await gref(g.gid).collection("members").doc(meUid()).get()).exists; }catch(e){ member=false; }
+    if(member){ out.push({gid:g.gid, status:"member"}); continue; }
+    if(g.status==="pending"){ let pending=false; try{ pending=(await gref(g.gid).collection("requests").doc(meUid()).get()).exists; }catch(e){}
+      if(pending) out.push(g); }
+  }
+  setMyGroups(out);
+}
+async function loadGroups(){
+  const token = comm.loadToken = (comm.loadToken||0) + 1;   // a newer load wins over an older one
+  comm.loading=true; renderGroups();
+  try{
+    const snap=await sync.db.collection("groups").orderBy("createdAt","desc").limit(60).get();
+    const list=snap.docs.map(d=>Object.assign({id:d.id}, d.data()));
+    await refreshMembership();
+    const known=new Set(list.map(g=>g.id));
+    for(const g of myGroups()) if(!known.has(g.gid)){ try{ const d=await gref(g.gid).get(); if(d.exists){ list.push(Object.assign({id:d.id}, d.data())); known.add(d.id); } }catch(e){} }
+    if(token!==comm.loadToken) return;
+    comm.groups=list;
+  }catch(e){ if(token===comm.loadToken) comm.msg=commErr(e); }
+  if(token===comm.loadToken){ comm.loading=false; renderGroups(); }
+}
+function openGroupsView(){
+  commUnsubscribe();
+  if(comm.gid && sync.user){ openGroup(comm.gid); return; }
+  renderGroups();
+  if(sync.db && sync.user && myName()) loadGroups();
+}
+
+/* ----- Views ----- */
+function renderGroups(){
+  const el=document.getElementById("groups"); if(!el || state.view!=="groups") return;
+  el.innerHTML = `<div class="gwrap">${comm.gid ? groupHTML() : groupsListHTML()}</div>`;
+}
+function groupsListHTML(){
+  const head=`<div class="ghead"><h2>Study groups</h2><p class="none">Learn with people working towards the same goal: ask questions, share progress and keep each other going.</p></div>`;
+  if(["unavailable","unconfigured"].includes(sync.state)) return head+`<div class="card"><p class="none">Groups need the online app with sign-in turned on.</p></div>`;
+  if(!sync.user) return head+`<div class="card"><h3 style="margin-top:0">Sign in to join study groups</h3><p class="none">Groups are for signed-in learners, so members know who they are talking to.</p>
+    <div class="btnrow"><button class="btn primary" data-gsignin>Sign in or create an account</button></div></div>`;
+  if(!myName()) return head+`<div class="card"><h3 style="margin-top:0">Choose a display name</h3><p class="none">Group members see this name next to your questions and progress. Don't use your email or phone number.</p>
+    <form class="gform" data-gname><label class="sr" for="gName">Display name</label><input id="gName" name="n" maxlength="40" minlength="2" placeholder="e.g. Priya S" required>
+    <div class="btnrow"><button class="btn primary" type="submit">Save name</button></div><p class="myerr" role="alert"></p></form></div>`;
+  const mine=myGroups(), byId2=new Map((comm.groups||[]).map(g=>[g.id,g])), c=getCommit();
+  const card=(g, action)=>`<article class="gcard"><div class="gctop"><b>${esc(g.name)}</b><span class="gcount">${g.memberCount||1} member${(g.memberCount||1)>1?"s":""}</span></div>
+    <span class="ggoal">Goal: ${esc(g.goalName||"")}</span>${g.desc?`<p class="gdesc">${esc(g.desc)}</p>`:""}<span class="ml">Started by ${esc(g.ownerName||"")}</span><div class="btnrow">${action}</div></article>`;
+  const memberIds=new Set(mine.filter(x=>x.status==="member").map(x=>x.gid)), pendingIds=new Set(mine.filter(x=>x.status==="pending").map(x=>x.gid));
+  const myCards=[...memberIds].map(id=>byId2.get(id)).filter(Boolean).map(g=>card(g, `<button class="btn primary" data-gopen="${g.id}">Open</button>`)).join("");
+  const pendCards=[...pendingIds].map(id=>byId2.get(id)).filter(Boolean).map(g=>card(g, `<span class="gpend">Request sent</span><button class="linkbtn" data-gcancel="${g.id}">Cancel request</button>`)).join("");
+  let disc=(comm.groups||[]).filter(g=>!memberIds.has(g.id) && !pendingIds.has(g.id));
+  if(comm.filter==="goal" && c) disc=disc.filter(g=>g.goal===c.goal);
+  const discCards=disc.map(g=>card(g, comm.reqFor===g.id
+    ? `<form class="gform greq" data-greq="${g.id}"><label class="sr" for="gMsg">Message</label><input id="gMsg" name="m" maxlength="200" placeholder="Say hello (optional)"><button class="btn primary" type="submit">Send request</button><button class="btn" type="button" data-greqx>Cancel</button></form>`
+    : `<button class="btn" data-greqopen="${g.id}">Ask to join</button>`)).join("");
+  const goals = [...(c ? [goalPath(c.goal)] : []), ...ROLES.map(r=>goalPath("role:"+r.id)), ...nodes.filter(n=>n.d==="app").map(n=>goalPath("topic:"+n.id))].filter(Boolean);
+  const seen=new Set(), goalOpts=goals.filter(g=>!seen.has(g.key) && seen.add(g.key)).map(g=>`<option value="${g.key}">${esc(g.name)}</option>`).join("");
+  return head + (comm.msg?`<p class="gmsg" role="status">${esc(comm.msg)}</p>`:"")
+    + `<section class="gsec"><h3>My groups</h3>${myCards||pendCards ? `<div class="gcards">${myCards}${pendCards}</div>` : `<p class="none">You haven't joined a group yet. Create one, or ask to join one below.</p>`}</section>
+    <section class="gsec"><h3>Start a group</h3>${comm.creating ? `<form class="gform" data-gcreate>
+      <label class="ttl" for="gcName">Group name</label><input id="gcName" name="n" maxlength="60" required placeholder="e.g. Weekend RAG builders">
+      <label class="ttl" for="gcGoal">Goal</label><select id="gcGoal" name="g">${goalOpts}</select>
+      <label class="ttl" for="gcDesc">About the group (optional)</label><textarea id="gcDesc" name="d" maxlength="300" rows="3" placeholder="When you meet, what you're working on, who should join"></textarea>
+      <div class="btnrow"><button class="btn primary" type="submit">Create group</button><button class="btn" type="button" data-gcreatex>Cancel</button></div><p class="myerr" role="alert"></p></form>`
+      : `<div class="btnrow" style="margin-top:0"><button class="btn primary" data-gcreateopen>Start a group</button></div>`}</section>
+    <section class="gsec"><div class="gsechead"><h3>Discover groups</h3>${c?`<div class="ctabs gfilt" role="tablist"><button role="tab" aria-selected="${comm.filter==="all"}" data-gfilter="all">All</button><button role="tab" aria-selected="${comm.filter==="goal"}" data-gfilter="goal">Same goal as me</button></div>`:""}</div>
+      ${comm.loading && !comm.groups ? `<p class="none">Loading groups…</p>` : discCards ? `<div class="gcards">${discCards}</div>` : `<p class="none">No ${comm.filter==="goal"?"matching ":""}groups yet. Start the first one.</p>`}</section>
+    <p class="note gguide">Be kind and stay on topic. Don't share personal contact details. Use Report on anything harmful; the group creator can remove posts and members. You must be 13 or older.</p>`;
+}
+
+function openGroup(gid){
+  commUnsubscribe(); comm.reqSub=false; comm.gid=gid; comm.members=[]; comm.posts=[]; comm.requests=[]; comm.group=null; comm.msg=""; comm.confirm=null; comm.reportFor=null;
+  renderGroups();
+  const g=gref(gid), onErr=e=>{ comm.msg=commErr(e); renderGroups(); };
+  comm.unsub.push(g.onSnapshot(d=>{ if(!d.exists){ comm.msg="This group was deleted."; setMyGroups(myGroups().filter(x=>x.gid!==gid)); closeGroup(); return; }
+    comm.group=Object.assign({id:d.id}, d.data());
+    if(comm.group.ownerUid===meUid() && !comm.reqSub){ comm.reqSub=true; comm.unsub.push(g.collection("requests").orderBy("at").onSnapshot(s=>{ comm.requests=s.docs.map(x=>Object.assign({uid:x.id}, x.data())); renderGroups(); }, ()=>{})); }
+    renderGroups(); }, onErr));
+  comm.unsub.push(g.collection("members").onSnapshot(s=>{ comm.members=s.docs.map(x=>Object.assign({uid:x.id}, x.data())); renderGroups(); }, e=>{ if(e.code==="permission-denied"){ comm.msg = myGroups().some(x=>x.gid===gid && x.status==="member") ? "You're no longer a member of this group." : "Only members can see inside this group. Ask to join from Discover groups."; setMyGroups(myGroups().filter(x=>x.gid!==gid)); closeGroup(); } else onErr(e); }));
+  comm.unsub.push(g.collection("posts").orderBy("at","desc").limit(100).onSnapshot(s=>{ comm.posts=s.docs.map(x=>Object.assign({id:x.id}, x.data())); renderGroups(); }, ()=>{}));
+  publishProgress(gid).catch(()=>{});
+}
+function closeGroup(){ commUnsubscribe(); comm.reqSub=false; comm.gid=null; comm.group=null; renderGroups(); if(sync.user && myName()) loadGroups(); }
+
+function groupHTML(){
+  const g=comm.group, me=meUid(), owner=g && g.ownerUid===me, blocked=blockedSet();
+  if(!g) return `<button class="btn" data-gback>‹ All groups</button><p class="none" style="margin-top:12px">Loading…</p>`;
+  const path=goalPath(g.goal), tabs=[["questions","Questions"],["progress","Progress"],["members", "Members"+(owner && comm.requests.length ? ` · ${comm.requests.length} to approve` : "")]];
+  let body="";
+  if(comm.tab==="questions") body=questionsHTML(g, path, owner, blocked);
+  else if(comm.tab==="progress") body=progressHTML(g, path, owner, blocked);
+  else body=membersHTML(g, owner);
+  return `<div class="btnrow" style="margin:0 0 10px"><button class="btn" data-gback>‹ All groups</button></div>
+    <div class="ghead"><p class="eyebrow">Study group</p><h2>${esc(g.name)}</h2>
+    <p class="none">Goal: <b>${esc(g.goalName||"")}</b> · ${g.memberCount||1} member${(g.memberCount||1)>1?"s":""} · started by ${esc(g.ownerName||"")}</p>${g.desc?`<p class="gdesc">${esc(g.desc)}</p>`:""}</div>
+    ${comm.msg?`<p class="gmsg" role="status">${esc(comm.msg)}</p>`:""}
+    <div class="tabs gtabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" aria-selected="${comm.tab===k}" data-gtab="${k}">${esc(l)}</button>`).join("")}</div>
+    <div class="gbody">${body}</div>`;
+}
+function postActions(p, owner, kind){
+  const me=meUid(), mine=p.uid===me, rid=kind+":"+p.id;
+  const conf=comm.confirm===rid;
+  return `<div class="pacts">${mine||owner ? (conf ? `<button class="linkbtn danger" data-gdel="${kind}:${p.id}${p.pid?":"+p.pid:""}">Confirm delete</button>` : `<button class="linkbtn" data-gconfirm="${rid}">Delete</button>`) : ""}
+    ${!mine ? `<button class="linkbtn" data-greport="${p.pid ? `post:${p.pid}:${p.id}` : `post:${p.id}`}">Report</button><button class="linkbtn" data-gblock="${p.uid}">Hide this person</button>` : ""}</div>`;
+}
+function reportFormHTML(key){
+  return comm.reportFor===key ? `<form class="gform greport" data-greportsend="${key}"><label class="ttl" for="gRep">What's wrong?</label>
+    <select id="gRep" name="r"><option>Spam or advertising</option><option>Harassment or hate</option><option>Personal or private information</option><option>Inappropriate content</option><option>Something else</option></select>
+    <div class="btnrow"><button class="btn primary" type="submit">Send report</button><button class="btn" type="button" data-greportx>Cancel</button></div></form>` : "";
+}
+function questionsHTML(g, path, owner, blocked){
+  const topics=path ? pathTopicIds(path).map(id=>byId.get(id)).filter(Boolean) : [];
+  const qs=comm.posts.filter(p=>p.kind==="question" && !blocked.has(p.uid));
+  const list=qs.map(p=>{ const n=p.topic && byId.get(p.topic), open=comm.open[p.id], ans=(comm.answers[p.id]||[]).filter(a=>!blocked.has(a.uid));
+    return `<article class="gpost"><div class="gpmeta"><b>${esc(p.name)}</b> · ${ago(p.at)}${n?` · <button class="item mini" data-id="${n.id}" style="--c:var(--d-${n.d})"><span class="dot"></span>${esc(n.label)}</button>`:""}</div>
+      <p class="gtext">${esc(p.text)}</p>
+      <div class="gprow"><button class="linkbtn" data-gans="${p.id}">${open?"Hide answers":`${p.answerCount||0} answer${(p.answerCount||0)===1?"":"s"} · Answer`}</button>${postActions(p, owner, "post")}</div>
+      ${reportFormHTML("post:"+p.id)}
+      ${open ? `<div class="ganswers">${ans.map(a=>`<div class="ganswer"><div class="gpmeta"><b>${esc(a.name)}</b> · ${ago(a.at)}</div><p class="gtext">${esc(a.text)}</p>${postActions(Object.assign({pid:p.id},a), owner, "answer")}${reportFormHTML("post:"+p.id+":"+a.id)}</div>`).join("") || `<p class="none">No answers yet.</p>`}
+        <form class="gform" data-ganswer="${p.id}"><label class="sr" for="ga-${p.id}">Your answer</label><textarea id="ga-${p.id}" name="t" maxlength="2000" rows="2" placeholder="Write an answer"></textarea><div class="btnrow"><button class="btn primary" type="submit">Post answer</button></div></form></div>` : ""}
+    </article>`; }).join("");
+  return `<form class="gform gask" data-gask><label class="ttl" for="gq">Ask the group</label>
+      <textarea id="gq" name="t" maxlength="2000" rows="3" placeholder="What are you stuck on?" required></textarea>
+      <label class="sr" for="gqTopic">Topic</label><select id="gqTopic" name="topic"><option value="">General question</option>${topics.map(n=>`<option value="${n.id}">${esc(n.label)}</option>`).join("")}</select>
+      <div class="btnrow"><button class="btn primary" type="submit">Post question</button></div><p class="myerr" role="alert"></p></form>
+    ${list || `<p class="none">No questions yet. Ask the first one.</p>`}`;
+}
+function ladderCounts(l){ const c={i:0,k:0,s:0,"$":0}; Object.values(l||{}).forEach(v=>{ if(v in c) c[v]++; }); return c; }
+function progressHTML(g, path, owner, blocked){
+  const topics=path ? pathTopicIds(path).map(id=>byId.get(id)).filter(Boolean) : [];
+  const members=comm.members.filter(m=>!blocked.has(m.uid)).sort((a,b)=>(b.pct||0)-(a.pct||0));
+  const cards=members.map(m=>{ const c=ladderCounts(m.ladder), open=comm.open["m:"+m.uid];
+    return `<article class="gmember"><div class="gctop"><b>${esc(m.name)}${m.uid===meUid()?" (you)":""}</b>${m.status?`<span class="gstat gs-${/behind/i.test(m.status)?"behind":/starts/i.test(m.status)?"wait":"ok"}">${esc(m.status)}</span>`:""}</div>
+      <span class="ml">${m.goalName?`Goal: ${esc(m.goalName)}`:"No goal committed yet"}${m.updatedAt?` · updated ${ago(m.updatedAt)}`:""}</span>
+      ${m.goalName?`<div class="prog" style="--c:var(--accent)"><div class="track"><div class="fill" style="width:${m.pct||0}%"></div></div><span>${m.done||0} of ${m.todo||0} topics</span></div>`:""}
+      <div class="gladsum">${KISS_STAGES.map(st=>`<span><span class="rk2 ${rc(st.k)}">${STAGE_LETTER[st.k]}</span> ${c[st.k]}</span>`).join("")}<button class="linkbtn" data-gladder="${m.uid}">${open?"Hide ladder":"Show ladder"}</button></div>
+      ${open ? `<div class="gladder"><p class="ml">${path?`Topics on this group's goal (${esc(path.short)})`:"Topics"}</p><div class="links">${topics.map(n=>{ const st=(m.ladder||{})[n.id];
+        return `<button class="item" data-id="${n.id}" style="--c:var(--d-${n.d})"><span class="dot"></span>${esc(n.label)}${st?`<span class="stg ${rc(st)}">${STAGE_LETTER[st]}</span>`:""}</button>`; }).join("")}</div></div>` : ""}
+    </article>`; }).join("");
+  const ups=comm.posts.filter(p=>p.kind==="update" && !blocked.has(p.uid)).map(p=>`<article class="gpost"><div class="gpmeta"><b>${esc(p.name)}</b> · ${ago(p.at)}</div><p class="gtext">${esc(p.text)}</p><div class="gprow">${postActions(p, owner, "post")}</div>${reportFormHTML("post:"+p.id)}</article>`).join("");
+  return `<p class="note" style="margin-top:0">Shared with this group: your display name, committed goal, progress and your full topic ladder. It updates automatically as you learn.</p>
+    <div class="gcards">${cards || `<p class="none">No members yet.</p>`}</div>
+    <h3>Progress updates</h3>
+    <form class="gform" data-gupdate><label class="sr" for="gu">Share an update</label><textarea id="gu" name="t" maxlength="2000" rows="2" placeholder="Share what you finished or learned this week" required></textarea><div class="btnrow"><button class="btn primary" type="submit">Share update</button></div><p class="myerr" role="alert"></p></form>
+    ${ups || `<p class="none">No updates yet.</p>`}`;
+}
+function membersHTML(g, owner){
+  const me=meUid();
+  const reqs = owner && comm.requests.length ? `<h3>Asking to join</h3>${comm.requests.map(r=>`<article class="gmember"><div class="gctop"><b>${esc(r.name)}</b><span class="ml">${ago(r.at)}</span></div>${r.msg?`<p class="gtext">${esc(r.msg)}</p>`:""}
+    <div class="btnrow"><button class="btn primary" data-gapprove="${r.uid}">Approve</button><button class="btn" data-gdecline="${r.uid}">Decline</button></div></article>`).join("")}` : "";
+  const list=comm.members.slice().sort((a,b)=>(a.role==="owner"?-1:0)-(b.role==="owner"?-1:0)).map(m=>`<div class="gmrow"><span><b>${esc(m.name)}</b>${m.uid===me?" (you)":""}${m.role==="owner"?` <span class="gowner">Creator</span>`:""}</span>
+    ${owner && m.uid!==me ? (comm.confirm==="rm:"+m.uid ? `<button class="linkbtn danger" data-gremove="${m.uid}">Confirm remove</button>` : `<button class="linkbtn" data-gconfirm="rm:${m.uid}">Remove</button>`) : ""}</div>`).join("");
+  const leave = owner
+    ? (comm.confirm==="delgroup" ? `<div class="delbox"><p><b>Delete this group for everyone?</b> Questions, answers and updates are deleted too. This can't be undone.</p><div class="btnrow"><button class="btn dangerfill" data-gdelgroup>Yes, delete the group</button><button class="btn" data-gconfirm="">Cancel</button></div></div>` : `<button class="btn danger" data-gconfirm="delgroup">Delete group</button>`)
+    : (comm.confirm==="leave" ? `<div class="btnrow"><button class="btn dangerfill" data-gleave>Yes, leave</button><button class="btn" data-gconfirm="">Cancel</button></div>` : `<button class="btn" data-gconfirm="leave">Leave group</button>`);
+  return reqs + `<h3>Members</h3><div class="gmlist">${list}</div><div class="btnrow" style="margin-top:16px">${leave}</div>`;
+}
+
+/* ----- Actions ----- */
+async function commDo(fn, okMsg){ try{ await fn(); if(okMsg!==undefined) comm.msg=okMsg; }catch(e){ comm.msg=commErr(e); } renderGroups(); }
+async function loadAnswers(pid){
+  const s=await gref(comm.gid).collection("posts").doc(pid).collection("answers").orderBy("at").limit(100).get();
+  comm.answers[pid]=s.docs.map(d=>Object.assign({id:d.id}, d.data())); renderGroups();
+}
+async function deleteGroupAll(gid){
+  const g=gref(gid);
+  for(const sub of ["requests","members"]){ const s=await g.collection(sub).get(); for(const d of s.docs) if(sub!=="members" || d.id!==meUid()) await d.ref.delete(); }
+  const posts=await g.collection("posts").get();
+  for(const p of posts.docs){ const a=await p.ref.collection("answers").get(); for(const d of a.docs) await d.ref.delete(); await p.ref.delete(); }
+  await g.collection("members").doc(meUid()).delete().catch(()=>{});
+  await g.delete();
+}
+async function leaveGroup(gid){
+  const b=sync.db.batch(); b.delete(gref(gid).collection("members").doc(meUid())); b.update(gref(gid), {memberCount:FV().increment(-1)}); await b.commit();
+}
+// When an account is deleted: delete groups it created, and leave the others after removing its posts.
+async function communityLeaveAll(){
+  if(!sync.db || !sync.user) return;
+  for(const m of myGroups()){
+    try{
+      const g=(await gref(m.gid).get()).data()||{};
+      if(g.ownerUid===meUid()){ await deleteGroupAll(m.gid); continue; }
+      if(m.status==="pending"){ await gref(m.gid).collection("requests").doc(meUid()).delete(); continue; }
+      const mine=await gref(m.gid).collection("posts").where("uid","==",meUid()).get();
+      for(const p of mine.docs){ const a=await p.ref.collection("answers").get(); for(const d of a.docs) await d.ref.delete().catch(()=>{}); await p.ref.delete(); }
+      await leaveGroup(m.gid);
+    }catch(e){}
+  }
+  setMyGroups([]);
+}
+
+document.getElementById("groups").addEventListener("click", ev=>{
+  const t=ev.target.closest("button"); if(!t) return;
+  const d=t.dataset, me=meUid();
+  if("gsignin" in d){ if(isPhone()) setView("home"); else openSettings(); return; }
+  if("gopen" in d){ comm.tab="questions"; openGroup(d.gopen); return; }
+  if("gback" in d){ closeGroup(); return; }
+  if("gtab" in d){ comm.tab=d.gtab; comm.confirm=null; comm.reportFor=null; renderGroups(); return; }
+  if("gfilter" in d){ comm.filter=d.gfilter; renderGroups(); return; }
+  if("gcreateopen" in d){ comm.creating=true; renderGroups(); const i=document.getElementById("gcName"); if(i) i.focus(); return; }
+  if("gcreatex" in d){ comm.creating=false; renderGroups(); return; }
+  if("greqopen" in d){ comm.reqFor=d.greqopen; renderGroups(); return; }
+  if("greqx" in d){ comm.reqFor=null; renderGroups(); return; }
+  if("gcancel" in d){ commDo(async()=>{ await gref(d.gcancel).collection("requests").doc(me).delete(); setMyGroups(myGroups().filter(x=>x.gid!==d.gcancel)); }, "Request cancelled."); return; }
+  if("gconfirm" in d){ comm.confirm=d.gconfirm||null; renderGroups(); return; }
+  if("gans" in d){ const id=d.gans; comm.open[id]=!comm.open[id]; renderGroups(); if(comm.open[id]) loadAnswers(id).catch(e=>{ comm.msg=commErr(e); renderGroups(); }); return; }
+  if("gladder" in d){ const k="m:"+d.gladder; comm.open[k]=!comm.open[k]; renderGroups(); return; }
+  if("gblock" in d){ blockUser(d.gblock); comm.msg="Hidden. You won't see posts or progress from this person in any group on this device."; renderGroups(); return; }
+  if("greport" in d){ comm.reportFor=d.greport; renderGroups(); return; }
+  if("greportx" in d){ comm.reportFor=null; renderGroups(); return; }
+  if("gdel" in d){ const [kind,id,pid]=d.gdel.split(":"); comm.confirm=null;
+    commDo(async()=>{ if(kind==="post"){ const pr=gref(comm.gid).collection("posts").doc(id); const a=await pr.collection("answers").get().catch(()=>({docs:[]})); for(const x of a.docs) await x.ref.delete().catch(()=>{}); await pr.delete(); }
+      else { const pr=gref(comm.gid).collection("posts").doc(pid), b=sync.db.batch(); b.delete(pr.collection("answers").doc(id)); b.update(pr,{answerCount:FV().increment(-1)}); await b.commit(); await loadAnswers(pid); } }, "Deleted."); return; }
+  if("gapprove" in d){ const r=comm.requests.find(x=>x.uid===d.gapprove); if(!r) return;
+    commDo(async()=>{ const g=gref(comm.gid), b=sync.db.batch(); b.set(g.collection("members").doc(r.uid), {name:r.name, role:"member", joinedAt:FV().serverTimestamp()}); b.delete(g.collection("requests").doc(r.uid)); b.update(g, {memberCount:FV().increment(1)}); await b.commit(); }, `${r.name} joined the group.`); return; }
+  if("gdecline" in d){ commDo(()=>gref(comm.gid).collection("requests").doc(d.gdecline).delete(), "Request declined."); return; }
+  if("gremove" in d){ comm.confirm=null; commDo(async()=>{ const g=gref(comm.gid), b=sync.db.batch(); b.delete(g.collection("members").doc(d.gremove)); b.update(g,{memberCount:FV().increment(-1)}); await b.commit(); }, "Member removed."); return; }
+  if("gleave" in d){ const gid=comm.gid; commDo(async()=>{ await leaveGroup(gid); setMyGroups(myGroups().filter(x=>x.gid!==gid)); closeGroup(); }, "You left the group."); return; }
+  if("gdelgroup" in d){ const gid=comm.gid; comm.confirm=null; commUnsubscribe(); commDo(async()=>{ await deleteGroupAll(gid); setMyGroups(myGroups().filter(x=>x.gid!==gid)); comm.gid=null; comm.group=null; loadGroups(); }, "Group deleted."); return; }
+  const item=t.closest("[data-id]"); if(item){ openModal(item.dataset.id); return; }
+});
+document.getElementById("groups").addEventListener("submit", ev=>{
+  const f=ev.target; ev.preventDefault(); const err=f.querySelector(".myerr"), say=m=>{ if(err) err.textContent=m; };
+  if(f.matches("[data-gname]")){ const n=f.n.value.trim().replace(/\s+/g," "); if(n.length<2) return say("Use at least 2 characters.");
+    if(/@|\d{6,}/.test(n)) return say("Please don't use an email address or phone number.");
+    try{ localStorage.setItem("atlas-displayname", n); }catch(e){} openGroupsView(); return; }
+  if(f.matches("[data-gcreate]")){ const name=f.n.value.trim(), desc=f.d.value.trim(), path=goalPath(f.g.value); if(name.length<3) return say("Give the group a name of at least 3 characters.");
+    commDo(async()=>{ const ref=sync.db.collection("groups").doc(), b=sync.db.batch();
+      b.set(ref, {name, desc, goal:path.key, goalName:path.name, ownerUid:meUid(), ownerName:myName(), memberCount:1, createdAt:FV().serverTimestamp()});
+      b.set(ref.collection("members").doc(meUid()), {name:myName(), role:"owner", joinedAt:FV().serverTimestamp()});
+      await b.commit(); setMyGroups([...myGroups().filter(x=>x.gid!==ref.id), {gid:ref.id, status:"member"}]); comm.creating=false; comm.tab="questions"; openGroup(ref.id); }); return; }
+  if(f.matches("[data-greq]")){ const gid=f.dataset.greq, msg=f.m.value.trim();
+    commDo(async()=>{ await gref(gid).collection("requests").doc(meUid()).set({name:myName(), msg, at:FV().serverTimestamp()}); setMyGroups([...myGroups().filter(x=>x.gid!==gid), {gid, status:"pending"}]); comm.reqFor=null; }, "Request sent. You'll be able to open the group once the creator approves it."); return; }
+  if(f.matches("[data-gask]") || f.matches("[data-gupdate]")){ const text=f.t.value.trim(); if(!text) return say("Write something first.");
+    const kind=f.matches("[data-gask]") ? "question" : "update", topic=kind==="question" ? (f.topic.value||null) : null;
+    commDo(async()=>{ await gref(comm.gid).collection("posts").add({uid:meUid(), name:myName(), kind, topic, text, answerCount:0, at:FV().serverTimestamp()}); }, kind==="question" ? "Question posted." : "Update shared."); return; }
+  if(f.matches("[data-ganswer]")){ const pid=f.dataset.ganswer, text=f.t.value.trim(); if(!text) return;
+    commDo(async()=>{ const pr=gref(comm.gid).collection("posts").doc(pid), b=sync.db.batch(); b.set(pr.collection("answers").doc(), {uid:meUid(), name:myName(), text, at:FV().serverTimestamp()}); b.update(pr,{answerCount:FV().increment(1)}); await b.commit(); await loadAnswers(pid); }); return; }
+  if(f.matches("[data-greportsend]")){ const [, pid, aid]=f.dataset.greportsend.split(":");
+    commDo(async()=>{ await sync.db.collection("reports").add({gid:comm.gid, pid, aid:aid||null, reporterUid:meUid(), reason:f.r.value, at:FV().serverTimestamp()}); comm.reportFor=null; }, "Thanks. The report was sent for review."); return; }
+});
+
 /* ---------- Title with highlighted K.I.S.S letters ---------- */
 document.getElementById("ttl").innerHTML = KISS_TITLE;
 document.getElementById("pttl").innerHTML = KISS_TITLE;
@@ -3639,7 +3979,7 @@ const sync = { state:"init", user:null, db:null, auth:null, unsub:null, applying
 const syncKey = k => typeof k==="string" && k.startsWith("atlas-") && !SYNC_SKIP.has(k);
 try{
   const P = Storage.prototype, _set = P.setItem, _rem = P.removeItem;
-  P.setItem = function(k,v){ _set.call(this,k,v); if(this===window.localStorage && syncKey(k)) queueSync(); };
+  P.setItem = function(k,v){ _set.call(this,k,v); if(this===window.localStorage && syncKey(k)) queueSync(); if(this===window.localStorage && typeof k==="string" && (k.startsWith("atlas-stage-") || k==="atlas-commit")) queueCommunity(); };
   P.removeItem = function(k){ _rem.call(this,k); if(this===window.localStorage && syncKey(k)) queueSync(); };
 }catch(e){}
 function localSnapshot(){ const o={}; try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(syncKey(k)) o[k]=localStorage.getItem(k); } }catch(e){} return o; }
@@ -3711,12 +4051,14 @@ async function initSync(){
   try{
     if(!window.firebase) for(const f of ["firebase-app-compat.js","firebase-auth-compat.js","firebase-firestore-compat.js"]) await loadScript("firebase/"+f);
     firebase.initializeApp(window.KISS_FIREBASE_CONFIG);
+    try{ if(localStorage.getItem("kiss-emulator")==="1"){ firebase.auth().useEmulator("http://127.0.0.1:9099"); firebase.firestore().useEmulator("127.0.0.1", 8080); } }catch(e){}
     sync.auth = firebase.auth(); sync.db = firebase.firestore();
     setSync("signedout", "");
     sync.auth.onAuthStateChanged(u=>{
       sync.user = u || null;
       if(u) startSync(); else { stopSync(); setSync("signedout", ""); }
       refreshAccountUI();
+      if(state.view==="groups") openGroupsView();
     });
     if(!window.AtlasNative) sync.auth.getRedirectResult().catch(e=>setSync("signedout", authError(e)));
   }catch(e){ setSync("error", "Sign-in couldn't load. Check your connection and reopen the app."); }
@@ -3816,7 +4158,9 @@ async function accountAction(k, prefix="", root=document){
     if(k==="signout"){ sync.confirmDelete=false; await sync.auth.signOut(); }
     if(k==="deldo"){
       say("Deleting your account…");
-      const u = sync.auth.currentUser; stopSync();
+      const u = sync.auth.currentUser;
+      await communityLeaveAll().catch(()=>{});
+      stopSync();
       await sync.db.collection("users").doc(u.uid).delete();
       await u.delete();
       sync.confirmDelete=false; setSync("signedout", "Your account and synced progress were deleted.");
@@ -3855,7 +4199,7 @@ function start(){
   const h = location.hash.slice(1); const first = byId.has(h)? h : null;
   const firstRole = h.startsWith("role-") && ROLES.some(r=>r.id===h.slice(5)) ? h.slice(5) : null;
   let v=null; try{ v = localStorage.getItem("atlas-view"); }catch(e){}
-  if(!["home","graph","list","roles"].includes(v)) v = isPhone() ? "home" : "graph";
+  if(!["home","graph","list","roles","groups"].includes(v)) v = isPhone() ? "home" : "graph";
   const r=svg.node().getBoundingClientRect(); svg.call(zoom.transform, d3.zoomIdentity.translate(r.width/2,r.height/2).scale(.7));
   setView(first||firstRole ? "graph" : v);
   if(first) select(first,{anim:false}); else if(firstRole){ selectRole(firstRole,{anim:false}); }

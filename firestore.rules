@@ -1,10 +1,113 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function me() { return request.auth.uid; }
+    function groupPath(gid) { return /databases/$(database)/documents/groups/$(gid); }
+    function isOwner(gid) { return signedIn() && get(groupPath(gid)).data.ownerUid == me(); }
+    function isMember(gid) { return signedIn() && exists(/databases/$(database)/documents/groups/$(gid)/members/$(me())); }
+    function str(v, max) { return v is string && v.size() > 0 && v.size() <= max; }
+    function optStr(v, max) { return v == null || (v is string && v.size() <= max); }
+
     // Each person can read and write only their own progress document.
     match /users/{uid} {
-      allow read, write: if request.auth != null && request.auth.uid == uid;
+      allow read, write: if signedIn() && me() == uid;
     }
+
+    // Study groups. Name, goal and description are visible to signed-in users so groups can be
+    // discovered; everything inside a group is visible only to its members.
+    match /groups/{gid} {
+      allow read: if signedIn();
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['name', 'desc', 'goal', 'goalName', 'ownerUid', 'ownerName', 'memberCount', 'createdAt'])
+        && request.resource.data.ownerUid == me()
+        && str(request.resource.data.name, 60) && optStr(request.resource.data.desc, 300)
+        && str(request.resource.data.goal, 80) && str(request.resource.data.goalName, 120)
+        && str(request.resource.data.ownerName, 40)
+        && request.resource.data.memberCount == 1
+        && request.resource.data.createdAt == request.time;
+      // The owner edits the group and keeps the member count; a member who leaves lowers it by one.
+      allow update: if (isOwner(gid)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'desc', 'memberCount'])
+          && str(request.resource.data.name, 60) && optStr(request.resource.data.desc, 300)
+          && request.resource.data.memberCount is int
+          && request.resource.data.memberCount >= 1 && request.resource.data.memberCount <= 500)
+        || (isMember(gid) && !isOwner(gid)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['memberCount'])
+          && request.resource.data.memberCount == resource.data.memberCount - 1);
+      allow delete: if isOwner(gid);
+
+      // Requests to join: the person asking and the owner can see them.
+      match /requests/{uid} {
+        allow read: if isOwner(gid) || (signedIn() && me() == uid);
+        allow create: if signedIn() && me() == uid && !isMember(gid)
+          && request.resource.data.keys().hasOnly(['name', 'msg', 'at'])
+          && str(request.resource.data.name, 40) && optStr(request.resource.data.msg, 200)
+          && request.resource.data.at == request.time;
+        allow delete: if isOwner(gid) || (signedIn() && me() == uid);
+      }
+
+      // Members and the progress they share with the group (goal, progress and full topic ladder).
+      function validMember(d) {
+        return d.keys().hasOnly(['name', 'role', 'joinedAt', 'goal', 'goalName', 'pct', 'status', 'done', 'todo', 'ladder', 'updatedAt'])
+          && str(d.name, 40) && d.role in ['owner', 'member']
+          && optStr(d.get('goal', null), 80) && optStr(d.get('goalName', null), 120) && optStr(d.get('status', null), 40)
+          && (!('ladder' in d) || (d.ladder is map && d.ladder.size() <= 400));
+      }
+      match /members/{uid} {
+        allow read: if isMember(gid);
+        // The owner adds themselves when creating the group, and others when approving a request.
+        allow create: if signedIn() && validMember(request.resource.data) && (
+            (me() == uid && request.resource.data.role == 'owner'
+              && getAfter(groupPath(gid)).data.ownerUid == me())
+            || (isOwner(gid) && request.resource.data.role == 'member'
+              && exists(/databases/$(database)/documents/groups/$(gid)/requests/$(uid))));
+        // Members update only their own shared progress, and can't change their role.
+        allow update: if signedIn() && me() == uid && validMember(request.resource.data)
+          && request.resource.data.role == resource.data.role;
+        allow delete: if (signedIn() && me() == uid) || isOwner(gid);
+      }
+
+      // Questions and progress updates, visible to members only.
+      match /posts/{pid} {
+        allow read: if isMember(gid);
+        allow create: if isMember(gid)
+          && request.resource.data.keys().hasOnly(['uid', 'name', 'kind', 'topic', 'text', 'answerCount', 'at'])
+          && request.resource.data.uid == me()
+          && request.resource.data.kind in ['question', 'update']
+          && str(request.resource.data.text, 2000) && str(request.resource.data.name, 40)
+          && optStr(request.resource.data.get('topic', null), 40)
+          && request.resource.data.answerCount == 0
+          && request.resource.data.at == request.time;
+        allow update: if isMember(gid)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['answerCount'])
+          && (request.resource.data.answerCount == resource.data.answerCount + 1
+            || request.resource.data.answerCount == resource.data.answerCount - 1);
+        allow delete: if signedIn() && (resource.data.uid == me() || isOwner(gid));
+
+        match /answers/{aid} {
+          allow read: if isMember(gid);
+          allow create: if isMember(gid)
+            && request.resource.data.keys().hasOnly(['uid', 'name', 'text', 'at'])
+            && request.resource.data.uid == me()
+            && str(request.resource.data.text, 2000) && str(request.resource.data.name, 40)
+            && request.resource.data.at == request.time;
+          allow delete: if signedIn() && (resource.data.uid == me() || isOwner(gid));
+        }
+      }
+    }
+
+    // Reports of posts or answers, reviewed by the app owner in the Firebase console.
+    match /reports/{rid} {
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['gid', 'pid', 'aid', 'reporterUid', 'reason', 'at'])
+        && request.resource.data.reporterUid == me()
+        && str(request.resource.data.gid, 64) && str(request.resource.data.pid, 64)
+        && optStr(request.resource.data.get('aid', null), 64) && optStr(request.resource.data.reason, 300)
+        && request.resource.data.at == request.time;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
