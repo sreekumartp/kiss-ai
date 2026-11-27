@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>window.ATLAS_BUILD="7386d70f1df0";</script>
+<script>window.ATLAS_BUILD="e7e424507264";</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The K.I.S.S model for mastering AI</title>
@@ -2238,10 +2238,9 @@ const BACKGROUNDS = [
  {id:"analyst", name:"Data analyst", topics:"numbers arith fractions exponents logs ratios sumnot algebra functions coord programming dataeng viz descstats probbasics condprob bayes randvar expect clt hyptest linreg metrics"},
  {id:"mlpro", name:"ML practitioner", topics:"@lv<=3 mlp backprop sgd adam frameworks activations normalization dropout cnn transfer"}
 ];
-function bgList(){ return getAssess() ? [{id:"self", name:"My self-check (You are here)", topics:""}, ...BACKGROUNDS] : BACKGROUNDS; }
+function bgList(){ return BACKGROUNDS; }
 function currentBg(){ return bgList().find(b=>b.id===getBg()) || BACKGROUNDS[0]; }
 function bgSet(bg){
-  if(bg && bg.id==="self") return assessKnown();
   const s=new Set(); (bg.topics||"").split(/\s+/).filter(Boolean).forEach(t=>{ const m=t.match(/^@lv<=(\d)$/); if(m) nodes.filter(n=>n.lv<=+m[1]).forEach(n=>s.add(n.id)); else s.add(t); });
   return s;
 }
@@ -2451,10 +2450,9 @@ function openCommit(pref){
   const cur=sheet.querySelector('.cgoals [aria-current="true"]'); if(cur) cur.scrollIntoView({block:"nearest"});
 }
 function commitHTML(){
-  const d=commitDraft, c=getCommit(), path=d.goal && goalPath(d.goal), ranked=rankRoles();
+  const d=commitDraft, c=getCommit(), path=d.goal && goalPath(d.goal);
   const row=(key,name,sub)=>`<button class="rprow" data-cgoal="${key}" ${d.goal===key?'aria-current="true"':""}><span class="rpn">${esc(name)}</span><span class="rpd">${sub}</span></button>`;
-  const roles=Object.entries(ROLE_FAMILIES).map(([f,fn])=>`<h4>${esc(fn)}</h4>`+ROLES.filter(r=>r.fam===f).map(r=>{ const x=ranked && ranked.find(y=>y.r.id===r.id);
-    return row("role:"+r.id, r.name, x ? `${x.steep} climb · ${x.todo} of ${x.total} essential topics to learn` : esc(r.does)); }).join("")).join("");
+  const roles=Object.entries(ROLE_FAMILIES).map(([f,fn])=>`<h4>${esc(fn)}</h4>`+ROLES.filter(r=>r.fam===f).map(r=>row("role:"+r.id, r.name, esc(r.does))).join("")).join("");
   const topics=nodes.filter(n=>n.d==="app").sort((a,b)=>a.label.localeCompare(b.label)).map(n=>row("topic:"+n.id, n.label, esc(n.desc))).join("");
   let sum="Choose a goal above to see your plan.";
   if(path){ const p=ttPlan(path,{hpw:d.hpw,opt:d.opt,start:d.start}); sum=`<b>${p.todo}</b> topics to learn · about <b>${p.hours} hours</b> · <b>${p.weeks} weeks</b> at ${d.hpw} h/week · finish around <b>${fmtDate(p.end)}</b>`; }
@@ -2492,104 +2490,7 @@ function openGoalPath(key){
   state.role=null; state.mode="pre"; setView("graph"); select(g.id);
 }
 
-/* ---------- Self-check: "You are here" ----------
-   Learners rate eight skill areas and four interests. Skill ratings mark a share of each
-   area's topics (basic first) as already known; interests and the remaining climb rank the
-   roles, so a weak maths background shows a steeper path to Data Scientist and enjoying work
-   with people lifts roles such as Forward Deployed Engineer. Saved as "atlas-assess". */
-const ASSESS_SKILLS = [
-  ["math","Maths","Algebra, calculus and linear algebra", n=>n.d==="math"],
-  ["stats","Probability & statistics","Distributions, inference and A/B tests", n=>n.d==="prob"],
-  ["code","Programming","Python, data structures and algorithms", n=>["programming","datastruct","complexity","binary","graphs","tensors","dynprog","autodiff","numstab"].includes(n.id)],
-  ["data","Working with data","Cleaning, SQL, features and charts", n=>["dataeng","viz","descstats","features","mlworkflow"].includes(n.id)],
-  ["ml","Classical machine learning","Regression, trees, validation and metrics", n=>n.d==="ml"],
-  ["dl","Deep learning","Neural networks, CNNs and transformers", n=>n.d==="dl" || ((n.d==="nlp"||n.d==="cv"||n.d==="gen") && n.lv<=5)],
-  ["llm","Building with LLMs","Prompting, RAG, agents and evals", n=>n.d==="llm" || n.d==="agent"],
-  ["sys","Systems & deployment","Cloud, GPUs, serving and MLOps", n=>n.d==="sys" && n.lv>=3],
-];
-const ASSESS_TRAITS = [["build","Building things with code"],["people","Working with people and customers"],["research","Research, reading papers and writing"],["product","Product and business thinking"],["security","Security and risk"]];
-const SKILL_LEVELS = ["None","Basic","Comfortable","Strong"], LIKE_LEVELS = ["Not for me","A little","Quite a lot","Love it"];
-// How much each interest matters for a role (0 to 3). Roles without an entry are judged on skills alone.
-const ROLE_TRAITS = {
-  "data-scientist":{product:2,research:1,people:1,build:1}, "ml-engineer":{build:3}, "ai-engineer":{build:3,product:1},
-  "cv-engineer":{build:2,research:1}, "nlp-speech":{build:2,research:1}, "genai-media":{build:2,product:1}, "rl-robotics":{build:2,research:1},
-  "research-scientist":{research:3}, "research-engineer":{build:3,research:2}, "ai-scientist":{research:3,build:1},
-  "mlops":{build:3}, "inference-perf":{build:3}, "data-engineer":{build:3},
-  "safety-researcher":{research:3,security:1}, "ai-security":{security:3,build:2}, "responsible-ai":{people:2,security:2,product:1},
-  "eval-engineer":{research:2,build:2}, "ai-qa":{build:2,security:1,product:1}, "ai-pm":{product:3,people:2},
-  "educator":{people:3,research:1,build:1}, "solutions-architect":{people:3,product:2,build:1}, "fde":{people:3,build:2,product:2}
-};
-function getAssess(){ try{ const a=JSON.parse(localStorage.getItem("atlas-assess")||"null"); return a && a.s ? a : null; }catch(e){ return null; } }
-function setAssess(a){ try{ localStorage.setItem("atlas-assess", JSON.stringify(a)); }catch(e){} }
-let knownCache = {key:null, set:null};
-function assessKnown(){
-  const a=getAssess(), key=JSON.stringify(a && a.s);
-  if(knownCache.key===key && knownCache.set) return knownCache.set;
-  const s=new Set();
-  if(a) ASSESS_SKILLS.forEach(([k,,,f])=>{ const r=a.s[k]||0; if(!r) return;
-    const list=nodes.filter(f).sort((x,y)=>x.lv-y.lv || x.nAnc-y.nAnc);
-    list.slice(0, Math.round(list.length*[0,.2,.55,.9][r])).forEach(n=>s.add(n.id)); });
-  knownCache={key, set:s}; return s;
-}
-const AREA_SHORT = {safe:"AI safety", agent:"Agents", llm:"LLMs", nlp:"Language & speech", cv:"Vision", gen:"Generative models", rl:"Reinforcement learning", app:"Applied AI", opt:"Optimization", sys:"Systems"};
-function skillArea(n){ const a=ASSESS_SKILLS.find(x=>x[3](n)); return a ? a[1] : (AREA_SHORT[n.d] || dName[n.d]); }
-function rankRoles(){
-  const a=getAssess(); if(!a) return null;
-  const known=assessKnown(), t=a.t||{};
-  const rows=ROLES.map(r=>{
-    const opt=optSet(r), ess=[...new Set((PHASES[r.id]||[]).flatMap(ph=>ph[1].split(/\s+/)))].filter(id=>!opt.has(id));
-    const todo=ess.filter(id=>!known.has(id) && STAGE_IDX[getStage(id)]<1).map(id=>byId.get(id));
-    const climb=todo.reduce((sum,n)=>sum+1+n.lv/7,0);
-    const areas={}; todo.forEach(n=>{ const k=skillArea(n); areas[k]=(areas[k]||0)+1; });
-    const top=Object.entries(areas).sort((x,y)=>y[1]-x[1])[0]||null;
-    const tw=ROLE_TRAITS[r.id]||{}, ws=Object.values(tw).reduce((x,w)=>x+w,0);
-    const fit = ws ? Object.entries(tw).reduce((x,[k,w])=>x+w*(t[k]||0)/3,0)/ws : null;
-    const likes=Object.entries(tw).filter(([k,w])=>w>=1 && (t[k]||0)>=2).map(([k])=>ASSESS_TRAITS.find(x=>x[0]===k)[1]);
-    const clash=Object.entries(tw).filter(([k,w])=>w>=2 && !(t[k]||0)).map(([k])=>ASSESS_TRAITS.find(x=>x[0]===k)[1]);
-    return {r, todo:todo.length, total:ess.length, climb, top, fit, likes, clash};
-  });
-  const maxC=Math.max(1,...rows.map(x=>x.climb));
-  rows.forEach(x=>{ x.steep = x.climb<=12 ? "Gentle" : x.climb<=26 ? "Moderate" : "Steep";
-    x.score = .5*(1-x.climb/maxC) + .5*(x.fit===null ? .5 : x.fit); });
-  return rows.sort((x,y)=>y.score-x.score);
-}
-function climbLine(x){
-  return `<span class="steep st-${x.steep.toLowerCase()}">${x.steep} climb</span> ${x.todo} of ${x.total} essential topics to learn${x.top && x.todo ? ` · most in ${esc(x.top[0])} (${x.top[1]})` : ""}`;
-}
-function fitLine(x){
-  if(x.likes.length) return `<span class="fitok">Fits you:</span> ${x.likes.map(l=>esc(l.toLowerCase())).join(", ")}`;
-  if(x.clash.length) return `<span class="fitno">Needs:</span> ${x.clash.map(l=>esc(l.toLowerCase())).join(", ")}`;
-  return "";
-}
-function hereHTML(where){
-  const a=getAssess();
-  if(!a) return `<div class="card herecard"><h2>Where are you starting from?</h2>
-    <p class="none">Every role has a destination. Take a 2-minute self-check to mark where you are now: the map shows what you already know, and roles are ranked by how steep your climb is and how well they fit what you enjoy.</p>
-    <div class="btnrow"><button class="btn primary" data-assess>Take the self-check</button></div></div>`;
-  const rows=rankRoles(), top=rows.slice(0, where==="roles" ? 5 : 3);
-  const strong=ASSESS_SKILLS.filter(([k])=>(a.s[k]||0)>=2).map(x=>x[1]), weak=ASSESS_SKILLS.filter(([k])=>!(a.s[k]||0)).map(x=>x[1]);
-  return `<div class="card herecard"><div class="herehead"><span class="youare">You are here</span><button class="linkbtn" data-assess>Redo self-check</button></div>
-    <p class="none">${assessKnown().size} topics marked as known from your self-check.${strong.length?` Strong: ${strong.map(esc).join(", ")}.`:""}${weak.length?` New to you: ${weak.map(esc).join(", ")}.`:""}</p>
-    <h3>Best matches for you</h3>
-    <ol class="matches">${top.map(x=>`<li><button class="match" ${where==="roles"?"data-role":"data-homerole"}="${x.r.id}"><b>${esc(x.r.name)}</b><span class="ml">${climbLine(x)}</span>${fitLine(x)?`<span class="ml">${fitLine(x)}</span>`:""}</button></li>`).join("")}</ol>
-    ${where==="roles" ? "" : `<div class="btnrow"><button class="btn" data-goto="roles">See all roles ranked</button></div>`}</div>`;
-}
-function openAssess(){
-  modalId=null; const a=getAssess()||{s:{},t:{}};
-  sheet.style.setProperty("--c","var(--accent)");
-  const row=(group,k,label,hint,levels,val)=>`<div class="asrow"><div class="aslabel"><b>${esc(label)}</b>${hint?`<span>${esc(hint)}</span>`:""}</div>
-    <div class="asseg" role="radiogroup" aria-label="${esc(label)}">${levels.map((l,i)=>`<button type="button" role="radio" aria-checked="${val===i}" data-as="${group}:${k}:${i}">${l}</button>`).join("")}</div></div>`;
-  sheet.innerHTML = `<button class="xbtn" id="mClose" aria-label="Close">×</button>
-    <div class="assess"><h2 id="mTitle">Where are you now?</h2>
-    <p class="note">Be honest: this only decides where your paths start and which roles suit you. You can change it any time.</p>
-    <h3>Your skills today</h3>${ASSESS_SKILLS.map(([k,l,h])=>row("s",k,l,h,SKILL_LEVELS,a.s[k]??-1)).join("")}
-    <h3>What you enjoy</h3>${ASSESS_TRAITS.map(([k,l])=>row("t",k,l,"",LIKE_LEVELS,(a.t||{})[k]??-1)).join("")}
-    <p class="status" id="asStatus" role="status"></p>
-    <div class="btnrow"><button class="btn primary" data-asdone>See my starting point</button></div></div>`;
-  if(modal.hidden) lastFocus=document.activeElement;
-  modal.hidden=false; sheet.scrollTop=0; document.getElementById("mClose").focus();
-}
-function getBg(){ try{ return localStorage.getItem("atlas-bg")||"new"; }catch(e){ return "new"; } }
+function getBg(){ try{ const v=localStorage.getItem("atlas-bg")||"new"; return BACKGROUNDS.some(b=>b.id===v) ? v : "new"; }catch(e){ return "new"; } }
 function setBg(v){ try{ localStorage.setItem("atlas-bg",v); }catch(e){} }
 // A phase counts as covered when every essential topic is in your background or you have marked it at Knowledge or above.
 // Optional topics never block progress. A phase with only optional topics is marked "opt" and is never the starting phase.
@@ -3175,9 +3076,7 @@ function refreshStages(){
   document.querySelectorAll(".item[data-id]").forEach(b=>{ const old=b.querySelector(".stg"); if(old) old.remove(); const h=stageBadge(b.dataset.id); if(h) b.insertAdjacentHTML("beforeend",h); });
   if(nodeSel){
     nodeSel.select("circle").attr("r", n=>getStage(n.id)?6.5:3.6).style("fill", n=>{ const st=getStage(n.id); return st ? `var(--${rc(st)})` : null; });
-    const here=assessKnown();
-    nodeSel.select("text.sl").text(n=>{ const st=getStage(n.id); return st ? STAGE_LETTER[st] : here.has(n.id) ? "✓" : ""; });
-    nodeSel.classed("here", n=>!getStage(n.id) && here.has(n.id));
+    nodeSel.select("text.sl").text(n=>{ const st=getStage(n.id); return st ? STAGE_LETTER[st] : ""; });
   }
   if(!state.sel) renderPanel();
   if(state.view==="home") renderHome();
@@ -3368,7 +3267,7 @@ function homeHTML(){
     <p class="none">Open any topic and tap <b>Where am I?</b> to mark your rung. Your funnel below fills up as you go.</p>
     <div class="btnrow"><button class="btn primary" data-intro>Got it</button></div></div>`;
   const starts = ["gd","backprop","transformer","rag","reasoning","agents"].map(id=>byId.get(id));
-  return `<div class="homewrap">${intro}${goalCardHTML()}${landingAccountHTML()}${hereHTML("home")}${getCommit() ? "" : cont}<div class="card">${funnelHTML()}</div>
+  return `<div class="homewrap">${intro}${goalCardHTML()}${landingAccountHTML()}${getCommit() ? "" : cont}<div class="card">${funnelHTML()}</div>
     <div class="card"><h3 style="margin-top:0">Good places to start</h3><div class="links">${starts.map(itemHTML).join("")}</div></div>
     <p class="foot">${nodes.length} topics · ${edges.length} links · frontier through mid-2026. ${syncFooter()}</p></div>`;
 }
@@ -3513,7 +3412,6 @@ function roleHTML(role){
     <h2>${esc(role.name)}</h2>
     <p class="desc">${esc(role.does)}</p>
     <div class="stats"><div><b>${S.length||"–"}</b><span>topics to build</span></div><div><b>${K.length + (role.depth==="k"?0:0)}</b><span>topics to teach</span></div><div><b>${I.length}</b><span>topics to know of</span></div></div>
-    ${(()=>{ const x=(rankRoles()||[]).find(y=>y.r.id===role.id); return x ? `<p class="climbrow">${climbLine(x)}${fitLine(x)?`<br>${fitLine(x)}`:""}</p>` : ""; })()}
     <h3>What success looks like</h3>
     <div class="links">${role.success.map(k=>`<span class="succchip">${esc(FORM[k].name)}</span>`).join("")}</div>
     <h3>Your readiness</h3>
@@ -3548,11 +3446,10 @@ function roleHTML(role){
 }
 let roleDetail = null;
 function renderRoles(){
-  const el=document.getElementById("roles"), ranked=rankRoles();
+  const el=document.getElementById("roles");
   if(isPhone() && roleDetail){ const role=ROLES.find(x=>x.id===roleDetail);
     el.innerHTML = `<div class="roleback"><button class="btn" data-roleback>‹ All roles</button><button class="btn primary" data-rolemap="${role.id}">Show on map</button></div><div class="rdetail">${roleHTML(role)}</div>`; return; }
   el.innerHTML = `<div class="rolesintro"><h2>Learning paths by role</h2><p>Each role has an ordered path of phases. Every phase lists topics to study, a teach-back to prove Knowledge, a capstone to prove Skill and a milestone for Success. Pick your background to skip what you already know.</p>
-    ${hereHTML("roles")}
     <label class="bglabel">Your background <select class="bgsel" data-bg aria-label="Your background">${bgList().map(b=>`<option value="${b.id}" ${b.id===getBg()?"selected":""}>${esc(b.name)}</option>`).join("")}</select></label></div>` +
     Object.entries(ROLE_FAMILIES).map(([f,fname])=>`<section class="rfam"><h3>${esc(fname)}</h3><div class="rcards">${ROLES.filter(r=>r.fam===f).map(r=>{
       const need=rolePath(r), {met}=roleGap(need), core=[...need.values()].filter(x=>x===r.depth).length;
@@ -3560,7 +3457,6 @@ function renderRoles(){
         <b>${esc(r.name)}</b><span class="rd">${esc(r.does)}</span>
         <span class="rm">${(()=>{ const ps=phaseStatus(r), tot=ps.reduce((a,x)=>a+x.ess.length,0), nw=ps.reduce((a,x)=>a+x.essNew.length,0), at=ps.findIndex(x=>x.st==="now")+1; return `${ps.length} phases · ${at?`start at phase ${at}`:"essentials covered"} · ${nw} of ${tot} essential topics new to you`; })()}</span>
         <span class="rm">Success: ${r.success.map(k=>esc(FORM[k].name)).join(" · ")}</span>
-        ${(()=>{ const x=ranked && ranked.find(y=>y.r.id===r.id); return x ? `<span class="rm">${climbLine(x)}</span>${fitLine(x)?`<span class="rm">${fitLine(x)}</span>`:""}` : ""; })()}
         <span class="rbar"><span style="width:${Math.round(met/need.size*100)}%"></span></span>
       </button>`; }).join("")}</div></section>`).join("");
 }
@@ -3611,18 +3507,6 @@ sheet.addEventListener("change", ev=>{
   ttSaveFor(path,s); ttRefresh(); rerenderAll();
 });
 
-/* ---------- Self-check events ---------- */
-sheet.addEventListener("click", ev=>{
-  const b=ev.target.closest("[data-as]");
-  if(b){ const [g,k,v]=b.dataset.as.split(":"); const a=getAssess()||{s:{},t:{}}; a.t=a.t||{}; a[g][k]=+v; a.at=Date.now(); setAssess(a);
-    b.parentElement.querySelectorAll("button").forEach(x=>x.setAttribute("aria-checked", String(x===b))); return; }
-  if(ev.target.closest("[data-asdone]")){
-    const a=getAssess(), missing=ASSESS_SKILLS.filter(([k])=>!a || a.s[k]===undefined).length;
-    if(missing){ document.getElementById("asStatus").textContent=`Rate all skills first (${missing} left). Choose None if a skill is new to you.`; return; }
-    setBg("self"); closeModal(); refreshStages(); roleDetail=null; setView("roles"); renderPanel();
-  }
-});
-document.addEventListener("click", ev=>{ if(ev.target.closest("[data-assess]")){ ev.preventDefault(); openAssess(); } });
 
 /* ---------- Title with highlighted K.I.S.S letters ---------- */
 document.getElementById("ttl").innerHTML = KISS_TITLE;

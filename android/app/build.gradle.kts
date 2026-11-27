@@ -11,8 +11,8 @@ android {
         applicationId = "io.github.sreekumartp.kissai.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 42
-        versionName = "5.1"
+        versionCode = 43
+        versionName = "5.2"
     }
 
     // Play upload key. Supplied by CI from GitHub Secrets (see playstore/README.md);
