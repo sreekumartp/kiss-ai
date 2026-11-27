@@ -416,6 +416,28 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
 .delbox{margin-top:10px;padding:12px;border:1px solid color-mix(in srgb,#C0392B 45%,var(--line));border-radius:10px;background:color-mix(in srgb,#C0392B 7%,var(--surface))}
 .delbox p{margin:0 0 4px;font-size:.88rem}
 .settings a{color:var(--accent)}
+.goalcard h2{margin:6px 0 4px}
+.youare.mygoal::before{background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%,transparent)}
+.gline{margin:8px 0 0;font-size:.86rem}
+.gstat{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 9px;border-radius:999px;margin-right:6px}
+.gs-ok{background:color-mix(in srgb,var(--r-s) 20%,var(--surface));color:var(--fg)}
+.gs-behind{background:color-mix(in srgb,#C0392B 20%,var(--surface));color:var(--fg)}
+.gs-wait{background:var(--surface-2);color:var(--fg)}
+.nextup{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.nextup .lbl{flex-basis:100%;margin:0}
+.nextrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;min-width:0}
+.goalmark{display:inline-flex;align-items:center;min-height:44px;padding:0 6px;font-weight:700;color:var(--accent)}
+.ctabs{display:flex;gap:4px;padding:3px;border-radius:10px;background:var(--surface-2);margin-bottom:8px}
+.ctabs button{flex:1;min-height:40px;border:0;border-radius:8px;background:none;cursor:pointer;font-weight:600;color:var(--muted)}
+.ctabs button[aria-selected="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 3px rgba(10,20,40,.12)}
+.cgoals{max-height:40vh;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:4px 8px 10px}
+.cgoals h4{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin:12px 6px 4px}
+.cpick{margin:8px 0 0;font-size:.9rem}
+.commit h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:18px 0 8px;font-weight:600}
+.ttlearn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:2px 10px;min-height:30px;font-size:.72rem;font-weight:600;color:var(--fg);cursor:pointer;white-space:nowrap}
+.ttlearn:hover{border-color:var(--accent)}
+.ttlearned{font-size:.72rem;font-weight:700;color:var(--r-s);white-space:nowrap}
+.ttgot td:nth-child(2){text-decoration:none}
 .tt h2{margin-bottom:12px}
 .ttctl{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-bottom:10px}
 .ttl{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;margin-bottom:4px}
@@ -2203,67 +2225,183 @@ function bgSet(bg){
   const s=new Set(); (bg.topics||"").split(/\s+/).filter(Boolean).forEach(t=>{ const m=t.match(/^@lv<=(\d)$/); if(m) nodes.filter(n=>n.lv<=+m[1]).forEach(n=>s.add(n.id)); else s.add(t); });
   return s;
 }
-/* ---------- Study timetable: a plain week-by-week list for one role ----------
+/* ---------- Goals: a role or an Applied AI topic ----------
+   A goal key is "role:<id>" or "topic:<id>". Roles use their hand-written phases. An Applied AI
+   topic's path is the topic plus three steps of prerequisites, grouped into phases by level;
+   deeper foundations count as background. */
+function parseGoal(key){ if(!key) return null; const i=key.indexOf(":"); return i<0 ? {kind:"role", id:key} : {kind:key.slice(0,i), id:key.slice(i+1)}; }
+function goalPath(key){
+  const g=parseGoal(key); if(!g) return null;
+  if(g.kind==="role"){ const r=ROLES.find(x=>x.id===g.id); if(!r) return null;
+    return {key:"role:"+r.id, kind:"role", id:r.id, name:r.name, short:shortRole(r), phases:PHASES[r.id]||[], opt:optSet(r)}; }
+  const n=byId.get(g.id); if(!n) return null;
+  const set=new Set(); let f=[n];
+  for(let i=0;i<3;i++){ const nf=[]; f.forEach(x=>x.pre.forEach(p=>{ if(!set.has(p)){ set.add(p); nf.push(p); } })); f=nf; }
+  const [build,earn]=(KISS[n.id]||"|").split("|");
+  const bands=[["Foundations", l=>l<=2, `Explain how this maths and code shows up in ${n.label}`, `Work through the maths and code behind one ${n.label} example`],
+    ["Machine learning", l=>l===3, `Explain which classic ML methods suit ${n.label} problems`, `Build a baseline model for a ${n.label} problem`],
+    ["Deep learning", l=>l===4, `Explain which neural networks suit ${n.label} data`, `Train a neural network on ${n.label} data`],
+    ["Modern models", l=>l>=5, `Explain how modern models change ${n.label}`, `Adapt a modern pretrained model to a ${n.label} task`]];
+  const phases=[];
+  bands.forEach(([name,fn,tb,cap])=>{ const ids=[...set].filter(x=>fn(x.lv)).sort((a,b)=>a.lv-b.lv||a.nAnc-b.nAnc).map(x=>x.id); if(ids.length) phases.push([name, ids.join(" "), tb, cap, ""]); });
+  phases.push([n.label, n.id, `Explain ${n.label} to someone who works in that field`, build||`Build a working ${n.label} project`, earn?`Your work is used by ${earn}`:""]);
+  return {key:"topic:"+n.id, kind:"topic", id:n.id, name:n.label, short:n.label, phases, opt:new Set()};
+}
+function pathTopicIds(path){ return [...new Set(path.phases.flatMap(ph=>ph[1].split(/\s+/)))]; }
+const isLearned = id => STAGE_IDX[getStage(id)]>=1;
+function knownNow(path){ const bg=bgSet(currentBg()); return new Set(pathTopicIds(path).filter(id=>bg.has(id) || isLearned(id))); }
+
+/* ---------- Commitment: the goal a learner commits to, with a weekly pace ----------
+   Saved as "atlas-commit" (synced). The topics already known when committing are stored, so the
+   schedule stays fixed and progress is measured against it. */
+function getCommit(){ try{ const c=JSON.parse(localStorage.getItem("atlas-commit")||"null"); return c && goalPath(c.goal) ? c : null; }catch(e){ return null; } }
+function setCommit(c){ try{ c ? localStorage.setItem("atlas-commit", JSON.stringify(c)) : localStorage.removeItem("atlas-commit"); }catch(e){} }
+
+/* ---------- Study timetable: a plain week-by-week list for a goal ----------
    Topics in path order, grouped by phase, each with estimated hours from its level, plus a
-   capstone block per phase. Known topics (self-check or rung K and above) take no time.
-   Settings (hours per week, optional topics, start date) are kept per device. */
+   capstone block per phase. Known topics take no time. For the committed goal the schedule is
+   fixed at commitment and learned topics are ticked; other goals use per-device settings. */
 const TT_HOURS = [3,4,6,8,10,12,12,14], TT_CAPSTONE = 10;
-let ttRole = null;
-function ttSettings(){ try{ const v=JSON.parse(localStorage.getItem("kiss-tt")||"null"); if(v) return v; }catch(e){} return {hpw:10, opt:false, start:""}; }
-function ttSave(v){ try{ localStorage.setItem("kiss-tt", JSON.stringify(v)); }catch(e){} }
-function ttToday(){ const d=new Date(); return d.toISOString().slice(0,10); }
-function ttPlan(role){
-  const set=ttSettings(), opt=optSet(role), known=bgSet(currentBg()), rows=[]; let cum=0;
-  const wk = h => Math.floor(h/set.hpw)+1;
-  (PHASES[role.id]||[]).forEach((ph,pi)=>{
+let ttGoal = null;
+function ttToday(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function ttSettingsFor(path){
+  const c=getCommit(); if(c && c.goal===path.key) return {hpw:c.hpw, opt:!!c.opt, start:c.start, committed:true};
+  try{ const v=JSON.parse(localStorage.getItem("kiss-tt")||"null"); if(v) return Object.assign({hpw:10,opt:false,start:""}, v); }catch(e){}
+  return {hpw:10, opt:false, start:""};
+}
+function ttSaveFor(path, v){
+  const c=getCommit();
+  if(c && c.goal===path.key){ Object.assign(c,{hpw:v.hpw, opt:v.opt, start:v.start||c.start}); setCommit(c); return; }
+  try{ localStorage.setItem("kiss-tt", JSON.stringify({hpw:v.hpw, opt:v.opt, start:v.start})); }catch(e){}
+}
+function ttPlan(path, set, known){
+  set = set || ttSettingsFor(path); known = known || knownNow(path);
+  const rows=[]; let cum=0; const wk = h => Math.floor(h/set.hpw)+1;
+  path.phases.forEach((ph,pi)=>{
     rows.push({phase:true, i:pi+1, name:ph[0]});
     ph[1].split(/\s+/).forEach(id=>{
-      const n=byId.get(id), isOpt=opt.has(id); if(!n || (isOpt && !set.opt)) return;
-      const isKnown = known.has(id) || STAGE_IDX[getStage(id)]>=1;
-      const h = isKnown ? 0 : TT_HOURS[n.lv]; const w0=wk(cum); cum+=h; const w1=wk(Math.max(cum-0.01,0));
-      rows.push({n, opt:isOpt, known:isKnown, h, w0, w1, stage:getStage(id)});
+      const n=byId.get(id), isOpt=path.opt.has(id); if(!n || (isOpt && !set.opt)) return;
+      const isKnown=known.has(id), h=isKnown ? 0 : TT_HOURS[n.lv], w0=wk(cum); cum+=h;
+      rows.push({n, opt:isOpt, known:isKnown, learned:!isKnown && isLearned(id), h, w0, w1:wk(Math.max(cum-0.01,0)), end:cum, stage:getStage(id)});
     });
-    const w0=wk(cum); cum+=TT_CAPSTONE; rows.push({cap:true, text:ph[3], h:TT_CAPSTONE, w0, w1:wk(cum-0.01)});
+    const w0=wk(cum); cum+=TT_CAPSTONE; rows.push({cap:true, text:ph[3], h:TT_CAPSTONE, w0, w1:wk(cum-0.01), end:cum});
   });
-  const start=new Date((set.start||ttToday())+"T00:00:00"), end=new Date(start.getTime()+Math.ceil(cum/set.hpw)*7*864e5);
-  return {rows, hours:Math.round(cum), weeks:Math.ceil(cum/set.hpw), end, set, topics:rows.filter(r=>r.n).length, todo:rows.filter(r=>r.n && !r.known).length};
+  const start=new Date((set.start||ttToday())+"T00:00:00"), weeks=Math.max(1,Math.ceil(cum/set.hpw)), end=new Date(start.getTime()+weeks*7*864e5);
+  return {rows, hours:Math.round(cum), weeks, end, start, set, topics:rows.filter(r=>r.n).length, todo:rows.filter(r=>r.n && !r.known).length};
 }
+function goalPlan(path){ const c=getCommit(); return c && c.goal===path.key ? ttPlan(path, ttSettingsFor(path), new Set(c.known||[])) : ttPlan(path); }
 const ttWeeks = r => r.w0===r.w1 ? `Wk ${r.w0}` : `Wk ${r.w0}–${r.w1}`;
-function ttHTML(role){
-  const p=ttPlan(role), set=p.set, fmt=d=>d.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"});
+const fmtDate = d => d.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"});
+function ttHTML(path){
+  const p=goalPlan(path), set=p.set, c=getCommit(), mine = c && c.goal===path.key;
   const body=p.rows.map(r=>{
     if(r.phase) return `<tr class="ttphase"><td colspan="5">Phase ${r.i} · ${esc(r.name)}</td></tr>`;
     if(r.cap) return `<tr class="ttcap"><td>${ttWeeks(r)}</td><td colspan="2"><span class="rk2 r-s">S</span> Capstone: ${esc(r.text)}</td><td class="n">${r.h}</td><td></td></tr>`;
-    const st = r.known ? `<span class="ttknown">Known</span>` : r.stage ? `<span class="stg ${rc(r.stage)}">${STAGE_LETTER[r.stage]}</span>` : `<span class="ttnew">To learn</span>`;
-    return `<tr class="${r.known?"ttdone":""}"><td>${r.known?"–":ttWeeks(r)}</td><td><button class="ttopic" data-id="${r.n.id}" style="--c:var(--d-${r.n.d})"><span class="dot"></span>${esc(r.n.label)}</button>${r.opt?` <span class="ttopt">optional</span>`:""}</td><td class="n">L${r.n.lv}</td><td class="n">${r.h||"–"}</td><td>${st}</td></tr>`;
+    const st = r.known ? `<span class="ttknown">Known</span>` : r.learned ? `<span class="ttlearned">Learned ✓</span>` : `<button class="ttlearn" data-learned="${r.n.id}" title="Mark as learned (Knowledge rung)">Mark learned</button>`;
+    return `<tr class="${r.known?"ttdone":r.learned?"ttgot":""}"><td>${r.known?"–":ttWeeks(r)}</td><td><button class="ttopic" data-id="${r.n.id}" style="--c:var(--d-${r.n.d})"><span class="dot"></span>${esc(r.n.label)}</button>${r.opt?` <span class="ttopt">optional</span>`:""}</td><td class="n">L${r.n.lv}</td><td class="n">${r.h||"–"}</td><td>${st}</td></tr>`;
   }).join("");
   return `<button class="xbtn" id="mClose" aria-label="Close">×</button>
-  <div class="tt"><p class="eyebrow">Study timetable</p><h2 id="mTitle">${esc(role.name)}</h2>
+  <div class="tt"><p class="eyebrow">${mine?"Study timetable · my goal":"Study timetable"}</p><h2 id="mTitle">${esc(path.name)}</h2>
    <div class="ttctl">
     <div><span class="ttl">Hours per week</span><div class="asseg tthpw" role="radiogroup" aria-label="Hours per week">${[5,10,15,20].map(h=>`<button type="button" role="radio" aria-checked="${set.hpw===h}" data-tt="hpw:${h}">${h} h</button>`).join("")}</div></div>
-    <label class="ttchk"><input type="checkbox" data-tt="opt" ${set.opt?"checked":""}> Include optional topics</label>
+    ${path.opt.size?`<label class="ttchk"><input type="checkbox" data-tt="opt" ${set.opt?"checked":""}> Include optional topics</label>`:""}
     <label class="ttdate">Start <input type="date" data-tt="start" value="${esc(set.start||ttToday())}"></label>
    </div>
-   <p class="ttsum"><b>${p.todo}</b> of ${p.topics} topics to learn · about <b>${p.hours} hours</b> · <b>${p.weeks} weeks</b> at ${set.hpw} h/week · finish around <b>${fmt(p.end)}</b></p>
+   <p class="ttsum">${(()=>{ const got=p.rows.filter(r=>r.learned).length; return `<b>${p.todo-got}</b> of ${p.topics} topics to learn${got?` (${got} learned)`:""}`; })()} · about <b>${p.hours} hours</b> · <b>${p.weeks} weeks</b> at ${set.hpw} h/week · finish around <b>${fmtDate(p.end)}</b></p>
    <div class="tablewrap"><table class="tttable"><thead><tr><th>When</th><th>Topic</th><th class="n">Level</th><th class="n">Hours</th><th>Status</th></tr></thead><tbody>${body}</tbody></table></div>
-   <p class="note">Hours are planning estimates from each topic's level, plus ${TT_CAPSTONE} hours per capstone. Topics you already know (self-check or rung K and above) take no time. Tap a topic to study it.</p>
-   <div class="btnrow"><button class="btn primary" data-ttcopy>Copy as text</button>${window.AtlasNative?`<button class="btn" data-ttshare>Share</button>`:""}</div>
+   <p class="note">Hours are planning estimates from each topic's level, plus ${TT_CAPSTONE} hours per capstone. Topics you already knew take no time. "Mark learned" sets the topic to the Knowledge rung.${mine?" Changing the pace here updates your commitment.":""}</p>
+   <div class="btnrow">${mine?"":`<button class="btn primary" data-commit="${path.key}">Commit to this goal</button>`}<button class="btn ${mine?"primary":""}" data-ttcopy>Copy as text</button>${window.AtlasNative?`<button class="btn" data-ttshare>Share</button>`:""}</div>
    <p class="status" id="ttStatus" role="status"></p></div>`;
 }
-function ttText(role){
-  const p=ttPlan(role); const lines=[`Study timetable: ${role.name}`, `${p.todo} of ${p.topics} topics to learn, about ${p.hours} hours, ${p.weeks} weeks at ${p.set.hpw} h/week`];
+function ttText(path){
+  const p=goalPlan(path); const lines=[`Study timetable: ${path.name}`, `${p.todo} of ${p.topics} topics to learn, about ${p.hours} hours, ${p.weeks} weeks at ${p.set.hpw} h/week, finish around ${fmtDate(p.end)}`];
   p.rows.forEach(r=>{ if(r.phase) lines.push("", `Phase ${r.i}: ${r.name}`); else if(r.cap) lines.push(`  ${ttWeeks(r)}  Capstone: ${r.text} (${r.h} h)`);
-    else lines.push(`  ${r.known?"Known   ":ttWeeks(r).padEnd(8)}  ${r.n.label}${r.opt?" (optional)":""}  L${r.n.lv}${r.h?`, ${r.h} h`:""}`); });
+    else lines.push(`  ${r.known?"Known   ":ttWeeks(r).padEnd(8)}  ${r.n.label}${r.opt?" (optional)":""}  L${r.n.lv}${r.h?`, ${r.h} h`:""}${r.learned?"  [learned]":""}`); });
   return lines.join("\n");
 }
-function openTimetable(id){
-  const role=ROLES.find(r=>r.id===id); if(!role) return;
-  ttRole=id; modalId=null; sheet.style.setProperty("--c","var(--accent)");
-  sheet.innerHTML=ttHTML(role);
-  if(modal.hidden) lastFocus=document.activeElement;
-  modal.hidden=false; sheet.scrollTop=0; document.getElementById("mClose").focus();
+function showSheet(html){ sheet.style.setProperty("--c","var(--accent)"); sheet.innerHTML=html; if(modal.hidden) lastFocus=document.activeElement; modal.hidden=false; sheet.scrollTop=0; const x=document.getElementById("mClose"); if(x) x.focus(); }
+function openTimetable(key){ const path=goalPath(key); if(!path) return; ttGoal=path.key; commitDraft=null; modalId=null; showSheet(ttHTML(path)); }
+function ttRefresh(){ const y=sheet.scrollTop; sheet.innerHTML=ttHTML(goalPath(ttGoal)); sheet.scrollTop=y; }
+
+/* ---------- Progress against the committed goal ---------- */
+function goalProgress(){
+  const c=getCommit(); if(!c) return null;
+  const path=goalPath(c.goal), plan=goalPlan(path), todo=plan.rows.filter(r=>r.n && !r.known), done=todo.filter(r=>isLearned(r.n.id));
+  const days=(Date.now()-plan.start.getTime())/864e5, planned=Math.max(0, days/7*c.hpw);
+  const expected=todo.filter(r=>r.end<=planned+0.01).length, diff=done.length-expected;
+  const week = days<0 ? 0 : Math.min(plan.weeks, Math.floor(days/7)+1);
+  let status, cls;
+  if(todo.length && done.length===todo.length){ status="Goal complete"; cls="ok"; }
+  else if(days<0){ status=`Starts ${fmtDate(plan.start)}`; cls="wait"; }
+  else if(diff>0){ status=`${diff} topic${diff>1?"s":""} ahead`; cls="ok"; }
+  else if(diff===0){ status="On track"; cls="ok"; }
+  else { status=`${-diff} topic${diff<-1?"s":""} behind`; cls="behind"; }
+  return {c, path, plan, todo:todo.length, done:done.length, expected, week, status, cls, next:todo.find(r=>!isLearned(r.n.id))};
 }
-function ttRefresh(){ const y=sheet.scrollTop; sheet.innerHTML=ttHTML(ROLES.find(r=>r.id===ttRole)); sheet.scrollTop=y; }
+function goalCardHTML(){
+  const g=goalProgress();
+  if(!g) return `<div class="card goalcard"><h2>Set your goal</h2>
+    <p class="none">Choose a role or an Applied AI area and commit to a weekly pace. Your progress is tracked against it here.</p>
+    <div class="btnrow"><button class="btn primary" data-commit>Choose and commit</button></div></div>`;
+  const pct=g.todo ? Math.round(g.done/g.todo*100) : 100, n=g.next;
+  return `<div class="card goalcard"><div class="herehead"><span class="youare mygoal">My goal</span><button class="linkbtn" data-commit>Change goal</button></div>
+    <h2>${esc(g.path.name)}</h2>
+    <p class="none">${g.week ? `Week ${g.week} of ${g.plan.weeks}` : `${g.plan.weeks} weeks`} · ${g.c.hpw} h/week · finish around ${fmtDate(g.plan.end)}</p>
+    <div class="prog" style="--c:var(--accent)"><div class="track"><div class="fill" style="width:${pct}%"></div></div><span>${g.done} of ${g.todo} topics learned</span></div>
+    <p class="gline"><span class="gstat gs-${g.cls}">${esc(g.status)}</span>${g.expected && g.cls!=="wait" && g.status!=="Goal complete" ? ` <span class="ml">The plan had ${g.expected} by now</span>` : ""}</p>
+    ${n ? `<div class="nextup"><span class="lbl">Next up</span><div class="nextrow"><button class="item" data-id="${n.n.id}" style="--c:var(--d-${n.n.d})"><span class="dot"></span>${esc(n.n.label)}</button><span class="ml">${ttWeeks(n)} · about ${n.h} h</span></div>
+      <button class="btn" data-learned="${n.n.id}">Mark as learned</button></div>` : ""}
+    <div class="btnrow"><button class="btn primary" data-timetable="${g.path.key}">Timetable</button><button class="btn" data-goalopen="${g.path.key}">Show path</button></div></div>`;
+}
+
+/* ---------- Commit sheet: choose a goal, set the pace, commit ---------- */
+let commitDraft = null;
+function openCommit(pref){
+  const c=getCommit(); ttGoal=null; modalId=null;
+  const goal = pref || (c && c.goal) || null;
+  commitDraft = {goal, hpw: c ? c.hpw : 10, opt: c ? !!c.opt : false, start: ttToday(), tab: goal && goal.startsWith("topic:") ? "topic" : "role"};
+  showSheet(commitHTML());
+  const cur=sheet.querySelector('.cgoals [aria-current="true"]'); if(cur) cur.scrollIntoView({block:"nearest"});
+}
+function commitHTML(){
+  const d=commitDraft, c=getCommit(), path=d.goal && goalPath(d.goal), ranked=rankRoles();
+  const row=(key,name,sub)=>`<button class="rprow" data-cgoal="${key}" ${d.goal===key?'aria-current="true"':""}><span class="rpn">${esc(name)}</span><span class="rpd">${sub}</span></button>`;
+  const roles=Object.entries(ROLE_FAMILIES).map(([f,fn])=>`<h4>${esc(fn)}</h4>`+ROLES.filter(r=>r.fam===f).map(r=>{ const x=ranked && ranked.find(y=>y.r.id===r.id);
+    return row("role:"+r.id, r.name, x ? `${x.steep} climb · ${x.todo} of ${x.total} essential topics to learn` : esc(r.does)); }).join("")).join("");
+  const topics=nodes.filter(n=>n.d==="app").sort((a,b)=>a.label.localeCompare(b.label)).map(n=>row("topic:"+n.id, n.label, esc(n.desc))).join("");
+  let sum="Choose a goal above to see your plan.";
+  if(path){ const p=ttPlan(path,{hpw:d.hpw,opt:d.opt,start:d.start}); sum=`<b>${p.todo}</b> topics to learn · about <b>${p.hours} hours</b> · <b>${p.weeks} weeks</b> at ${d.hpw} h/week · finish around <b>${fmtDate(p.end)}</b>`; }
+  return `<button class="xbtn" id="mClose" aria-label="Close">×</button>
+  <div class="commit"><p class="eyebrow">Your goal</p><h2 id="mTitle">Choose a goal and commit</h2>
+   <p class="note">Pick what you're working towards and how much time you can give it each week. Home tracks your progress against this plan.</p>
+   <h3>1. Choose your goal</h3>
+   <div class="ctabs" role="tablist"><button role="tab" aria-selected="${d.tab==="role"}" data-ctab="role">A role</button><button role="tab" aria-selected="${d.tab==="topic"}" data-ctab="topic">An Applied AI area</button></div>
+   <div class="rplist cgoals">${d.tab==="role" ? roles : topics}</div>
+   ${path ? `<p class="cpick">Goal: <b>${esc(path.name)}</b></p>` : ""}
+   <h3>2. Your commitment</h3>
+   <div class="ttctl">
+    <div><span class="ttl">Hours per week</span><div class="asseg tthpw" role="radiogroup" aria-label="Hours per week">${[5,10,15,20].map(h=>`<button type="button" role="radio" aria-checked="${d.hpw===h}" data-chpw="${h}">${h} h</button>`).join("")}</div></div>
+    ${path && path.opt.size ? `<label class="ttchk"><input type="checkbox" data-copt ${d.opt?"checked":""}> Include optional topics</label>` : ""}
+    <label class="ttdate">Start <input type="date" data-cstart value="${esc(d.start)}"></label>
+   </div>
+   <p class="ttsum">${sum}</p>
+   ${c && path && c.goal!==path.key ? `<p class="note">This replaces your current goal, <b>${esc(goalPath(c.goal).name)}</b>. Rungs you've marked are kept.</p>` : ""}
+   <div class="btnrow"><button class="btn primary" data-cdo ${path?"":"disabled"}>I commit to this goal</button>${c ? `<button class="btn danger" data-cdrop>Remove my goal</button>` : ""}</div>
+   <p class="status" id="cStatus" role="status"></p></div>`;
+}
+function doCommit(){
+  const d=commitDraft, path=goalPath(d.goal); if(!path) return;
+  setCommit({goal:path.key, hpw:d.hpw, opt:d.opt, start:d.start||ttToday(), known:[...knownNow(path)], at:Date.now()});
+  if(path.kind==="role"){ try{ localStorage.setItem("atlas-lastrole", path.id); }catch(e){} }
+  commitDraft=null; closeModal(); roleDetail=null;
+  if(isPhone()) setView("home"); else { renderPanel(); }
+  rerenderAll();
+}
+function openGoalPath(key){
+  const g=parseGoal(key); if(!g) return; closeModal();
+  if(g.kind==="role"){ if(isPhone()){ roleDetail=g.id; selectRole(g.id); setView("roles"); } else { setView("graph"); selectRole(g.id); } return; }
+  state.role=null; state.mode="pre"; setView("graph"); select(g.id);
+}
 
 /* ---------- Self-check: "You are here" ----------
    Learners rate eight skill areas and four interests. Skill ratings mark a share of each
@@ -2914,6 +3052,7 @@ function openModal(id, keep=false){
     <div class="mfoot">
       <button class="primary" id="mPath">Show learning path on map</button>
       <button id="mUnlocks">Show what it unlocks</button>
+      ${n.d==="app" ? ((()=>{ const c=getCommit(); return c && c.goal==="topic:"+n.id ? `<button data-timetable="topic:${n.id}">My goal · timetable</button>` : `<button data-commit="topic:${n.id}">Make this my goal</button><button data-timetable="topic:${n.id}">Study timetable</button>`; })()) : ""}
     </div>`;
   updateProg();
   if(modal.hidden) lastFocus = document.activeElement;
@@ -3138,7 +3277,7 @@ function homeHTML(){
     <p class="none">Open any topic and tap <b>Where am I?</b> to mark your rung. Your funnel below fills up as you go.</p>
     <div class="btnrow"><button class="btn primary" data-intro>Got it</button></div></div>`;
   const starts = ["gd","backprop","transformer","rag","reasoning","agents"].map(id=>byId.get(id));
-  return `<div class="homewrap">${intro}${landingAccountHTML()}${hereHTML("home")}${cont}<div class="card">${funnelHTML()}</div>
+  return `<div class="homewrap">${intro}${goalCardHTML()}${landingAccountHTML()}${hereHTML("home")}${getCommit() ? "" : cont}<div class="card">${funnelHTML()}</div>
     <div class="card"><h3 style="margin-top:0">Good places to start</h3><div class="links">${starts.map(itemHTML).join("")}</div></div>
     <p class="foot">${nodes.length} topics · ${edges.length} links · frontier through mid-2026. ${syncFooter()}</p></div>`;
 }
@@ -3292,7 +3431,7 @@ function roleHTML(role){
     <h3>Your starting point</h3>
     <select class="bgsel" data-bg aria-label="Your background">${bgList().map(b=>`<option value="${b.id}" ${b.id===getBg()?"selected":""}>${esc(b.name)}</option>`).join("")}</select>
     <h3>Learning path: ${(PHASES[role.id]||[]).length} phases</h3>
-    <div class="btnrow" style="margin:0 0 10px"><button class="btn" data-timetable="${role.id}">Study timetable</button></div>
+    <div class="btnrow" style="margin:0 0 10px">${(()=>{ const c=getCommit(); return c && c.goal==="role:"+role.id ? `<span class="goalmark">✓ Your goal</span>` : `<button class="btn primary" data-commit="role:${role.id}">Commit to this role</button>`; })()}<button class="btn" data-timetable="role:${role.id}">Study timetable</button></div>
     <p class="none" style="margin-top:-2px">Essential topics get you started. <b>Optional</b> topics add depth: skip them now and come back when a project needs them.</p>
     <ol class="phases">${phaseStatus(role).map(({ph,ids,st,known,ess,optional,essNew,optNew},i)=>{
       const chip = id => known.has(id)?itemHTML(byId.get(id)).replace('class="item"','class="item known" title="Already covered"'):itemHTML(byId.get(id));
@@ -3344,21 +3483,41 @@ document.getElementById("roles").addEventListener("click", ev=>{
   setView("graph"); selectRole(c.dataset.role);
 });
 
-/* ---------- Study timetable events ---------- */
-document.addEventListener("click", ev=>{ const b=ev.target.closest("[data-timetable]"); if(b){ ev.preventDefault(); openTimetable(b.dataset.timetable); } });
+/* ---------- Study timetable, goal and commitment events ---------- */
+document.addEventListener("click", ev=>{
+  const tb=ev.target.closest("[data-timetable]"); if(tb){ ev.preventDefault(); openTimetable(tb.dataset.timetable); return; }
+  const cm=ev.target.closest("[data-commit]"); if(cm){ ev.preventDefault(); openCommit(cm.dataset.commit||null); return; }
+  const gl=ev.target.closest("[data-goalopen]"); if(gl){ ev.preventDefault(); openGoalPath(gl.dataset.goalopen); return; }
+  const ln=ev.target.closest("[data-learned]"); if(ln){ ev.preventDefault(); const id=ln.dataset.learned; if(STAGE_IDX[getStage(id)]<1) setStage(id,"k");
+    refreshStages(); if(ttGoal && !modal.hidden && sheet.querySelector(".tt")) ttRefresh(); rerenderAll(); return; }
+});
 sheet.addEventListener("click", ev=>{
-  if(!ttRole || modalId || !sheet.querySelector(".tt")) return;
-  const h=ev.target.closest('[data-tt^="hpw:"]'); if(h){ const s=ttSettings(); s.hpw=+h.dataset.tt.split(":")[1]; ttSave(s); ttRefresh(); return; }
+  if(commitDraft && sheet.querySelector(".commit")){
+    const t=ev.target.closest("[data-ctab]"); if(t){ commitDraft.tab=t.dataset.ctab; sheet.innerHTML=commitHTML(); return; }
+    const g=ev.target.closest("[data-cgoal]"); if(g){ commitDraft.goal=g.dataset.cgoal; const y=sheet.querySelector(".cgoals").scrollTop; sheet.innerHTML=commitHTML(); sheet.querySelector(".cgoals").scrollTop=y; return; }
+    const h=ev.target.closest("[data-chpw]"); if(h){ commitDraft.hpw=+h.dataset.chpw; const y=sheet.querySelector(".cgoals").scrollTop; sheet.innerHTML=commitHTML(); sheet.querySelector(".cgoals").scrollTop=y; return; }
+    if(ev.target.closest("[data-cdo]")){ doCommit(); return; }
+    if(ev.target.closest("[data-cdrop]")){ setCommit(null); commitDraft=null; closeModal(); rerenderAll(); return; }
+    return;
+  }
+  if(!ttGoal || modalId || !sheet.querySelector(".tt")) return;
+  const path=goalPath(ttGoal);
+  const h=ev.target.closest('[data-tt^="hpw:"]'); if(h){ const s=ttSettingsFor(path); s.hpw=+h.dataset.tt.split(":")[1]; ttSaveFor(path,s); ttRefresh(); rerenderAll(); return; }
   const t=ev.target.closest(".ttopic"); if(t){ openModal(t.dataset.id); return; }
-  if(ev.target.closest("[data-ttcopy]")){ const txt=ttText(ROLES.find(r=>r.id===ttRole)), st=document.getElementById("ttStatus");
+  if(ev.target.closest("[data-ttcopy]")){ const txt=ttText(path), st=document.getElementById("ttStatus");
     try{ navigator.clipboard.writeText(txt).then(()=>st.textContent="Timetable copied. Paste it into your notes or calendar.", ()=>st.textContent="Copy isn't allowed here. Use Share instead."); }catch(e){ st.textContent="Copy isn't allowed here. Use Share instead."; } return; }
-  if(ev.target.closest("[data-ttshare]") && window.AtlasNative){ const r=ROLES.find(x=>x.id===ttRole); window.AtlasNative.share("Study timetable: "+r.name, ttText(r)); }
+  if(ev.target.closest("[data-ttshare]") && window.AtlasNative){ window.AtlasNative.share("Study timetable: "+path.name, ttText(path)); }
 });
 sheet.addEventListener("change", ev=>{
-  if(!ttRole || !sheet.querySelector(".tt")) return;
-  const k=ev.target.dataset && ev.target.dataset.tt; if(!k) return; const s=ttSettings();
+  if(commitDraft && sheet.querySelector(".commit")){
+    if(ev.target.matches("[data-copt]")) commitDraft.opt=ev.target.checked;
+    if(ev.target.matches("[data-cstart]") && ev.target.value) commitDraft.start=ev.target.value;
+    const y=sheet.querySelector(".cgoals").scrollTop; sheet.innerHTML=commitHTML(); sheet.querySelector(".cgoals").scrollTop=y; return;
+  }
+  if(!ttGoal || !sheet.querySelector(".tt")) return;
+  const k=ev.target.dataset && ev.target.dataset.tt; if(!k) return; const path=goalPath(ttGoal), s=ttSettingsFor(path);
   if(k==="opt") s.opt=ev.target.checked; if(k==="start" && ev.target.value) s.start=ev.target.value;
-  ttSave(s); ttRefresh();
+  ttSaveFor(path,s); ttRefresh(); rerenderAll();
 });
 
 /* ---------- Self-check events ---------- */
