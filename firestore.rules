@@ -108,6 +108,16 @@ service cloud.firestore {
         && request.resource.data.at == request.time;
     }
 
+    // Requests to delete an account from people who can't sign in. Anyone can send one; only the
+    // app owner reads them, in the Firebase console.
+    match /deletionRequests/{rid} {
+      allow create: if request.resource.data.keys().hasOnly(['email', 'note', 'at'])
+        && request.resource.data.email is string && request.resource.data.email.size() <= 254
+        && request.resource.data.email.matches('^[^@ ]+@[^@ ]+[.][^@ ]+$')
+        && optStr(request.resource.data.get('note', null), 500)
+        && request.resource.data.at == request.time;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

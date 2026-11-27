@@ -3232,7 +3232,7 @@ function select(id, opts={}){
   if(id && opts.pop) openModal(id);
   if(state.view==="list" && id){ const b=document.querySelector(`#list .item[data-id="${id}"]`); b && b.scrollIntoView({block:"nearest",behavior:"smooth"}); }
 }
-window.addEventListener("hashchange", ()=>{ const h=location.hash.slice(1); if(byId.has(h) && h!==state.sel) select(h); else if(h.startsWith("role-") && h.slice(5)!==state.role && ROLES.some(r=>r.id===h.slice(5))) selectRole(h.slice(5)); });
+window.addEventListener("hashchange", ()=>{ if(location.hash==="#delete-account"){ openDeleteAccount(); return; } const h=location.hash.slice(1); if(byId.has(h) && h!==state.sel) select(h); else if(h.startsWith("role-") && h.slice(5)!==state.role && ROLES.some(r=>r.id===h.slice(5))) selectRole(h.slice(5)); });
 
 /* ---------- Legend ---------- */
 const legend = document.getElementById("legend");
@@ -4091,6 +4091,14 @@ function authError(e){
   })[c] || ((e && e.message) || "Something went wrong. Try again.");
 }
 const PRIVACY_URL = "https://sreekumartp.github.io/kiss-ai/privacy.html";
+const DELETE_URL = "https://sreekumartp.github.io/kiss-ai/delete-account.html";
+// Opened from the account-deletion page: go straight to the delete step in Settings.
+function openDeleteAccount(){
+  if(sync.user) sync.confirmDelete=true;
+  openSettings();
+  const a=document.getElementById("acct"); if(a) a.scrollIntoView({block:"start"});
+  if(!sync.user) setSync(sync.state, "Sign in below, then choose Delete account.");
+}
 function accountSectionHTML(){
   let body;
   if(sync.state==="unavailable") body = `<p class="note" style="margin:0">Sign-in and sync work in the web app and the Android app.</p>`;
@@ -4110,7 +4118,7 @@ function accountSectionHTML(){
       </form>
       <p class="status" id="acctStatus" role="status">${esc(syncStatusText())}</p>`;
   return `<section id="acct"><label class="sl">Account and sync</label>${body}
-    <p class="note"><a href="${PRIVACY_URL}" target="_blank" rel="noopener noreferrer">Privacy policy and account deletion ↗</a></p></section>`;
+    <p class="note"><a href="${PRIVACY_URL}" target="_blank" rel="noopener noreferrer">Privacy policy ↗</a> · <a href="${DELETE_URL}" target="_blank" rel="noopener noreferrer">Delete your account or request deletion ↗</a></p></section>`;
 }
 // Sign-up and sign-in on the landing screen (phone Home, desktop welcome panel).
 function hideSignin(){ try{ return localStorage.getItem("kiss-hide-signin")==="1"; }catch(e){ return false; } }
@@ -4206,6 +4214,7 @@ function start(){
   else { renderPanel(); applyHighlight(); if(state.view==="graph"){ if(isPhone()) jumpLevel(0,false); else fit(false); } }
   if(isPhone() && state.view!=="graph"){ document.getElementById("map").style.display="block"; jumpLevel(0,false); document.getElementById("map").style.display="none"; }
   initSync();
+  if(location.hash==="#delete-account") setTimeout(openDeleteAccount, 1200);
   setTimeout(()=>{ const c=getCommit(); if(c && remindOf(c).on && hasNativeReminders()){ let ok=false; try{ ok=window.AtlasNative.notificationsAllowed(); }catch(e){} if(ok){ pushReminderPlan(); applyReminder(c); } } }, 1500);
 }
 (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start, start);

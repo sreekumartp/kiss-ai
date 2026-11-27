@@ -70,3 +70,7 @@ Until the current rules are published, study groups show a permission error.
 Reports from study groups arrive in the `reports` collection (Firebase console → Firestore Database).
 Check it regularly and remove anything harmful.
 
+Account deletion requests from people who can't sign in arrive in the `deletionRequests` collection.
+Within 30 days: find the account by email in Firebase console → Authentication, delete it and its
+`users/<uid>` document (and their group posts), then delete the request.
+

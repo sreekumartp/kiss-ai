@@ -48,7 +48,7 @@ Copy the texts and upload the graphics from [`listing.md`](listing.md) and `grap
 | Content rating | Questionnaire → category **Reference, news or educational**; answer No to all content questions |
 | Target audience | **13 and over** (or 18+); not designed for children |
 | Data safety | See below |
-| Account deletion | Yes, users can create accounts. Deletion URL: https://sreekumartp.github.io/kiss-ai/privacy.html#delete — in-app: Settings → Account and sync → Delete account |
+| Account deletion | Yes, users can create accounts. Deletion URL: https://sreekumartp.github.io/kiss-ai/delete-account.html — in-app: Settings → Account and sync → Delete account |
 | Government / financial / health features | None |
 
 ### Data safety answers

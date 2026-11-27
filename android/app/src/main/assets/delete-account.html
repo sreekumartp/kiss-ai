@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delete your account – The K.I.S.S model for mastering AI</title>
+<style>
+  :root{--bg:#F2F4F8;--fg:#172033;--muted:#566278;--line:#D3DAE6;--surface:#fff;--accent:#2F5FD0;--danger:#B4232C;--ok:#047857}
+  @media (prefers-color-scheme: dark){:root{--bg:#0E1320;--fg:#E5E9F2;--muted:#98A3B8;--line:#2B3754;--surface:#161E30;--accent:#86A7FF;--danger:#FF8A8F;--ok:#4ADE9B}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{max-width:720px;margin:0 auto;padding-block:32px 48px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+  h1{font-size:1.7rem;line-height:1.2;margin:0 0 6px}
+  h2{font-size:1.15rem;margin:0 0 8px}
+  p,li{max-width:65ch}
+  .muted{color:var(--muted)}
+  a{color:var(--accent)}
+  .box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:18px}
+  ul{padding-left:20px}
+  label{display:block;font-weight:600;margin:12px 0 4px}
+  input,textarea{width:100%;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg);font:inherit}
+  textarea{min-height:84px;resize:vertical}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;margin-top:14px;border-radius:10px;border:1px solid var(--fg);background:var(--fg);color:var(--bg);font:inherit;font-weight:600;text-decoration:none;cursor:pointer}
+  .btn:disabled{opacity:.6;cursor:default}
+  .status{margin:10px 0 0;font-weight:600}
+  .status.ok{color:var(--ok)} .status.err{color:var(--danger)}
+  .chk{display:flex;gap:10px;align-items:flex-start;font-weight:400}
+  .chk input{width:auto;min-height:0;margin-top:5px}
+</style>
+</head>
+<body>
+<main>
+<h1>Delete your account and data</h1>
+<p class="muted">The K.I.S.S model for mastering AI · website and Android app "K.I.S.S AI"</p>
+
+<p>You can delete your account at any time. Deleting it permanently removes, from our servers:</p>
+<ul>
+  <li>your account (email address and user ID),</li>
+  <li>your synced progress, notes, saved links, goal and settings,</li>
+  <li>your membership of study groups and the questions, answers and updates you posted, and</li>
+  <li>study groups you created, with everything posted in them.</li>
+</ul>
+<p>Nothing is kept on our servers afterwards. A copy of your progress stays on your own device until you clear the app's or website's data or uninstall the app.</p>
+
+<div class="box">
+  <h2>Delete it now</h2>
+  <p>Sign in and delete your account straight away. This takes effect immediately.</p>
+  <a class="btn" href="./#delete-account">Sign in and delete my account</a>
+  <p class="muted" style="margin-top:10px">In the Android app: <b>Settings → Account and sync → Delete account</b>.</p>
+</div>
+
+<div class="box" id="request">
+  <h2>Can't sign in? Ask us to delete it</h2>
+  <p>Send us the email address you used for your account. We will delete the account and all its data within 30 days. If we need to confirm that the account is yours, we will email that address. Never send your password.</p>
+  <form id="delForm" novalidate>
+    <label for="email">Email address of the account</label>
+    <input id="email" type="email" autocomplete="email" required maxlength="254">
+    <label for="note">Anything we should know (optional)</label>
+    <textarea id="note" maxlength="500" placeholder="For example: I no longer have access to this email address"></textarea>
+    <label class="chk"><input id="confirm" type="checkbox" required> I want this account and all its data deleted permanently.</label>
+    <button class="btn" id="send" type="submit">Request deletion</button>
+    <p class="status" id="status" role="status"></p>
+  </form>
+</div>
+
+<p style="margin-top:24px"><a href="privacy.html">Privacy policy</a> · <a href="./">Back to the app</a></p>
+</main>
+
+<script src="firebase-config.js"></script>
+<script src="firebase/firebase-app-compat.js"></script>
+<script src="firebase/firebase-firestore-compat.js"></script>
+<script>
+// Deletion requests are stored in Firestore (collection "deletionRequests"). Anyone can create one;
+// nobody can read them except the app owner in the Firebase console.
+(function(){
+  const form=document.getElementById("delForm"), status=document.getElementById("status"), send=document.getElementById("send");
+  const say=(t,ok)=>{ status.textContent=t; status.className="status "+(ok?"ok":"err"); };
+  let db=null;
+  try{
+    if(window.firebase && window.KISS_FIREBASE_CONFIG){
+      firebase.initializeApp(window.KISS_FIREBASE_CONFIG);
+      try{ if(localStorage.getItem("kiss-emulator")==="1") firebase.firestore().useEmulator("127.0.0.1", 8080); }catch(e){}
+      db=firebase.firestore();
+    }
+  }catch(e){}
+  form.addEventListener("submit", async ev=>{
+    ev.preventDefault();
+    const email=document.getElementById("email").value.trim(), note=document.getElementById("note").value.trim();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return say("Enter the email address you used for your account.");
+    if(!document.getElementById("confirm").checked) return say("Tick the box to confirm you want the account deleted.");
+    if(!db) return say("Requests can't be sent right now. Check your connection and try again.");
+    send.disabled=true; say("Sending…", true);
+    try{
+      await db.collection("deletionRequests").add({email, note, at:firebase.firestore.FieldValue.serverTimestamp()});
+      form.reset(); say("Request received. We will delete the account and its data within 30 days.", true);
+    }catch(e){ say("The request couldn't be sent. Check your connection and try again."); }
+    send.disabled=false;
+  });
+})();
+</script>
+</body>
+</html>
