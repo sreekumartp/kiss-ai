@@ -416,6 +416,19 @@ a.res.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
 .delbox{margin-top:10px;padding:12px;border:1px solid color-mix(in srgb,#C0392B 45%,var(--line));border-radius:10px;background:color-mix(in srgb,#C0392B 7%,var(--surface))}
 .delbox p{margin:0 0 4px;font-size:.88rem}
 .settings a{color:var(--accent)}
+.node text.newtag{font-family:var(--font-mono);font-size:7.5px;font-weight:700;letter-spacing:.06em;fill:var(--accent)}
+.node.sel text.newtag{fill:var(--on-c)}
+.newtag-h{display:inline-block;margin-left:6px;padding:0 5px;border-radius:4px;font-family:var(--font-mono);font-size:.6rem;font-weight:700;letter-spacing:.05em;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 55%,transparent);vertical-align:1px}
+.item.sel .newtag-h{color:var(--on-c);border-color:var(--on-c)}
+.wncard{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.wncard h2{margin:0}
+.wnlist{margin:10px 0 0;padding-left:18px;font-size:.9rem}
+.wnlist li{margin-bottom:4px}
+.paperrow{display:flex;flex-direction:column;gap:4px}
+.pact{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding-left:2px}
+.pact .btn{min-height:36px;padding:0 12px;font-size:.8rem}
+.psaved{font-size:.76rem;font-weight:700;color:var(--r-s)}
+.psaving{font-size:.76rem;color:var(--muted)}
 .goalcard h2{margin:6px 0 4px}
 .youare.mygoal::before{background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%,transparent)}
 .gline{margin:8px 0 0;font-size:.86rem}
@@ -2495,6 +2508,36 @@ function phaseStatus(role){
   });
 }
 
+/* ---------- What's new ----------
+   Topics added in recent releases get a NEW tag on the map, in search and in lists, and Home shows
+   a short release note until the learner taps "Got it". Update this block with each release. */
+const WHATS_NEW = {
+  release: "5.3",
+  features: [
+    "Commit to a goal, a role or an Applied AI area, and see on Home whether you are on track, behind or ahead.",
+    "Weekly study reminders in the Android app, or a weekly calendar event on the website.",
+    "A study timetable for every role and Applied AI area, with hours and an estimated finish date.",
+    "A Roles column on the map, a Reset view button, and area filters that say what they show.",
+    "Save research papers as PDFs to read offline (Android app)."
+  ],
+  topics: "gpukernels llmobs aiplatforms aicompliance aithreat aitesting humanannot mlresearch vision3d voiceagents multilingual controlgen robotdata".split(" "),
+  renamed: "modelrl offlinerl rlvr rlhf".split(" ")
+};
+const NEW_SET = new Set(WHATS_NEW.topics);
+const showNew = () => { try{ return localStorage.getItem("kiss-hide-new")!=="1"; }catch(e){ return true; } };
+const isNewTopic = id => NEW_SET.has(id) && showNew();
+const newBadge = id => isNewTopic(id) ? `<span class="newtag-h">NEW</span>` : "";
+function whatsNewHTML(){
+  let seen=null; try{ seen=localStorage.getItem("kiss-seen-release"); }catch(e){}
+  if(seen===WHATS_NEW.release) return "";
+  const ren=WHATS_NEW.renamed.map(id=>byId.get(id)).filter(Boolean);
+  return `<div class="card wncard"><div class="herehead"><h2>What's new in ${esc(WHATS_NEW.release)}</h2><button class="linkbtn" data-wnseen>Got it</button></div>
+    <ul class="wnlist">${WHATS_NEW.features.map(f=>`<li>${esc(f)}</li>`).join("")}</ul>
+    <h3>${WHATS_NEW.topics.length} new topics</h3><div class="links">${WHATS_NEW.topics.map(id=>byId.get(id)).filter(Boolean).map(itemHTML).join("")}</div>
+    ${ren.length?`<p class="note" style="margin-top:10px">Renamed so search finds them: ${ren.map(n=>esc(n.label)).join(", ")}.</p>`:""}</div>`;
+}
+document.addEventListener("click", ev=>{ if(ev.target.closest("[data-wnseen]")){ try{ localStorage.setItem("kiss-seen-release", WHATS_NEW.release); }catch(e){} document.querySelectorAll(".wncard").forEach(x=>x.remove()); } });
+
 /* ---------- Model ---------- */
 const nodes = RAW.map(([id,label,d,lv,pre,desc,f]) => ({id,label,d,lv,pre:pre?pre.split(","):[],desc,f,kids:[]}));
 const byId = new Map(nodes.map(n=>[n.id,n]));
@@ -2515,7 +2558,7 @@ const COLW = 300, ROWH = 26, PH = 19;
 const measure = document.createElement("canvas").getContext("2d");
 function layout(){
   measure.font = '500 11.5px "Instrument Sans", system-ui, sans-serif';
-  nodes.forEach(n=> n.w = Math.ceil(measure.measureText(n.label).width) + 30);
+  nodes.forEach(n=> n.w = Math.ceil(measure.measureText(n.label).width) + 30 + (isNewTopic(n.id) ? 30 : 0));
   nodes.forEach(n=> n.col = n.d==="app" ? LEVELS.length : n.lv);
   const cols = Array.from({length:LEVELS.length+1},(_,i)=>nodes.filter(n=>n.col===i));
   const maxLen = Math.max(...cols.map(c=>c.length));
@@ -2561,6 +2604,7 @@ function renderGraph(){
   nodeSel.append("rect").attr("class","pill").attr("width",n=>n.w).attr("height",PH).attr("rx",PH/2);
   nodeSel.append("circle").attr("cx",10).attr("cy",PH/2).attr("r",3.6);
   nodeSel.append("text").attr("class","lbl").attr("x",19).attr("y",PH/2+4).text(n=>n.label);
+  nodeSel.filter(n=>isNewTopic(n.id)).append("text").attr("class","newtag").attr("x",n=>n.w-30).attr("y",PH/2+3.5).text("NEW");
   nodeSel.append("text").attr("class","sl").attr("x",10).attr("y",PH/2+3).attr("text-anchor","middle");
   buildRoleColumn(); placeRoleColumn();
   zoom = d3.zoom().scaleExtent([.2,2.5]).clickDistance(5).on("zoom", e=>{ root.attr("transform", e.transform); updateHScroll(e.transform); });
@@ -2591,7 +2635,7 @@ function renderList(){
     <div class="items">${applied.map(n=>itemHTML(n).replace("</button>",`<small class="lvchip">L${n.lv}</small></button>`)).join("")}</div></section>`);
   el.addEventListener("click", ev=>{ const b=ev.target.closest("[data-id]"); if(b) select(b.dataset.id,{pop:true}); });
 }
-const itemHTML = n => `<button class="item" data-id="${n.id}" style="--c:var(--d-${n.d})"><span class="dot"></span>${esc(n.label)}${stageBadge(n.id)}</button>`;
+const itemHTML = n => `<button class="item" data-id="${n.id}" style="--c:var(--d-${n.d})"><span class="dot"></span>${esc(n.label)}${newBadge(n.id)}${stageBadge(n.id)}</button>`;
 
 /* ---------- Roles column: every learning path, to the right of Applied AI ----------
    Tapping a role opens its learning path (the map focuses on it and the panel shows its phases).
@@ -2970,6 +3014,29 @@ function myResHTML(n){
       <p class="myerr" role="alert" id="mye-${n.id}"></p>
     </form></div>`;
 }
+/* ---------- Offline papers (Android app) ----------
+   arXiv papers can be saved as PDFs and opened without a connection. The app keeps the files in
+   its own storage; the page only asks for each paper's status and shows Save / Saving / Open. */
+const hasPapersOffline = () => !!(window.AtlasNative && window.AtlasNative.savePaper);
+const arxivOf = r => { const m=/arxiv\.org\/abs\/([0-9]{4}\.[0-9]{4,5}(v[0-9]+)?)/.exec(r.u||""); return m ? m[1] : null; };
+function paperStatus(id){ try{ return window.AtlasNative.paperStatus(id); }catch(e){ return "none"; } }
+let paperPoll = null;
+function paperHTML(r){
+  const id=arxivOf(r); if(!hasPapersOffline() || !id) return resHTML(r);
+  const st=paperStatus(id);
+  if(st==="saving" && !paperPoll) paperPoll=setTimeout(()=>{ paperPoll=null; if(!modal.hidden && modalId && modalTab==="res") openModal(modalId, true); }, 2500);
+  const act = st==="saved" ? `<span class="psaved">Saved offline</span><button class="btn" data-popen="${id}">Open</button><button class="linkbtn" data-pdel="${id}">Remove</button>`
+    : st==="saving" ? `<span class="psaving">Saving…</span>`
+    : `<button class="btn" data-psave="${id}" data-ptitle="${esc(r.t)}">${st==="failed" ? "Retry download" : "Save PDF"}</button>`;
+  return `<div class="paperrow">${resHTML(r)}<div class="pact">${act}</div></div>`;
+}
+function papersOfflineHead(papers){
+  if(!hasPapersOffline()) return "";
+  const ids=papers.map(r=>({id:arxivOf(r), t:r.t})).filter(x=>x.id);
+  const todo=ids.filter(x=>paperStatus(x.id)!=="saved" && paperStatus(x.id)!=="saving");
+  return ids.length>1 && todo.length ? `<div class="btnrow" style="margin:0 0 8px"><button class="btn" data-psaveall='${esc(JSON.stringify(todo))}'>Save all ${ids.length} papers for offline</button></div>` : "";
+}
+
 let modalTab = "ladder";
 function openModal(id, keep=false){
   const n = byId.get(id); if(!n) return;
@@ -3014,7 +3081,7 @@ function openModal(id, keep=false){
     <div class="tabpane" data-pane="res" ${modalTab==="res"?"":"hidden"}>
       ${myResHTML(n)}
       ${r.learn.length?`<h3>Learn it</h3><div class="reslist">${r.learn.map(resHTML).join("")}</div>`:""}
-      ${r.papers.length?`<h3>Key papers</h3><div class="reslist">${r.papers.map(resHTML).join("")}</div>`:""}
+      ${r.papers.length?`<h3>Key papers</h3>${papersOfflineHead(r.papers)}<div class="reslist">${r.papers.map(paperHTML).join("")}</div><p class="status" id="pStatus" role="status"></p>`:""}
       <h3>Search further</h3>
       <div class="searchlinks">${r.search.map(s=>`<a href="${esc(s.u)}" target="_blank" rel="noopener noreferrer">${esc(s.t)} ↗</a>`).join("")}</div>
     </div>
@@ -3160,7 +3227,7 @@ function runSearch(){
       const sc = l.startsWith(s)?0 : rs.test(l)?1 : (rs.test(t)||(rx && rx.test(t)))?1.5 : (rs.test(d)||(rx && rx.test(d)))?2 : 9; return [sc,n]; })
     .filter(([sc])=>sc<9).sort((a,b)=>a[0]-b[0]||a[1].lv-b[1].lv).slice(0,12).map(x=>x[1]);
   kb=0;
-  qres.innerHTML = hits.length? hits.map((n,i)=>`<li><button data-id="${n.id}" class="${i===kb?"kb":""}" style="--c:var(--d-${n.d})"><span class="dot"></span><span>${esc(n.label)}</span><small style="margin-left:auto;color:var(--muted)">L${n.lv}</small></button></li>`).join("")
+  qres.innerHTML = hits.length? hits.map((n,i)=>`<li><button data-id="${n.id}" class="${i===kb?"kb":""}" style="--c:var(--d-${n.d})"><span class="dot"></span><span>${esc(n.label)}${newBadge(n.id)}</span><small style="margin-left:auto;color:var(--muted)">L${n.lv}</small></button></li>`).join("")
     : `<li style="padding:8px;color:var(--muted)">No topic matches “${esc(q.value)}”.</li>`;
   qres.hidden=false;
 }
@@ -3250,7 +3317,7 @@ function homeHTML(){
     <p class="none">Open any topic and tap <b>Where am I?</b> to mark your rung. Your funnel below fills up as you go.</p>
     <div class="btnrow"><button class="btn primary" data-intro>Got it</button></div></div>`;
   const starts = ["gd","backprop","transformer","rag","reasoning","agents"].map(id=>byId.get(id));
-  return `<div class="homewrap">${intro}${goalCardHTML()}${landingAccountHTML()}${getCommit() ? "" : cont}<div class="card">${funnelHTML()}</div>
+  return `<div class="homewrap">${intro}${whatsNewHTML()}${goalCardHTML()}${landingAccountHTML()}${getCommit() ? "" : cont}<div class="card">${funnelHTML()}</div>
     <div class="card"><h3 style="margin-top:0">Good places to start</h3><div class="links">${starts.map(itemHTML).join("")}</div></div>
     <p class="foot">${nodes.length} topics · ${edges.length} links · frontier through mid-2026. ${syncFooter()}</p></div>`;
 }
@@ -3278,6 +3345,8 @@ function openSettings(){
       <select id="setGoal" data-set="goal">
         <option value="">Natural for each topic</option>${SUCCESS_FORMS.map(f=>`<option value="${f.k}" ${goal===f.k?"selected":""}>${esc(f.name)}</option>`).join("")}
       </select><p class="note">Sets which form of success the ladder, funnel and suggestions use. Your own definitions on a topic always win.</p></section>
+    <section><label class="sl"><input type="checkbox" id="setNew" data-set="shownew" ${showNew()?"checked":""}> Show NEW tags on recently added topics</label>
+      <p class="note">Marks the ${WHATS_NEW.topics.length} topics added in release ${esc(WHATS_NEW.release)}.</p></section>
     <section><label class="sl" for="setBg">Your background</label>
       <select id="setBg" data-set="bg">${bgList().map(b=>`<option value="${b.id}" ${b.id===bg?"selected":""}>${esc(b.name)}</option>`).join("")}</select>
       <p class="note">Decides which phases of a role path count as already covered.</p></section>
@@ -3302,6 +3371,7 @@ function settingsChange(ev){
   const t=ev.target.closest("[data-set]"); if(!t || modalId) return false;
   if(t.dataset.set==="goal"){ setGoal(t.value); }
   if(t.dataset.set==="bg"){ setBg(t.value); }
+  if(t.dataset.set==="shownew"){ try{ t.checked ? localStorage.removeItem("kiss-hide-new") : localStorage.setItem("kiss-hide-new","1"); }catch(e){} location.reload(); return true; }
   rerenderAll(); return true;
 }
 function settingsClick(ev){
@@ -3451,6 +3521,22 @@ document.getElementById("roles").addEventListener("click", ev=>{
   const c=ev.target.closest("[data-role]"); if(!c) return;
   if(isPhone()){ roleDetail=c.dataset.role; selectRole(c.dataset.role); renderRoles(); document.getElementById("roles").scrollTop=0; return; }
   setView("graph"); selectRole(c.dataset.role);
+});
+
+/* ---------- Offline paper events ---------- */
+sheet.addEventListener("click", ev=>{
+  if(!hasPapersOffline()) return;
+  const sv=ev.target.closest("[data-psave]"), op=ev.target.closest("[data-popen]"), rm=ev.target.closest("[data-pdel]"), all=ev.target.closest("[data-psaveall]");
+  if(!sv && !op && !rm && !all) return;
+  const say=t=>{ const el=document.getElementById("pStatus"); if(el) el.textContent=t; };
+  try{
+    if(sv) window.AtlasNative.savePaper(sv.dataset.psave, sv.dataset.ptitle||"Paper");
+    if(all) JSON.parse(all.dataset.psaveall).forEach(x=>window.AtlasNative.savePaper(x.id, x.t));
+    if(rm) window.AtlasNative.removePaper(rm.dataset.pdel);
+    if(op){ if(!window.AtlasNative.openPaper(op.dataset.popen)) say("Couldn't open the PDF. Install a PDF viewer, or save the paper again."); return; }
+  }catch(e){ say("Saving isn't available right now. Try again."); return; }
+  modalTab="res"; openModal(modalId, true);
+  if(sv || all) say("Downloading. You can close this; the paper keeps saving and appears here when it's done.");
 });
 
 /* ---------- Study timetable, goal and commitment events ---------- */

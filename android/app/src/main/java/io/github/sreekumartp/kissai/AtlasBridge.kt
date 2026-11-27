@@ -35,6 +35,22 @@ class AtlasBridge(private val activity: MainActivity) {
     @JavascriptInterface
     fun notificationsAllowed(): Boolean = Reminders.canNotify(activity.applicationContext)
 
+    /** Saves an arXiv paper as a PDF for reading offline. */
+    @JavascriptInterface
+    fun savePaper(arxivId: String, title: String): Boolean = Papers.save(activity.applicationContext, arxivId, title)
+
+    /** "none", "saving", "saved" or "failed". */
+    @JavascriptInterface
+    fun paperStatus(arxivId: String): String = Papers.status(activity.applicationContext, arxivId)
+
+    /** Opens a saved paper; false if it isn't saved or no PDF viewer is installed. */
+    @JavascriptInterface
+    fun openPaper(arxivId: String): Boolean = Papers.open(activity, arxivId)
+
+    /** Deletes a saved paper. */
+    @JavascriptInterface
+    fun removePaper(arxivId: String) = Papers.remove(activity.applicationContext, arxivId)
+
     /** Shows the reminder now, so the learner can see what it looks like. */
     @JavascriptInterface
     fun testReminder() {

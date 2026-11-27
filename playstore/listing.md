@@ -36,6 +36,7 @@ Data Scientist, ML Engineer, AI Engineer, Forward Deployed Engineer, AI Quality 
 YOUR PROGRESS, YOUR WAY
 • Works fully offline, no account needed
 • Optional sign-in syncs your progress across phone and web
+• Save research papers as PDFs and read them offline
 • Back up and restore at any time
 • No ads, no tracking
 
